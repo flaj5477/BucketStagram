@@ -13,7 +13,7 @@ import co.bucketstargram.dao.SearchDao;
 import co.bucketstargram.dto.BucketDto;
 import co.bucketstargram.dto.LibraryDto;
 
-public class SetSearch implements Command {
+public class GetSearch implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SearchDao dao = new SearchDao();

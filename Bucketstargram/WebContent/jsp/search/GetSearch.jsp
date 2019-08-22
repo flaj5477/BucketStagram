@@ -5,51 +5,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%	String word = (String) request.getAttribute("word"); %>
-<title><%=word%></title>
+<title>검색 값 반환</title>
+<link rel="stylesheet" href="css/search.css">
 </head>
 <body>
-	<div align = "center">
-	<h2>Library</h2>
-		<table border="1">
-				<tr>
-					<th width="100">제목</th>
-					<th width="50">타입</th>
-					<th width="50">좋아요</th>
-					<th width="150">이미지</th>
-				</tr>
-			<c:forEach items="${getLibrarySearch}" var="dto">
-				<tr onmouseover="this.style.background='#FAF082'" onmouseout="this.style.background='#FFFFFF'">
-					<td align="center">${dto.libTitle}</td>
-					<td align="center">${dto.libType}</td>
-					<td align="center">${dto.libLike}</td>
-					<td align="center">${dto.libImagePath}</td>
-				</tr>
-			</c:forEach>	
-		</table>
-	</div>
+	<hr>
+	<h3>Library</h3>
 	<div align="center">
-		<h2>Buckets</h2>
-		<table border="1">
-				<tr>
-					<th width="50">작성자</th>
-					<th width="100">제목</th>
-					<th width="50">타입</th>
-					<th width="100">챌린지</th>
-					<th width="50">좋아요</th>
-					<th width="150">이미지</th>
-				</tr>
-			<c:forEach items="${getBucketSearch}" var="dto">
-				<tr onmouseover="this.style.background='#FAF082'" onmouseout="this.style.background='#FFFFFF'">
-					<td align="center">${dto.bucketMemberId}</td>
-					<td align="center">${dto.bucketTitle}</td>
-					<td align="center">${dto.bucketType}</td>
-					<td align="center">${dto.bucketCompliation}</td>
-					<td align="center">${dto.bucketLike}</td>
-					<td align="center">${dto.bucketImagePath}</td>
-				</tr>
-			</c:forEach>	
-			</table>
+		<c:forEach items="${getLibrarySearch}" var="dto">
+			<div class="gallery">
+				<a target="_blank" href="#">
+					<img src="${dto.libImagePath}"width="600" height="400">
+				</a>
+				<div class="type">${dto.libType}</div>
+				<div class="title">${dto.libTitle}</div>
+				<div class="like">${dto.libLike}</div>
+			</div>
+		</c:forEach>
+	</div>
+	<div style="clear:both"></div> <!-- css, float속성 clear -->
+	<hr>
+	<h3>Bucket</h3>
+	<div align="center">
+		<c:forEach items="${getBucketSearch}" var="dto">
+			<div class="gallery">
+				<a target="_blank" href="#">
+					<img src="${dto.bucketImagePath}"width="600" height="400">
+				</a>
+				<div class="type">${dto.bucketType}</div>
+				<div class="title">${dto.bucketTitle}</div>
+				<div class="like">${dto.bucketLike}</div>
+			</div>
+		</c:forEach>
 	</div>
 </body>
 </html>
