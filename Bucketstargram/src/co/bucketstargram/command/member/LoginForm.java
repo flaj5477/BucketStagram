@@ -14,7 +14,7 @@ public class LoginForm implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String viewPage = "jsp/LoginForm.jsp";
+		String viewPage = "jsp/logon/LoginForm.jsp";
 		HttpRes.forward(request, response, viewPage);
 	}
 

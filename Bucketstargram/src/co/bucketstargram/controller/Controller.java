@@ -18,6 +18,7 @@ import co.bucketstargram.command.myBucket.AppendReply;
 import co.bucketstargram.command.myBucket.BucketPost;
 import co.bucketstargram.command.myBucket.BucketPostForm;
 import co.bucketstargram.command.myBucket.GetReply;
+import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
 import co.bucketstargram.command.search.SetSearch;
 import co.bucketstargram.common.Command;
@@ -47,6 +48,7 @@ public class Controller extends HttpServlet {
         map.put("/BucketPost.do", new BucketPost());
         map.put("/GetReply.do", new GetReply());
         map.put("/AppendReply.do", new AppendReply());
+        map.put("/LikeAction.do", new LikeAction());
         
         map.put("/SetSearch.do", new SetSearch());
      }

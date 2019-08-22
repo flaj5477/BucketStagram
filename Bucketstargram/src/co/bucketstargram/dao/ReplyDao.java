@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import co.bucketstargram.dto.ReplyDto;
-
 public class ReplyDao {
 
 	Connection conn = null; // DB연결된 상태(세션)을 담은 객체
@@ -49,27 +47,29 @@ public class ReplyDao {
 	}
 	
 	
-	public ArrayList<ReplyDto> select(String imageId, String userId) {
+	public ArrayList<HashMap<String, String>> getReplyInfo(String imageId) {
 		// TODO Auto-generated method stub
-		ArrayList<ReplyDto> replyList = new ArrayList<ReplyDto>();
-		ReplyDto reply = null;
+		ArrayList<HashMap<String, String>> replyInfoList = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> reply = null;
 		//String sql = "SELECT re_member_id, re_reply_contents FROM bucket_reply_tb WHERE re_bucket_id = '" + imageId + "'";
-		String sql = "SELECT re_reply_id, re_member_id, re_reply_contents, re_write_date FROM bucket_reply_tb br, bucket_info_tb bi WHERE br.re_bucket_id=bi.bucket_id and br.re_bucket_id = ? and bi.bucket_member_id = ?"; 
+		String sql = "SELECT * FROM bucket_reply_tb br, bucket_info_tb bi WHERE re_bucket_id = ?"; 
 		
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, imageId);
-			psmt.setString(2, userId);
 			rs = psmt.executeQuery();
+
 			while(rs.next()) {
-				reply = new ReplyDto();
+				reply = new HashMap<String, String>();
 				
-				reply.setReReplyId(rs.getString("re_reply_id"));
-				reply.setReMemberId(rs.getString("re_member_id"));
-				reply.setReReplyContents(rs.getString("re_reply_contents"));
-				reply.setReWriteDate(rs.getString("re_write_date"));
+				reply.put("reBucketId", rs.getString("re_bucket_id"));
+				reply.put("reReplyId",rs.getString("re_reply_id"));
+				reply.put("reMemberId",rs.getString("re_member_id"));
+				reply.put("reReplyContents",rs.getString("re_reply_contents"));
+				reply.put("reWriteDate",rs.getString("re_write_date"));
 				
-				replyList.add(reply);
+				replyInfoList.add(reply);
+			
 			}
 			
 		} catch (SQLException e) {
@@ -78,7 +78,7 @@ public class ReplyDao {
 			close();
 		}
 		
-		return replyList;
+		return replyInfoList;
 	}
 
 	public boolean insert(String replyId, String bucketId, String memberId, String replyCotents) {

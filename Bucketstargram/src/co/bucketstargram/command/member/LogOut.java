@@ -14,7 +14,7 @@ public class LogOut implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String viewPage = "jsp/LoginOut.jsp";
+		String viewPage = "jsp/logon/LoginOut.jsp";
 		HttpRes.forward(request, response, viewPage);
 	}
 

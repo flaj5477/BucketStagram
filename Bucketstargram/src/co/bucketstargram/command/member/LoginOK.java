@@ -29,7 +29,7 @@ public class LoginOK implements Command {
 			session.setAttribute("userpw", formPW);	
 		}
 		
-		String viewPage = "jsp/LoginOK.jsp";
+		String viewPage = "jsp/logon/LoginOK.jsp";
 		HttpRes.forward(request, response, viewPage);
 	}
 }
