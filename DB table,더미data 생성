@@ -1,0 +1,369 @@
+-- GET_KORNM(1, 3) => 3글자 이름 랜덤 출력
+CREATE OR REPLACE FUNCTION GET_KORNM ( V_FROM IN VARCHAR2, V_TO IN VARCHAR2 ) RETURN VARCHAR2 
+IS 
+OUT_REAL_NM VARCHAR2(100); 
+TYPE V_ARR IS TABLE OF VARCHAR2(10); 
+V_LAST V_ARR; 
+V_MID V_ARR;
+V_FIRST V_ARR;
+       BEGIN 
+       V_LAST := V_ARR('김' , '이' , '박' , '최' , '정' , '강' , '조' , '윤' , '장' , '임' , '오' , '한' , '신' , '서' , 
+                       '권' , '황' , '안' , '송' , '유' , '홍' , '전' , '고' , '문' , '손' , '양' , '배' , '조' , '백' , '허' , '남'); 
+                       
+       V_MID := V_ARR('민' , '현' , '동' , '인' , '지' , '현' , '재' , '우' , '건' , '준' , '승' , '영' , '성' , '진' , '준' , '정' , 
+                      '수' , '광' , '영' , '호' , '중' , '훈' , '후' , '우' , '상' , '연' , '철' , '아' , '윤' , '은'); 
+                
+       V_FIRST := V_ARR('유' , '자' , '도' , '성' , '상' , '남' , '식' , '일' , '철' , '병' , '혜' , '영' , '미' , '환' , '식' , '숙' , 
+                        '자' , '희' , '순' , '진' , '서' , '빈' , '정' , '지' , '하' , '연' , '성' , '공' , '안' , '원'); 
+                        
+       SELECT SUBSTR(V_LAST(ROUND(DBMS_RANDOM.VALUE(1 , 30), 0)) || V_MID(ROUND(DBMS_RANDOM.VALUE(1 , 30), 0)) || V_FIRST(ROUND(DBMS_RANDOM.VALUE(1 , 30), 0)) 
+                  || V_MID(ROUND(DBMS_RANDOM.VALUE(1 , 30), 0)) || V_FIRST(ROUND(DBMS_RANDOM.VALUE(1 , 30), 0)) , V_FROM, V_TO) INTO OUT_REAL_NM 
+       FROM DUAL; 
+       RETURN OUT_REAL_NM; 
+END;
+
+-- GET_TYPE(0) => 카테고리 종류 랜덤 출력
+CREATE OR REPLACE FUNCTION GET_TYPE(V_FROM IN VARCHAR2) RETURN VARCHAR2 IS OUT_LIB VARCHAR2(100); 
+       TYPE V_ARR IS TABLE OF VARCHAR2(10); 
+       V_LAST V_ARR; 
+BEGIN 
+       V_LAST := V_ARR('여행' , '음식' , '운동' , '배움' , '문화' , '야외' , '쇼핑' , '생활'); 
+       SELECT substr(V_LAST(ROUND(DBMS_RANDOM.VALUE(1 , 8), 0)), v_from) INTO OUT_LIB 
+       FROM DUAL; 
+       RETURN OUT_LIB; 
+END;
+
+-- GET_REPL(0) => 댓글 내용 랜덤 출력
+CREATE OR REPLACE FUNCTION GET_REPL(V_FROM IN VARCHAR2) RETURN VARCHAR2 IS OUT_LIB VARCHAR2(100); 
+       TYPE V_ARR IS TABLE OF VARCHAR2(50); 
+       V_LAST V_ARR; 
+BEGIN 
+       V_LAST := V_ARR('헐~ 대박' , '좋은데요?' , '퍼가유~' , '나도 해봐야지' , '와.. 대단하다' , '흠..' , '잘지내는군' , '안녕하세요'); 
+       SELECT substr(V_LAST(ROUND(DBMS_RANDOM.VALUE(1 , 8), 0)), v_from) INTO OUT_LIB 
+       FROM DUAL; 
+       RETURN OUT_LIB; 
+END;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- 테이블 생성
+CREATE TABLE member_info_tb (
+    member_id      VARCHAR2(50) NOT NULL,
+    member_pw      VARCHAR2(50) NOT NULL,
+    member_name    VARCHAR2(50) NOT NULL,
+    member_email   VARCHAR2(100) NOT NULL,
+    member_phone   VARCHAR2(50)
+);
+
+-- 제약 조건 설정(기본키)
+ALTER TABLE member_info_tb ADD CONSTRAINT member_info_tb_pk PRIMARY KEY ( member_id );
+
+-- 데이터 입력
+INSERT INTO member_info_tb(member_id, member_pw, member_name, member_email, member_phone)
+--select bi.bucket_member_id as member_id,
+select DBMS_RANDOM.STRING ('L', 5) || TRIM(CEIL(DBMS_RANDOM.VALUE(0, 1000))) as member_id,
+'1234' as member_pw, 
+get_kornm(1, 3) as member_name,
+CASE CEIL(DBMS_RANDOM.VALUE(0, 6)) WHEN 1 THEN DBMS_RANDOM.STRING ('L', 5) || TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)) || '@naver.com'
+WHEN 2 THEN DBMS_RANDOM.STRING ('L', 5) || TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)) || '@naver.com'
+WHEN 3 THEN DBMS_RANDOM.STRING ('L', 5) || TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)) || '@gmail.com'
+WHEN 4 THEN DBMS_RANDOM.STRING ('L', 5) || TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)) || '@gmail.com'
+WHEN 5 THEN DBMS_RANDOM.STRING ('L', 5) || TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)) || '@daum.net' 
+WHEN 6 THEN DBMS_RANDOM.STRING ('L', 5) || TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)) || '@nate.com' 
+END AS member_email,
+CASE CEIL(DBMS_RANDOM.VALUE(1, 3)) WHEN 1 THEN '010-' || to_char(TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (1000, 9999), 0), 3))) || '-' || to_char(TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (1000, 9999), 0), 3))) 
+WHEN 2 THEN '010-' || to_char(TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (1000, 9999), 0), 4))) || '-' || to_char(TRIM(LPAD (ROUND (DBMS_RANDOM.VALUE (1000, 9999), 0), 3)))
+WHEN 3 THEN null
+END AS member_phone
+from dual
+CONNECT BY LEVEL <= 30
+;
+
+select * from member_info_tb;
+
+--drop table member_info_tb cascade constraints;
+--delete from member_info_tb;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- 테이블 생성
+CREATE TABLE bucket_info_tb (
+    bucket_id            VARCHAR2(50) NOT NULL,
+    bucket_member_id     VARCHAR2(50) NOT NULL,
+    bucket_title         VARCHAR2(50) NOT NULL,
+    bucket_contents      VARCHAR2(500) NOT NULL,
+    bucket_type          VARCHAR2(50) NOT NULL,
+    bucket_compliation   VARCHAR2(50) DEFAULT 'challenging',
+    bucket_like          NUMBER DEFAULT 0,
+    bucket_image_path    VARCHAR2(100),
+    bucket_tag           VARCHAR2(50),
+    bucket_write_date    VARCHAR2(50) DEFAULT to_char(sysdate, 'yyyy-mm-DD HH24:MI:SS')
+);
+
+ALTER TABLE bucket_info_tb ADD CONSTRAINT bucket_info_tb_pk PRIMARY KEY ( bucket_id );
+
+-- 데이터 입력
+INSERT INTO bucket_info_tb
+SELECT 
+'2019'|| DECODE(LPAD(ROUND(DBMS_RANDOM.VALUE (0, 1), 0), 3),0 ,0, 1) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(0, 5)) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(100, 999)) AS bucket_id,
+DBMS_RANDOM.STRING ('L', 5) || TRIM(CEIL(DBMS_RANDOM.VALUE(0, 1000))) AS bucket_member_id,
+'TEST_제목_' || DBMS_RANDOM.STRING('X',  4)  AS bucket_title,
+'내용물 출력 공간 입니다' AS bucket_contents,
+get_type(0) AS bucket_type,
+'challenging' AS bucket_compliation,
+0 AS bucket_like,
+'' AS bucket_image_path,
+'' AS bucket_tag
+FROM dual
+CONNECT BY LEVEL <= 50;
+
+select * from bucket_info_tb;
+
+--delete from bucket_info_tb;
+--drop table bucket_info_tb cascade constraints;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+-- 테이블 생성
+CREATE TABLE member_wish_list_tb (
+    mwl_member_id   VARCHAR2(50) NOT NULL,
+    mwl_bucket_id   VARCHAR2(50) NOT NULL
+);
+
+-- 제약 조건 설정(기본키)
+ALTER TABLE member_wish_list_tb ADD CONSTRAINT member_wish_list_tb_pk PRIMARY KEY ( mwl_member_id,
+                                                                                    mwl_bucket_id );
+-- 제약 조건 설정(외래키)
+ALTER TABLE member_wish_list_tb
+    ADD CONSTRAINT mwl_bl_tb_fk FOREIGN KEY ( mwl_bucket_id )
+        REFERENCES bucket_info_tb ( bucket_id )
+            ON DELETE CASCADE;
+
+-- 데이터 입력
+set serveroutput on;
+DECLARE
+    v_cnt number := 1;
+    v_rownum number := 0;
+begin
+    dbms_output.enable;
+    select count(*) into v_rownum from member_info_tb;  
+loop
+    insert into member_wish_list_tb(mwl_member_id, mwl_bucket_id)
+    select member_id, bucket_id 
+    from (select member_id from (select rownum no, member_id from (select * from member_info_tb)) where no = v_cnt) cross join 
+         (select * from  (select bucket_id from bucket_info_tb order by dbms_random.value) where rownum <= CEIL(DBMS_RANDOM.VALUE(2, 14)));
+    v_cnt := v_cnt+1;
+    DBMS_OUTPUT.PUT_LINE('v_cnt = ' || v_cnt);
+    EXIT WHEN v_cnt > v_rownum;
+END LOOP;
+END;
+
+select * from bucket_reply_tb where re_bucket_id = '20190816065023188';
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE bucket_reply_tb (
+    re_reply_id         VARCHAR2(50) NOT NULL,
+    re_bucket_id        VARCHAR2(50) NOT NULL,
+    re_member_id        VARCHAR2(50) NOT NULL,
+    re_reply_contents   VARCHAR2(500) NOT NULL,
+    re_write_date       VARCHAR2(50) DEFAULT to_char(sysdate, 'yyyy-mm-DD HH24:MI:SS')
+);
+
+ALTER TABLE bucket_reply_tb ADD CONSTRAINT bucket_reply_tb_pk PRIMARY KEY ( re_reply_id );
+
+ALTER TABLE bucket_reply_tb
+    ADD CONSTRAINT br_bi_tb_fk FOREIGN KEY ( re_bucket_id )
+        REFERENCES bucket_info_tb ( bucket_id );
+
+-- 데이터 입력
+set serveroutput on;
+DECLARE
+    v_cnt number := 1;
+    v_rownum number := 0;
+begin
+    dbms_output.enable;
+    select count(*) into v_rownum from member_info_tb;  
+loop
+    insert into bucket_reply_tb(re_member_id, re_bucket_id, re_reply_contents)
+    select member_id, bucket_id, contents 
+    from (select member_id, get_repl(0) as contents from (select rownum no, member_id from (select * from member_info_tb)) where no = v_cnt) cross join 
+         (select * from  (select bucket_id from bucket_info_tb order by dbms_random.value) where rownum <= CEIL(DBMS_RANDOM.VALUE(2, 14)));
+    v_cnt := v_cnt+1;
+    DBMS_OUTPUT.PUT_LINE('v_cnt = ' || v_cnt);
+    EXIT WHEN v_cnt > v_rownum;
+END LOOP;
+END;
+
+select * from bucket_reply_tb;
+
+--drop table bucket_reply_tb cascade constraints;     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE library_info_tb (
+    lib_id           VARCHAR2(50) NOT NULL,
+    lib_title        VARCHAR2(50) NOT NULL,
+    lib_contents     VARCHAR2(1000) NOT NULL,
+    lib_type         VARCHAR2(50) NOT NULL,
+    lib_image_path   VARCHAR2(100),
+    lib_like         NUMBER DEFAULT 0,
+    lib_write_date   VARCHAR2(50) DEFAULT to_char(sysdate, 'yyyy-mm-DD HH24:MI:SS')
+);
+
+ALTER TABLE library_info_tb ADD CONSTRAINT library_info_pk PRIMARY KEY ( lib_id );
+
+-- 데이터 입력
+INSERT INTO library_info_tb
+SELECT 
+'2019'|| DECODE(LPAD(ROUND(DBMS_RANDOM.VALUE (0, 1), 0), 3),0 ,0, 1) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(0, 5)) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(100, 999)) AS lib_id,
+'TEST_제목_' || DBMS_RANDOM.STRING('X',  4)  AS lib_title,
+'내용물 출력 공간 입니다' AS lib_contents,
+get_type(0) AS lib_type,
+'' AS lib_image_path,
+0 AS lib_like
+FROM dual
+CONNECT BY LEVEL <= 200;
+
+select * from library_info_tb;
+
+--drop table library_info_tb cascade constraints;     
+--delete from library_info_tb;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- 테이블 생성
+CREATE TABLE library_wish_list_tb (
+    lwl_lib_id      VARCHAR2(50) NOT NULL,
+    lwl_member_id   VARCHAR2(50) NOT NULL
+);
+
+-- 제약 조건 설정(기본키)
+ALTER TABLE library_wish_list_tb ADD CONSTRAINT library_wish_list_tb_pk PRIMARY KEY ( lwl_member_id,
+                                                                                      lwl_lib_id );
+-- 제약 조건 설정(외래키)
+ALTER TABLE library_wish_list_tb
+    ADD CONSTRAINT lwl_li_tb_fk FOREIGN KEY ( lwl_lib_id )
+        REFERENCES library_info_tb ( lib_id )
+            ON DELETE CASCADE;
+
+-- 데이터 입력
+set serveroutput on;
+DECLARE
+    v_cnt number := 1;
+    v_rownum number := 0;
+begin
+    dbms_output.enable;
+    select count(*) into v_rownum from library_info_tb;  
+loop
+    insert into library_wish_list_tb(lwl_member_id, lwl_lib_id)
+    select member_id, lib_id 
+    from (select lib_id from (select rownum no, lib_id from (select * from library_info_tb)) where no = v_cnt) cross join 
+         (select member_id from (select member_id from (select * from member_info_tb))where rownum <= CEIL(DBMS_RANDOM.VALUE(1, 10)));
+    v_cnt := v_cnt+1;
+    DBMS_OUTPUT.PUT_LINE('v_cnt = ' || v_cnt);
+    EXIT WHEN v_cnt > v_rownum;
+END LOOP;
+END;
+
+--drop table library_wish_list_tb cascade constraints;
+--delete from library_wish_list_tb;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+--
+--
+--
+--
+--select bucket_id from bucket_info_tb;
+--
+--
+--insert into test_member_info
+--select a.df (select bucket_id df from bucket_info_tb a) as id
+--from dual;
+--select CEIL(DBMS_RANDOM.VALUE(0, 4)) from dual CONNECT BY LEVEL <= 100;
+--select GET_TYPE(1) from dual CONNECT BY LEVEL <= 10;
+--select decode(LPAD (ROUND (DBMS_RANDOM.VALUE (0, 1), 0), 3),0 ,0, 1) as no from dual CONNECT BY LEVEL <= 100;
+--select '2019'|| CEIL(DBMS_RANDOM.VALUE(0, 1)) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(0, 5)) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(100, 999)) AS bucket_id from dual;
+--select DBMS_RANDOM.VALUE (0, 0) from dual;
+--
+--select * from test_tb;
+--
+--create table test_tb(
+--    name varchar2(50),
+--    id varchar2(50),
+--    email varchar2(50)    
+--);
+--create table test_member_info(
+--id varchar2(50)
+--);
+--
+--
+--drop table test_tb;
+--#############################################################################
+--insert into test_tb
+--select 
+--'2019'|| CEIL(DBMS_RANDOM.VALUE(0, 1)) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(0, 5)) || CEIL(DBMS_RANDOM.VALUE(0, 9)) || CEIL(DBMS_RANDOM.VALUE(100, 999)) AS bucket_id,
+--DBMS_RANDOM.STRING ('L', 5) || LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3) AS bucket_member_id,
+----get_kornm(1,3) AS name,
+--'내용물 출력 공간 입니다' AS bucket_contents,              
+--DBMS_RANDOM.STRING ('L', 5) || LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3) || '@naver.com' AS email,
+--get_type(0) AS bucket_type,
+--'challenging' AS bucket_compliation,
+--0 AS bucket_like,
+--'' AS bucket_like
+--from dual
+--CONNECT BY LEVEL <= 10;
+--##############################################################################
+--insert into test_tb
+--select DBMS_RANDOM.STRING ('L', 5)
+--              || LPAD (ROUND (DBMS_RANDOM.VALUE (0, 999), 0), 3)
+--              || '@naver.com' AS email
+--from dual
+--CONNECT BY LEVEL <= 10;
+--
+--rollback;
+--
+--
+--
+--insert into member_wish_list_tb(mwl_member_id, mwl_bucket_id)
+--select member_id, bucket_id from member_info_tb  cross join (select * from  (select bucket_id from bucket_info_tb order by dbms_random.value) where rownum <= CEIL(DBMS_RANDOM.VALUE(2, 14)));
+--rollback;
+--select * from member_wish_list_tb;
+--select count(*) from member_wish_list_tb where mwl_bucket_id = '20190236727';
+--select member_id, bucket_id from (select member_id from member_info_tb where rownum = level CONNECT BY LEVEL <= rownum) cross join (select * from  (select bucket_id from bucket_info_tb order by dbms_random.value) where rownum <= CEIL(DBMS_RANDOM.VALUE(2, 14)))
+--;
+--
+--select count(*) from member_info_tb where rownum = level CONNECT BY LEVEL <= 5;
+--
+--
+--
+--select member_id 
+--from member_info_tb
+--MINUS
+--(select union_member_id 
+--from  (select member_row union_member_row, member_id union_member_id, bucket_id union_bucket_id from bucket_info_tb cross join (select rownum member_row, member_id from (select * from member_info_tb))) 
+--where rownum <= CEIL(DBMS_RANDOM.VALUE(1, 10)));
+--
+----rownum, member_id
+--select rownum, member_id from (select * from member_info_tb);
+--
+--
+--select get_member_id(level) 
+--from member_info_tb cross join (select level no from dual connect by level <= 10);
+--
+--
+--select level from dual connect by level <= 10;
+--select member_id from member_info_tb;
+--
+--select member_id from member_info_tb where rownum = level
+--CONNECT BY LEVEL <= 2;
+--
+--select * from  (select bucket_id from bucket_info_tb) where rownum <= CEIL(DBMS_RANDOM.VALUE(1, 10));
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
