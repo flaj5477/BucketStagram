@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import co.bucketstargram.common.Command;
-import co.bucketstargram.common.PrimaryKey;
+import co.bucketstargram.common.Primary;
 import co.bucketstargram.dao.ReplyDao;
 
 public class AppendReply implements Command {
@@ -20,7 +20,7 @@ public class AppendReply implements Command {
 		String memberId = (String) session.getAttribute("userid");
 		String bucketId = (String)request.getParameter("imageId");
 		String replyCotents = (String)request.getParameter("replyCotent");
-		String replyId = PrimaryKey.create(); 
+		String replyId = Primary.create(); 
 		System.out.println("AppendReply.java | imageId = " + bucketId);
 		System.out.println("AppendReply.java | content = " + replyCotents); 
 		System.out.println("AppendReply.java | usersId = " + memberId);
