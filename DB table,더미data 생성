@@ -224,7 +224,8 @@ SELECT
 '내용물 출력 공간 입니다' AS lib_contents,
 get_type(0) AS lib_type,
 '' AS lib_image_path,
-0 AS lib_like
+0 AS lib_like,
+to_char(sysdate, 'yyyy-mm-DD HH24:MI:SS') AS lib_write_date
 FROM dual
 CONNECT BY LEVEL <= 200;
 
