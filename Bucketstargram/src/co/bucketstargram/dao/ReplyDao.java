@@ -52,7 +52,7 @@ public class ReplyDao {
 		ArrayList<HashMap<String, String>> replyInfoList = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> reply = null;
 		//String sql = "SELECT re_member_id, re_reply_contents FROM bucket_reply_tb WHERE re_bucket_id = '" + imageId + "'";
-		String sql = "SELECT * FROM bucket_reply_tb br, bucket_info_tb bi WHERE re_bucket_id = ?"; 
+		String sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class ReplyDao {
 		} finally {
 			close();
 		}
-		
+		System.out.println("ReplyDao.java | replyInfoList.size() = " + replyInfoList.size());
 		return replyInfoList;
 	}
 

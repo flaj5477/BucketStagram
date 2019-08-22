@@ -111,7 +111,7 @@ public class BucketDao {
 		return bucketList;
 	}
 
-	public ArrayList<HashMap<String, String>> getBucketInfo(String imageId, String userId) {
+	public HashMap<String, String> getBucketInfo(String imageId, String userId) {
 		// TODO Auto-generated method stub'
 		ArrayList<HashMap<String, String>> bucketInfoList = null;
 		HashMap<String, String> bucket = null;
@@ -150,7 +150,7 @@ public class BucketDao {
 			close();
 		}
 		
-		return bucketInfoList;
+		return bucket;
 	}
 	
 	private String getLikeYN(String imageId, String userId) {
