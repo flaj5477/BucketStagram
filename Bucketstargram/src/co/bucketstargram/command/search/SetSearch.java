@@ -27,7 +27,7 @@ public class SetSearch implements Command {
 		request.setAttribute("word",word);
 		request.setAttribute("getBucketSearch",bucketResult);
 		request.setAttribute("getLibrarySearch",libResult);
-		String viewPage = "jsp/search/SearchList.jsp";
+		String viewPage = "jsp/search/GetSearch.jsp";
 		HttpRes.forward(request, response, viewPage);
 	}
 }
