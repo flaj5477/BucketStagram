@@ -49,14 +49,15 @@
   font-size: 18px;
 }
 
+.navigation__column {
+	position: relative;
+	padding: 0 0 1em 0
+}
+
 .navigation__column input {
-  padding: 5px 0;
-  padding-left: 60px;
-  border: 0;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
-  background: #fafafa;
-  font-size: 16px;
+  font-size: 10px;
 }
 
 .navigation__column input:focus {
