@@ -48,13 +48,16 @@ public class SearchDao {
 		String sql = "SELECT bucket_member_id, bucket_title, bucket_type, "
 					+"bucket_compliation, bucket_like, bucket_image_path "
 					+"FROM bucket_info_tb "
-					+"WHERE bucket_title LIKE '%'||?||'%' OR bucket_contents LIKE '%'||?||'%'";
-					
+					+"WHERE bucket_title LIKE '%'||?||'%' "
+					+"OR bucket_contents LIKE '%'||?||'%' "
+					+"OR bucket_type LIKE '%'||?||'%'";
+
 		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,word); 
 			psmt.setString(2,word);
+			psmt.setString(3,word);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				BucketDto dto = new BucketDto();
@@ -75,12 +78,17 @@ public class SearchDao {
 	public ArrayList<LibraryDto> librarySearch(String word){
 		String sql = "SELECT lib_title, lib_type, lib_like, lib_image_path "
 					+"FROM library_info_tb " 
-					+"WHERE lib_title LIKE '%'||?||'%' OR lib_contents LIKE '%'||?||'%'";
+					+"WHERE lib_title LIKE '%'||?||'%' "
+					+"OR lib_contents LIKE '%'||?||'%' "
+					+"OR lib_type LIKE '%'||?||'%'";
+	 
+		
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,word); 
 			psmt.setString(2,word);
+			psmt.setString(3,word);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				LibraryDto dto = new LibraryDto();
