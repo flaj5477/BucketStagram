@@ -239,53 +239,27 @@ li{
 		var result = "";
 		//4: request finished and response is ready
 		//Returns the status-number of a request 200: "OK"		
-		if (request.readyState = 4 && request.status == 200) {
-			/////////////////////////////////////////////////////////////
-			console.log("searchProcess : request.responseText = " + request.responseText);
-			/////////////////////////////////////////////////////////////
+		if (request.readyState == 4 && request.status == 200) {
+			console.log("Ajax Request 호출 성공");
+			
 			result = request.responseText;
-			//console.log("result = " + result);
-			//해당 게시물에 댓글이 없을 경우 태그 추가없이 모달창만 띄운다.
-			//if(result != ""){
-				console.log("result");
-				if(result != ""){
-					tagCreate = true;
-					//console.log("result = " + result);
-					var json = JSON.parse(result);
-					//리플 개수 json 데이터 길이로 구함 - Object.keys(객체명).length
-					replyCnt = Object.keys(json).length;
-					var bucketInfo = (JSONArray)
-				}
+			var json = JSON.parse(result);
+			replyCnt = json.reply.length;
+			
+			for (var key=0 ; key<replyCnt ; key++){
+				console.log(json.reply[key]); 
+				tag += '<div class="repl"><h3 class = "repl-id">' + json.reply[key].reMemberId  + '</h3><span class = "repl-content">' + json.reply[key].reReplyContents + '</span>' + '<span class = "repl-wDate">' + json.reply[key].reWriteDate + '</span></div>';
+			}
+			if(tagCreate){
+				//리플 태그 실제로 넣는 부분
+				document.getElementById("ajax-repl").innerHTML = tag;
+				//리플 개수 태그에 실제로 값 넣는 부분
+				document.getElementById("total-like-view").innerHTML = "댓글 " + replyCnt + "개";
+				//한 번 태그 만들었으면 모달창 닫을 때까지는 생성 못하게 막음 - 중복 실행되서 강제로 넣음
+				tagCreate = false;
+			}
 				
-//				console.log("result = " + result);
-				for (var key in json){
-	 				console.log("key = " + key);
-					console.log("result[key] = " + json[key]); 
-					console.log("json length = " + Object.keys(json).length);
-					tag += '<div class="repl"><h3 class = "repl-id">' + json[key].reMemberId  + '</h3><span class = "repl-content">' + json[key].reReplyContent + '</span>' + '<span class = "repl-wDate">' + json[key].reWriteDate + '</span></div>';
-					console.log(tag);
-				}
-				if(tagCreate){
-					//리플 태그 실제로 넣는 부분
-					document.getElementById("ajax-repl").innerHTML = tag;
-					//리플 개수 태그에 실제로 값 넣는 부분
-					document.getElementById("total-like-view").innerHTML = "댓글 " + replyCnt + "개";
-					//한 번 태그 만들었으면 모달창 닫을 때까지는 생성 못하게 막음 - 중복 실행되서 강제로 넣음
-					tagCreate = false;
-				}
-				
-				document.getElementById("modal").style.display = "block";
-			//}else{
-				console.log("GetReply에서 result없음")
-				//서버에서 받아온 result가 공백이면 댓글 개수가 하나도 없는 경우이므로 replyCnt에 0값을 설정 
-				
-/* 				if(tagCreate){
-					replyCnt = 0;
-					document.getElementById("total-like-view").innerHTML = replyCnt + "개";
-					document.getElementById("modal").style.display = "block";
-					tagCreate = false;
-				} */
-			//}
+			document.getElementById("modal").style.display = "block";
 		}
 	}
 		
@@ -362,6 +336,7 @@ li{
 		if (request.readyState = 4 && request.status == 200) {
 			if(insertSuccess == "true" && tagAppend == true){
 				tag += '<div class="repl"><h3 class = "repl-id">' + '<%=userid%>'  + '</h3><span class = "repl-content">' + $('#reply-textArea').val() + '</span>' + '<span class = "repl-wDate">' + getTimeStamp() + '</span></div>';
+				// replyCnt : 댓글 입력시 총 댓글 갯수 증가 시키기 위해 존재
 				replyCnt = replyCnt+1;
 				document.getElementById("total-like-view").innerHTML = "종아요 " + replyCnt + "개";
 				console.log("tag = " + tag);

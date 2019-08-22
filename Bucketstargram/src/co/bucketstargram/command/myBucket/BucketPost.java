@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.HttpRes;
+import co.bucketstargram.common.Primary;
 import co.bucketstargram.dao.BucketDao;
 import co.bucketstargram.dto.BucketDto;
 
@@ -32,7 +33,7 @@ public class BucketPost implements Command {
 		//C:\Users\이재문\Desktop\자바\jsp\Bucketstargram\WebContent\
 		String serverPath = request.getServletContext().getRealPath("images");
 		
-		String bucketId = createBucketId();
+		String bucketId = Primary.create();
 		String bucketMemberId = (String)session.getAttribute("userid");;
 		String bucketTitle = null; // multi Form으로 받았기 때문에 request가 아니라 multi 인스턴스로 받아야됨
 		String bucketContents = null;

@@ -3,9 +3,6 @@ package co.bucketstargram.command.myBucket;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,61 +21,34 @@ public class GetReply implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("Ajax 호출");
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("userid");
-		System.out.println("GetReply.java | usersId = " + userId);
 		String imageId = request.getParameter("imageId");
+		System.out.println("GetReply.java | usersId = " + userId);
 		System.out.println("GetReply.java | imageId = " + imageId);
-		getJSON(imageId, userId);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		response.getWriter().write(getJSON(imageId, userId));		
 	}
 	
 	private String getJSON(String imageId, String userId) {
-
+		System.out.println("getJSON 호출");
 		BucketDao bDao = new BucketDao();
 		ReplyDao reDao = new ReplyDao();
 
-		ArrayList<HashMap<String, String>> bucketInfoList = bDao.getBucketInfo(imageId, userId);
+		HashMap<String, String> bucketInfo = bDao.getBucketInfo(imageId, userId);
 		ArrayList<HashMap<String, String>> replyInfoList = reDao.getReplyInfo(imageId);	
 		
-		Iterator<Map.Entry<String, String>> entries;
-		Entry<String, String> entry;
+		JSONObject json = new JSONObject();
 		
-		JSONArray jsonArray = new JSONArray();
-		JSONObject outerJsonObj = new JSONObject();
-		JSONObject bucketJsonObj = new JSONObject();
-		JSONObject replyJsonObj = new JSONObject();
+//		json.put("bucket", JSONObject.toJSONString(bucketInfo)); 
+//		json.put("reply", JSONArray.toJSONString(replyInfoList)); 이렇게 할 경우 제이슨 객체의 value값으로 배열이 담기는게 아니라 스틀링으로 담긴다 그래서 파싱을 두 번 해줘야됨
+		json.put("bucket", bucketInfo);
+		json.put("reply", replyInfoList);
+		System.out.println("json.toString() = " + json.toString());
 		
-		for(int i = 0; i < bucketInfoList.size(); i++){
-			for( Entry<String, String> element : bucketInfoList.get(i).entrySet() ) {
-				String key = element.getKey();
-				String value = element.getValue();
-				
-				System.out.println(String.format("["+i+"번] 키 : %s | 값 : %s", element.getKey(), element.getValue()));
-				bucketJsonObj.put(key, value);
-				
-			}
-		}
-		outerJsonObj.put("bucket", bucketJsonObj);
-		System.out.println("bucket | innerJsonObj = " + bucketJsonObj.toString());
-		System.out.println("outerJsonObj.toString() = " + outerJsonObj.toString());
-		
-		for(int i = 0; i < replyInfoList.size(); i++){
-			for( Entry<String, String> element : replyInfoList.get(i).entrySet() ) {				
-				String key = element.getKey();
-				String value = element.getValue();
-				
-				replyJsonObj.put(key, value);
-				System.out.println(String.format("["+i+"번] 키 : %s | 값 : %s", element.getKey(), element.getValue()));
-			}
-		}
-
-		outerJsonObj.put("reply", replyJsonObj);
-		System.out.println("outerJsonObj.toString() = " + outerJsonObj.toString());
-		
-		return jsonArray.toString();
+		return json.toString();
 	}
 }
 
