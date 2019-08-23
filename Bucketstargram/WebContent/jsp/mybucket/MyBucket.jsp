@@ -154,7 +154,7 @@ li{
     background-color: yellow;
 }
 .scrollBlind{
-    width:107%;
+    width:100%;
     height:100%;
 /*     width:230px;
     height:100%; */
@@ -164,7 +164,7 @@ li{
 } 
 .reple-view{
     width:100%;
-    height:70%;
+    height:50%;
 /*     width:200px;
     height:260px;
     position: absolute; */
@@ -184,7 +184,7 @@ li{
 }
 .add-view{
 	width:100%;
-    height:20%;
+    height:25%;
     border-bottom:1px solid #f1f1f1;
 }
 .add-view-child{
@@ -218,23 +218,33 @@ li{
 <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script src="js/bootstrap.js"></script>
 <script>
+	//클릭한 버킷의 id값 
 	var imageId = "";
-	//중복 이벤트 발생해서 막기위해 추가함
-	var tagCreate = false;
 	//리플 개수 저장 변수
 	var replyCnt;
+	//좋아요 개수 저장 변수
+	var likeCnt;
+	//서버로부터 전송받은 String으로 변환된 json 데이터를 저장할 변수
+	var result;
+	//해당 사용자가 보려는 버킷에 좋아요 유무 판단 변수(Y/N)
+	var likeYN;
+	//stirng으로 넘어온 데이터를 json객체로 파싱 후 저장할 변수
+	var json;
 	var request = new XMLHttpRequest();
+	
 	function startModal(element) {
-		imageId = element.id;
-		/////////////////////
-		console.log("imageId = " + imageId);
-		/////////////////////
+		//modal창 사진으로 클릭한 사진이 올라오도록 작업
 		document.getElementById("modalImg").src = element.src;
+		//버킷의 id 저장
+		imageId = element.id;
+		console.log(imageId);
 		request.open("Post", "GetReply.do?imageId="+encodeURIComponent(imageId, true));
-		request.onreadystatechange = searchProcess;//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
+		//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
+		request.onreadystatechange = searchProcess;
 		request.send(null);
 	}
 	function searchProcess() {
+		//댓글 내용 html에 생성하기 위해 사용될 태크 저장 변수
 		var tag = "";
 		var result = "";
 		//4: request finished and response is ready
@@ -242,42 +252,59 @@ li{
 		if (request.readyState == 4 && request.status == 200) {
 			console.log("Ajax Request 호출 성공");
 			
+			//서버의 string 타입 결과 데이터 저장
 			result = request.responseText;
-			var json = JSON.parse(result);
+			//Stirng -> JSON객체 파싱
+			json = JSON.parse(result);
+			//댓글 갯수 세팅
 			replyCnt = json.reply.length;
+			//좋아요 갯수 세팅
+			likeCnt = json.bucket.bucket_like;
+			//좋아요 유무 세팅
+			likeYN = json.bucket.likeYN;
 			
 			for (var key=0 ; key<replyCnt ; key++){
-				console.log(json.reply[key]); 
+				//댓글 정보 태크 작업 부분
 				tag += '<div class="repl"><h3 class = "repl-id">' + json.reply[key].reMemberId  + '</h3><span class = "repl-content">' + json.reply[key].reReplyContents + '</span>' + '<span class = "repl-wDate">' + json.reply[key].reWriteDate + '</span></div>';
 			}
-			if(tagCreate){
-				//리플 태그 실제로 넣는 부분
-				document.getElementById("ajax-repl").innerHTML = tag;
-				//리플 개수 태그에 실제로 값 넣는 부분
-				document.getElementById("total-like-view").innerHTML = "댓글 " + replyCnt + "개";
-				//한 번 태그 만들었으면 모달창 닫을 때까지는 생성 못하게 막음 - 중복 실행되서 강제로 넣음
-				tagCreate = false;
+			//리플 태그 실제로 넣는 부분
+			document.getElementById("ajax-repl").innerHTML = tag;
+			//리플 개수 정보 태그에 삽입
+			document.getElementById("total-reply-view").innerHTML = "댓글 " + replyCnt + "개";
+			//좋아요 개수 정보 태그에 삽입
+			document.getElementById("total-like-view").innerHTML = "좋아요 " + likeCnt + "개";
+			//로그인한 사용자가 해당 버킷에 이미 좋아요를 했을 경우 빨간색으로 표시
+			if(likeYN == "Y"){
+				$("#like").css("color", "red");			
+			}else{
+				$("#like").css("color", "black");
 			}
-				
+			//모달창 실행
 			document.getElementById("modal").style.display = "block";
+			
+			
+			console.log("--- Modal Up ---");
 		}
 	}
 		
 	window.onclick = function(event) {
 		if (event.target == modal) {
+			console.log("--- Modal Close ---");
+			
+		/* 	DB의 댓글 갯수로 구한게 아니라 모달창 띄웠을 때 댓글 개수에 댓글 추가 시킬때마다 해당 변수를 증감시키면서 임시적으로 댓글 개수를 계산 했기 때문에 
+			모달창을 닫으면 0개로 초기화 시키고 새로운 모달창을 열때 다시 DB의 댓글 갯수 계산에 구함 */
 			replyCnt = 0;
-			tagCreate = true;
+			likeCnt = 0;
 			tagAppend = true;
+			//댓글 입력시 text창에 입력된 댓글 내용 공백으로 변환
 			document.getElementById("reply-textArea").value='';
-			console.log("modal close");
+			//
 			modal.style.display = "none";
 			$('.repl').remove();
 		}
 	}
 </script>
 <script>
-	//이벤트가 두 번 실행되어  강제로 막기위해 사용 - 왜 두 번 실행 되는지 알 수 없음
-	
 ///////////////현재 시간 출력을 위한 함수////////////////////////
 	function getTimeStamp() {
 	  var d = new Date();
@@ -304,41 +331,42 @@ li{
 	  return zero + n;
 	}
 ////////////////////////////////////////////////////
+
 	var tagAppend = false;
 	var tag = "";
 	var insertSuccess = false;
-	//댓글 엔터혹은 게시 버튼 클릭시 댓글 추가
-	//쉬프트 엔터는 줄바꿈
+	
+	//댓글 엔터혹은 게시 버튼 클릭시 댓글 추가 ; 쉬프트+엔터는 줄바꿈
 	$(function() {
 		$('textarea').off().on('keydown', function(event) {
 	        if (event.keyCode == 13 && !event.shiftKey){
 	        	//엔터키 입력시에만 tag추가 허용
 	        	tagAppend=true;
-	        	console.log("Endter : tagAppend = " + tagAppend);
-	        	console.log("전송");
+	        	console.log("--- Enter ---");
 	        	appendReply();
 	        }else if(event.keyCode == 13 && event.shiftKey){
-	        	console.log("줄바꿈");
+	        	console.log("--- Shift + Enter ---");
 	        }
 		});
 	});
 
  	function appendReply(){
 		request.open("Post", "AppendReply.do?imageId="+encodeURIComponent(imageId, true)+"&replyCotent="+$('#reply-textArea').val());
-		request.onreadystatechange = appendProcess;//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
+		//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
+		request.onreadystatechange = appendProcess;
 		request.send(null);
 	}
 	function appendProcess() {
 		tag = "";
 		insertSuccess = request.responseText;
-		console.log("appendProcess() : insertSuccess = " + insertSuccess);
+		console.log("DB작업 성공(T)실패(F) => " + insertSuccess);
 		
-		if (request.readyState = 4 && request.status == 200) {
-			if(insertSuccess == "true" && tagAppend == true){
+		if (request.readyState == 4 && request.status == 200) {
+			if(insertSuccess == "true"){
 				tag += '<div class="repl"><h3 class = "repl-id">' + '<%=userid%>'  + '</h3><span class = "repl-content">' + $('#reply-textArea').val() + '</span>' + '<span class = "repl-wDate">' + getTimeStamp() + '</span></div>';
 				// replyCnt : 댓글 입력시 총 댓글 갯수 증가 시키기 위해 존재
 				replyCnt = replyCnt+1;
-				document.getElementById("total-like-view").innerHTML = "종아요 " + replyCnt + "개";
+				document.getElementById("total-reply-view").innerHTML = "댓글 " + replyCnt + "개";
 				console.log("tag = " + tag);
 				tagAppend = false; 
 				document.getElementById("reply-textArea").value='';
@@ -350,23 +378,35 @@ li{
 </script>
 <script>
 	function likeAction(){
-		request.open("Post", "LikeAction.do?imageId="+encodeURIComponent(imageId, true));
+		//처음 모달창에 접속시 좋아요를 했다고 판단 했을 경우 좋아요 버튼 클릭시 불필요한 request요청 방지를 위해 존재
+		console.log("likeYN = " +likeYN);
+		request.open("Post", "LikeAction.do?imageId="+encodeURIComponent(imageId, true)+"&likeYN="+likeYN);
+		//status가 변경될 때마다 호출 한다.
 		request.onreadystatechange = likeProcess;
 		request.send(null);
 	}
 	
 	function likeProcess() {
-		// InsertSuccess, InsertFail 받아옴
-		requestStatus = request.responseText;
-		console.log("likeProcess() : requestStatus = " + requestStatus);
+		// insertSuccess, insertFail, deleteSuccess, deleteFail 받아옴
+		likeStatus = request.responseText;
+		console.log("likeStatus = " + likeStatus);
 		
-		if (request.readyState = 4 && request.status == 200) {
-			if(requestStatus == "InsertSuccess"){
-				//document.getElementById("total-like-view").innerHTML = "종아요 " + replyCnt + "개";
+		if (request.readyState == 4 && request.status == 200) {
+			if(likeStatus == "insertSuccess"){
 				$("#like").css("color", "red");
-				insertSuccess = false;
+				//좋아요 한 상태 이므로 Y로 변경
+				likeYN="Y";
+				//좋아요 한 개 추가
+				likeCnt = likeCnt+1;
+				document.getElementById("total-like-view").innerHTML = "좋아요 " + likeCnt + "개";
+			}else if(likeStatus == "deleteSuccess"){
+				$("#like").css("color", "black");
+				likeYN="N";
+				//좋아요 한 개 감소
+				likeCnt = likeCnt-1;
+				document.getElementById("total-like-view").innerHTML = "좋아요 " + likeCnt + "개";
 			}else{
-				console.log('일시적인 오류가 발생했습니다.');
+				console.log(likeStatus);
 			}
 		}
 	}
@@ -388,6 +428,15 @@ li{
 				<img class="modal-content" id="modalImg">
 			</div>
 			<div id="reply-box">
+<!-- 				<div id = "reple-profile-fist-box">
+					<div id = "reple-profile-second-box">
+						<div id = "reple-profile-image-box"><a><img/></a></div>
+						<div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				</div> -->
 				<div class = "reple-view">
 					<div id="ajax-repl"class = "scrollBlind">
 						<div class="repl">
@@ -400,6 +449,8 @@ li{
 						<i id="add" class="fa fa-plus-circle" aria-hidden="true"></i>
 						<i id="delete" class="fa fa-trash-o" aria-hidden="true"></i>
 						<i id="update" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					</span>
+					<span class = "cnts" id="total-reply-view">
 					</span>
 					<span id="total-like-view">
 					</span>
