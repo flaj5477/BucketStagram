@@ -224,12 +224,12 @@ li{
 	var replyCnt;
 	//좋아요 개수 저장 변수
 	var likeCnt;
-	//서버로부터 전송받은 String으로 변환된 json 데이터를 저장할 변수
+	//서버로부터 전송받은 String으로 변환된 bucketJson 데이터를 저장할 변수
 	var result;
 	//해당 사용자가 보려는 버킷에 좋아요 유무 판단 변수(Y/N)
 	var likeYN;
 	//stirng으로 넘어온 데이터를 json객체로 파싱 후 저장할 변수
-	var json;
+	var bucketJson;
 	var request = new XMLHttpRequest();
 	
 	function startModal(element) {
@@ -238,7 +238,7 @@ li{
 		//버킷의 id 저장
 		imageId = element.id;
 		console.log(imageId);
-		request.open("Post", "GetReply.do?imageId="+encodeURIComponent(imageId, true));
+		request.open("Post", "GetBucketInfo.do?imageId="+encodeURIComponent(imageId, true));
 		//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
 		request.onreadystatechange = searchProcess;
 		request.send(null);
@@ -255,17 +255,17 @@ li{
 			//서버의 string 타입 결과 데이터 저장
 			result = request.responseText;
 			//Stirng -> JSON객체 파싱
-			json = JSON.parse(result);
+			bucketJson = JSON.parse(result);
 			//댓글 갯수 세팅
-			replyCnt = json.reply.length;
+			replyCnt = bucketJson.reply.length;
 			//좋아요 갯수 세팅
-			likeCnt = json.bucket.bucket_like;
+			likeCnt = Number(bucketJson.bucket.bucket_like);
 			//좋아요 유무 세팅
-			likeYN = json.bucket.likeYN;
+			likeYN = bucketJson.bucket.likeYN;
 			
 			for (var key=0 ; key<replyCnt ; key++){
 				//댓글 정보 태크 작업 부분
-				tag += '<div class="repl"><h3 class = "repl-id">' + json.reply[key].reMemberId  + '</h3><span class = "repl-content">' + json.reply[key].reReplyContents + '</span>' + '<span class = "repl-wDate">' + json.reply[key].reWriteDate + '</span></div>';
+				tag += '<div class="repl"><h3 class = "repl-id">' + bucketJson.reply[key].reMemberId  + '</h3><span class = "repl-content">' + bucketJson.reply[key].reReplyContents + '</span>' + '<span class = "repl-wDate">' + bucketJson.reply[key].reWriteDate + '</span></div>';
 			}
 			//리플 태그 실제로 넣는 부분
 			document.getElementById("ajax-repl").innerHTML = tag;
@@ -411,11 +411,34 @@ li{
 		}
 	}
 </script>
+<script>
+	//위시리스트 JSON 정보 저장 테이블
+	let wishJson;
+	function wishList(){
+		request.open("Post", "GetWishInfo.do");
+		//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
+		request.onreadystatechange = getWishListProcess;
+		request.send(null);
+	}
+	
+	function getWishListProcess() {
+		// insertSuccess, insertFail, deleteSuccess, deleteFail 받아옴
+		wishJson = request.responseText;
+		console.log("likeStatus = " + likeStatus);
+		
+		if (request.readyState == 4 && request.status == 200) {
+			bucketJson = JSON.parse(result);
+		}
+</script>
 </head>
 <body>
-    <section>
-		<a href = "BucketPostForm.do">등록</a>
-    </section>
+	<div>
+	    <section>
+			<span onclick="bucketList();">버킷리스트</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<span onclick="wishList();">위시리스트</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href = "BucketPostForm.do">등록</a>
+	    </section>
+	</div>
     <H3>TEST</H3>
 	<div>
  		<c:forEach items="${bucketList}" var="bucket">
@@ -731,17 +754,17 @@ li{
 				if(result != ""){
 					tagCreate = true;
 					//console.log("result = " + result);
-					var json = JSON.parse(result);
-					//리플 개수 json 데이터 길이로 구함 - Object.keys(객체명).length
-					replyCnt = Object.keys(json).length;
+					var bucketJson = JSON.parse(result);
+					//리플 개수 bucketJson 데이터 길이로 구함 - Object.keys(객체명).length
+					replyCnt = Object.keys(bucketJson).length;
 				}
 				
 //				console.log("result = " + result);
-				for (var key in json){
+				for (var key in bucketJson){
 	 				console.log("key = " + key);
-					console.log("result[key] = " + json[key]); 
-					console.log("json length = " + Object.keys(json).length);
-					tag += '<div class="repl"><h3 class = "repl-id">' + json[key].reMemberId  + '</h3><span class = "repl-content">' + json[key].reReplyContent + '</span>' + '<span class = "repl-wDate">' + json[key].reWriteDate + '</span></div>';
+					console.log("result[key] = " + bucketJson[key]); 
+					console.log("bucketJson length = " + Object.keys(bucketJson).length);
+					tag += '<div class="repl"><h3 class = "repl-id">' + bucketJson[key].reMemberId  + '</h3><span class = "repl-content">' + bucketJson[key].reReplyContent + '</span>' + '<span class = "repl-wDate">' + bucketJson[key].reWriteDate + '</span></div>';
 					console.log(tag);
 				}
 				if(tagCreate){
@@ -1178,17 +1201,17 @@ li{
 				if(result != ""){
 					tagCreate = true;
 					//console.log("result = " + result);
-					var json = JSON.parse(result);
-					//리플 개수 json 데이터 길이로 구함 - Object.keys(객체명).length
-					replyCnt = Object.keys(json).length;
+					var bucketJson = JSON.parse(result);
+					//리플 개수 bucketJson 데이터 길이로 구함 - Object.keys(객체명).length
+					replyCnt = Object.keys(bucketJson).length;
 				}
 				
 //				console.log("result = " + result);
-				for (var key in json){
+				for (var key in bucketJson){
 	 				console.log("key = " + key);
-					console.log("result[key] = " + json[key]); 
-					console.log("json length = " + Object.keys(json).length);
-					tag += '<div class="repl"><h3 class = "repl-id">' + json[key].reMemberId  + '</h3><span class = "repl-content">' + json[key].reReplyContent + '</span>' + '<span class = "repl-wDate">' + json[key].reWriteDate + '</span></div>';
+					console.log("result[key] = " + bucketJson[key]); 
+					console.log("bucketJson length = " + Object.keys(bucketJson).length);
+					tag += '<div class="repl"><h3 class = "repl-id">' + bucketJson[key].reMemberId  + '</h3><span class = "repl-content">' + bucketJson[key].reReplyContent + '</span>' + '<span class = "repl-wDate">' + bucketJson[key].reWriteDate + '</span></div>';
 					console.log(tag);
 				}
 				if(tagCreate){

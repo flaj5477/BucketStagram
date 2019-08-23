@@ -16,7 +16,7 @@ import co.bucketstargram.common.Command;
 import co.bucketstargram.dao.BucketDao;
 import co.bucketstargram.dao.ReplyDao;
 
-public class GetReply implements Command {
+public class GetBucketInfo implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -18,7 +18,8 @@ import co.bucketstargram.command.member.LoginOK;
 import co.bucketstargram.command.myBucket.AppendReply;
 import co.bucketstargram.command.myBucket.BucketPost;
 import co.bucketstargram.command.myBucket.BucketPostForm;
-import co.bucketstargram.command.myBucket.GetReply;
+import co.bucketstargram.command.myBucket.GetBucketInfo;
+import co.bucketstargram.command.myBucket.GetWishInfo;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
 import co.bucketstargram.command.search.GetSearch;
@@ -48,12 +49,14 @@ public class Controller extends HttpServlet {
         map.put("/MyBucket.do", new MyBucket());
         map.put("/BucketPostForm.do", new BucketPostForm());
         map.put("/BucketPost.do", new BucketPost());
-        map.put("/GetReply.do", new GetReply());
+        map.put("/GetBucketInfo.do", new GetBucketInfo());
         map.put("/AppendReply.do", new AppendReply());
         map.put("/LikeAction.do", new LikeAction());
+        map.put("/GetWishInfo.do", new GetWishInfo()); 
         
         //화정
         map.put("/LibraryForm.do", new LibraryForm());
+        map.put("/DetailLibFrm.do", new DetailLibFrm());
         
         
         

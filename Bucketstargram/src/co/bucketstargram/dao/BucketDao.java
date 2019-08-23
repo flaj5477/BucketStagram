@@ -249,6 +249,11 @@ public class BucketDao {
 				
 		return result;
 	}
+
+	public ArrayList<HashMap<String, String>> getWishInfo(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 //	private void likeCntUdate(String bucketId, String likeYN) {
 //		// TODO Auto-generated method stub
