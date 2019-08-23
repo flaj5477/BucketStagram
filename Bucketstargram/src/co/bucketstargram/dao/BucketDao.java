@@ -20,7 +20,7 @@ public class BucketDao {
 		try {
             String user = "lee"; 
             String pw = "1234";
-            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+            String url = "jdbc:oracle:thin:@114.200.227.226:1521:xe";
             
             Class.forName("oracle.jdbc.driver.OracleDriver");        
             conn = DriverManager.getConnection(url, user, pw);
@@ -116,6 +116,7 @@ public class BucketDao {
 		ArrayList<HashMap<String, String>> bucketInfoList = null;
 		HashMap<String, String> bucket = null;
 		String likeYN = getLikeYN(imageId, userId);
+		String bucket_like = getLikeCnt(imageId, userId);
 		
 		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_member_id = ? AND bucket_id = ?";
 		
@@ -135,7 +136,7 @@ public class BucketDao {
 				bucket.put("bucket_contents",rs.getString("BUCKET_CONTENTS"));
 				bucket.put("bucket_type",rs.getString("BUCKET_TYPE"));
 				bucket.put("bucket_compliation",rs.getString("BUCKET_COMPLIATION"));
-				bucket.put("bucket_like",rs.getString("BUCKET_LIKE"));
+				bucket.put("bucket_like", bucket_like);
 				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
 				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
 				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
@@ -153,9 +154,31 @@ public class BucketDao {
 		return bucket;
 	}
 	
+	private String getLikeCnt(String imageId, String userId) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT count(*) AS bucket_like FROM member_wish_list_tb WHERE mwl_bucket_id = ? AND mwl_member_id = ?";
+		String likeCnt = "";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, imageId);
+			psmt.setString(2, userId);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				likeCnt = rs.getString("bucket_like"); 
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return likeCnt;
+	}
+
 	private String getLikeYN(String imageId, String userId) {
 		// TODO Auto-generated method stub
-		String sql = "SELECT * FROM member_wish_list_tb WHERE mwl_bucket_id = ? AND mwl_bucket_id = ?";
+		String sql = "SELECT * FROM member_wish_list_tb WHERE mwl_bucket_id = ? AND mwl_member_id = ?";
 		String likeYN = "N";
 		
 		try {
@@ -176,33 +199,83 @@ public class BucketDao {
 		
 		return likeYN;
 	}
-
-	public String insert(String bucketId, String userId) {
+	
+	public String likeDelete(String bucketId, String userId) {
 		// TODO Auto-generated method stub
-		String reulst = "";
-		String sql = "";
+		String sql = "DELETE FROM member_wish_list_tb WHERE mwl_bucket_id = ? AND mwl_member_id = ?";
+		String result = "";
+			
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			psmt.setString(2, userId);
+			int deleteCnt = psmt.executeUpdate();
+			
+			if(deleteCnt>0) {
+				result="deleteSuccess";
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Delete개수 DB 반영 실패");
+			result = "deleteFail";
+			e.printStackTrace();
+			return result;
+		}		
+				
+		return result;
+	}
+	
+	public String likeInsert(String bucketId, String userId) {
+		// TODO Auto-generated method stub
+		String sql = "INSERT INTO member_wish_list_tb VALUES(?, ?)";
+		String result = "";
 		
 		try {
-			sql = "INSERT INTO member_wish_list_tb VALUES(?, ?)";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, userId);
 			psmt.setString(2, bucketId);
+			int insertCnt = psmt.executeUpdate();
 			
-			int insertNum = psmt.executeUpdate();
-			
-			if(insertNum>0) {
-				reulst = "InsertSuccess";
+			if(insertCnt>0) {
+				result="insertSuccess";
 			}
-			
 		} catch (SQLException e) {
 			// TODO: handle exception
+			System.out.println("Insert개수 DB 반영 실패");
+			result = "insertFail";
 			e.printStackTrace();
-			reulst = "InsertFail";
-			
-			return reulst;
-		}finally {
-			close();
-		}
-		return reulst;
+			return result;
+		}		
+				
+		return result;
 	}
+	
+//	private void likeCntUdate(String bucketId, String likeYN) {
+//		// TODO Auto-generated method stub
+//		String sql = "";
+//		String result = "";
+//		if(likeYN == "Y") {
+//			sql = "UPDATE bucket_info_tb SET bucket_like = bucket_like - 1 WHERE bucket_id = ?";
+//			result = "likeMinus";
+//		}else {
+//			sql = "UPDATE bucket_info_tb SET bucket_like = bucket_like + 1 WHERE bucket_id = ?";
+//			result = "likePlus";
+//		}  
+//		
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1, bucketId);
+//			int updateCnt =  psmt.executeUpdate();
+//			
+//			if(updateCnt > 0) {
+//				System.out.println("Update개수 DB 반영 실패");	
+//			}
+//		} catch (SQLException e) {
+//			// TODO: handle exception
+//			System.out.println("Update개수 DB 반영 실패");
+//			result = "UpdateFail";
+//			e.printStackTrace();
+//		}
+//	}
+
 }
