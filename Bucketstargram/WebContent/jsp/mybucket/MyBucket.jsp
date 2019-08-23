@@ -116,10 +116,6 @@ to {
 }
 </style>
 <style>
-.reple-profile-fist-box{
-	height:20%;
-	width:100%;
-}
 div#container
 {
 width:900px;
@@ -158,7 +154,7 @@ li{
     background-color: yellow;
 }
 .scrollBlind{
-    width:107%;
+    width:100%;
     height:100%;
 /*     width:230px;
     height:100%; */
@@ -188,7 +184,7 @@ li{
 }
 .add-view{
 	width:100%;
-    height:20%;
+    height:25%;
     border-bottom:1px solid #f1f1f1;
 }
 .add-view-child{
@@ -241,6 +237,7 @@ li{
 		document.getElementById("modalImg").src = element.src;
 		//버킷의 id 저장
 		imageId = element.id;
+		console.log(imageId);
 		request.open("Post", "GetReply.do?imageId="+encodeURIComponent(imageId, true));
 		//성공적으로 요청하는 동작이 끝났으면 searchProcess 실행
 		request.onreadystatechange = searchProcess;
@@ -297,6 +294,7 @@ li{
 		/* 	DB의 댓글 갯수로 구한게 아니라 모달창 띄웠을 때 댓글 개수에 댓글 추가 시킬때마다 해당 변수를 증감시키면서 임시적으로 댓글 개수를 계산 했기 때문에 
 			모달창을 닫으면 0개로 초기화 시키고 새로운 모달창을 열때 다시 DB의 댓글 갯수 계산에 구함 */
 			replyCnt = 0;
+			likeCnt = 0;
 			tagAppend = true;
 			//댓글 입력시 text창에 입력된 댓글 내용 공백으로 변환
 			document.getElementById("reply-textArea").value='';
@@ -368,7 +366,7 @@ li{
 				tag += '<div class="repl"><h3 class = "repl-id">' + '<%=userid%>'  + '</h3><span class = "repl-content">' + $('#reply-textArea').val() + '</span>' + '<span class = "repl-wDate">' + getTimeStamp() + '</span></div>';
 				// replyCnt : 댓글 입력시 총 댓글 갯수 증가 시키기 위해 존재
 				replyCnt = replyCnt+1;
-				document.getElementById("total-like-view").innerHTML = "댓글 " + replyCnt + "개";
+				document.getElementById("total-reply-view").innerHTML = "댓글 " + replyCnt + "개";
 				console.log("tag = " + tag);
 				tagAppend = false; 
 				document.getElementById("reply-textArea").value='';
@@ -381,26 +379,34 @@ li{
 <script>
 	function likeAction(){
 		//처음 모달창에 접속시 좋아요를 했다고 판단 했을 경우 좋아요 버튼 클릭시 불필요한 request요청 방지를 위해 존재
-		if(likeYN == "N"){
-			request.open("Post", "LikeAction.do?imageId="+encodeURIComponent(imageId, true));
-			request.onreadystatechange = likeProcess;
-			request.send(null);			
-		}
+		console.log("likeYN = " +likeYN);
+		request.open("Post", "LikeAction.do?imageId="+encodeURIComponent(imageId, true)+"&likeYN="+likeYN);
+		//status가 변경될 때마다 호출 한다.
+		request.onreadystatechange = likeProcess;
+		request.send(null);
 	}
 	
 	function likeProcess() {
-		// ("InsertSuccess"/"InsertFail")을 값으로 받아옴
-		requestStatus = request.responseText;
-		console.log("likeProcess() : requestStatus = " + requestStatus);
+		// insertSuccess, insertFail, deleteSuccess, deleteFail 받아옴
+		likeStatus = request.responseText;
+		console.log("likeStatus = " + likeStatus);
 		
-		if (request.readyState = 4 && request.status == 200) {
-			if(requestStatus == "InsertSuccess"){
+		if (request.readyState == 4 && request.status == 200) {
+			if(likeStatus == "insertSuccess"){
 				$("#like").css("color", "red");
-				insertSuccess = false;
-			}else{
+				//좋아요 한 상태 이므로 Y로 변경
+				likeYN="Y";
+				//좋아요 한 개 추가
+				likeCnt = likeCnt+1;
+				document.getElementById("total-like-view").innerHTML = "좋아요 " + likeCnt + "개";
+			}else if(likeStatus == "deleteSuccess"){
 				$("#like").css("color", "black");
-				insertSuccess = false;
-				alert('죄송합니다. 일시적인 오류가 발생했습니다.');
+				likeYN="N";
+				//좋아요 한 개 감소
+				likeCnt = likeCnt-1;
+				document.getElementById("total-like-view").innerHTML = "좋아요 " + likeCnt + "개";
+			}else{
+				console.log(likeStatus);
 			}
 		}
 	}
@@ -422,7 +428,7 @@ li{
 				<img class="modal-content" id="modalImg">
 			</div>
 			<div id="reply-box">
-				<div id = "reple-profile-fist-box">
+<!-- 				<div id = "reple-profile-fist-box">
 					<div id = "reple-profile-second-box">
 						<div id = "reple-profile-image-box"><a><img/></a></div>
 						<div>
@@ -430,7 +436,7 @@ li{
 							<div></div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class = "reple-view">
 					<div id="ajax-repl"class = "scrollBlind">
 						<div class="repl">
