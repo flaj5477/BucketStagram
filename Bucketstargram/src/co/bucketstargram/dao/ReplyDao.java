@@ -104,4 +104,9 @@ public class ReplyDao {
 		
 		return insertSuccess;
 	}
+
+	public ArrayList<HashMap<String, String>> getWishReplyInfo(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
