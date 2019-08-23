@@ -21,7 +21,7 @@ import co.bucketstargram.command.myBucket.BucketPostForm;
 import co.bucketstargram.command.myBucket.GetReply;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
-import co.bucketstargram.command.search.SetSearch;
+import co.bucketstargram.command.search.GetSearch;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.Trace;
 
@@ -43,7 +43,8 @@ public class Controller extends HttpServlet {
         map.put("/LoginForm.do", new LoginForm());
         map.put("/LoginOK.do", new LoginOK());
         map.put("/LogOut.do", new LogOut());
-        
+       
+        //재문
         map.put("/MyBucket.do", new MyBucket());
         map.put("/BucketPostForm.do", new BucketPostForm());
         map.put("/BucketPost.do", new BucketPost());
@@ -51,9 +52,18 @@ public class Controller extends HttpServlet {
         map.put("/AppendReply.do", new AppendReply());
         map.put("/LikeAction.do", new LikeAction());
         
+        //화정
         map.put("/LibraryForm.do", new LibraryForm());
         
-        map.put("/SetSearch.do", new SetSearch());
+        
+        
+        
+        //동규
+        map.put("/GetSearch.do", new GetSearch());
+        
+        
+        
+        //지민
      }
 
      protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

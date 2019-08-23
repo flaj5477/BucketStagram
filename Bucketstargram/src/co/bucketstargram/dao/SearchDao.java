@@ -48,9 +48,9 @@ public class SearchDao {
 		String sql = "SELECT bucket_member_id, bucket_title, bucket_type, "
 					+"bucket_compliation, bucket_like, bucket_image_path "
 					+"FROM bucket_info_tb "
-					+"WHERE bucket_title LIKE '%'||?||'%' "
-					+"OR bucket_contents LIKE '%'||?||'%' "
-					+"OR bucket_type LIKE '%'||?||'%'";
+					+"WHERE bucket_title LIKE '%'||UPPER(?)||'%' "
+					+"OR bucket_contents LIKE '%'||UPPER(?)||'%' "
+					+"OR bucket_type LIKE '%'||UPPER(?)||'%'";
 
 		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
 		try {
@@ -78,9 +78,9 @@ public class SearchDao {
 	public ArrayList<LibraryDto> librarySearch(String word){
 		String sql = "SELECT lib_title, lib_type, lib_like, lib_image_path "
 					+"FROM library_info_tb " 
-					+"WHERE lib_title LIKE '%'||?||'%' "
-					+"OR lib_contents LIKE '%'||?||'%' "
-					+"OR lib_type LIKE '%'||?||'%'";
+					+"WHERE UPPER(lib_title) LIKE '%'||UPPER(?)||'%' "
+					+"OR UPPER(lib_contents) LIKE '%'||UPPER(?)||'%' "
+					+"OR UPPER(lib_type) LIKE '%'||UPPER(?)||'%'";
 	 
 		
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
