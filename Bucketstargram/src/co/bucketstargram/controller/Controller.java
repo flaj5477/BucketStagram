@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.bucketstargram.command.index.Index;
+import co.bucketstargram.command.library.DetailLibFrm;
 import co.bucketstargram.command.library.LibraryForm;
 import co.bucketstargram.command.member.LogOut;
 import co.bucketstargram.command.member.LoginForm;
@@ -54,7 +55,7 @@ public class Controller extends HttpServlet {
         
         //화정
         map.put("/LibraryForm.do", new LibraryForm());
-        
+        map.put("/DetailLibFrm.do", new DetailLibFrm());
         
         
         
@@ -72,7 +73,8 @@ public class Controller extends HttpServlet {
         String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String path = uri.substring(contextPath.length()); //최종path
-//        System.out.println("uri = " + uri);
+        
+        System.out.println("uri = " + uri);
 //        System.out.println("contextPath = " + contextPath);
 //        System.out.println("path = " + path);
 //        System.out.println("map.size() = " + map.size());
