@@ -20,7 +20,7 @@ import co.bucketstargram.command.myBucket.BucketPostForm;
 import co.bucketstargram.command.myBucket.GetReply;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
-import co.bucketstargram.command.search.SetSearch;
+import co.bucketstargram.command.search.GetSearch;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.Trace;
 
@@ -50,7 +50,7 @@ public class Controller extends HttpServlet {
         map.put("/AppendReply.do", new AppendReply());
         map.put("/LikeAction.do", new LikeAction());
         
-        map.put("/SetSearch.do", new SetSearch());
+        map.put("/GetSearch.do", new GetSearch());
      }
 
      protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
