@@ -12,7 +12,7 @@
 		<nav id="topMenu">
 			<ul>
 				<li class="topMenuLi">
-					<a class="menuLink" href="#">Library</a>
+					<a class="menuLink" href="LibraryForm.do">Library</a>
 					<ul class="submenu">
 						<li>
 							<a href="#" class="submenuLink">All</a>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.bucketstargram.command.index.Index;
+import co.bucketstargram.command.library.LibraryForm;
 import co.bucketstargram.command.member.LogOut;
 import co.bucketstargram.command.member.LoginForm;
 import co.bucketstargram.command.member.LoginOK;
@@ -49,6 +50,8 @@ public class Controller extends HttpServlet {
         map.put("/GetReply.do", new GetReply());
         map.put("/AppendReply.do", new AppendReply());
         map.put("/LikeAction.do", new LikeAction());
+        
+        map.put("/LibraryForm.do", new LibraryForm());
         
         map.put("/SetSearch.do", new SetSearch());
      }
