@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="css/styles.css">	
 </head>
 <body>
+	<jsp:include page = "jsp/category/topmenu.jsp"/>
+<!--	<jsp:include page = "jsp/category/footer.jsp"/>
 	<jsp:include page="jsp/category/nav.jsp"/>
 	<jsp:include page="jsp/category/main.jsp"/>
-	<jsp:include page = "jsp/category/topmenu.jsp"/>
-	<jsp:include page = "jsp/category/footer.jsp"/>
+ -->
 </body>
 </html>
 <%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
