@@ -13,30 +13,22 @@
 </head>
 <body>
 	<div class="photo">
-		<img src="../images/thumbs/01.jpg" align="left" width="600"
+		<img src="${library.libImagePath }" align="left" width="600"
 			, height="800">
 		<header class="photo__header">
 			<img src="../images/avatar.jpg" class="photo__avatar">
 			<div class="photo__user-info">
-				<span class="photo__author">inthetiger</span> <span
-					class="photo__location">Bestechung</span>
+				<span class="photo__author">라이브러리 아이디</span> <span
+					class="photo__location">${library.libId}</span>
 			</div>
 		</header>
 		<div class="photo__info">
-			<ul class="photo__comments">
-				<li class="photo__comment">
-					<span class="photo__comment-author">serranoarevalo</span>
-					${libId }
-				</li>
-				<li class="photo__comment"><span class="photo__comment-author">serranoarevalo</span>
-					love this!</li>
-				<li class="photo__comment"><span class="photo__comment-author">serranoarevalo</span>
-					love this!</li>
-				<li class="photo__comment"><span class="photo__comment-author">serranoarevalo</span>
-					love this!</li>
-				<li class="photo__comment"><span class="photo__comment-author">serranoarevalo</span>
-					love this!</li>
-			</ul>
+			<div class="lib_content" style="font-size: 30px">
+				라이브러리 내용 <br><br><br>
+				${library.libContents }
+			</div>
+			<br><br><br><br><br><br><br><br>
+			
 			<div class="photo__actions">
 				<span class="photo__action"> <i class="fa fa-heart-o fa-lg"></i>
 				</span> <span class="photo__action"> <i
