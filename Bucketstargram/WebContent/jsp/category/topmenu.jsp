@@ -47,7 +47,7 @@
 					|
 				</li>
 				<li class="topMenuLi">
-					<a class="menuLink" href="#">Popular</a>
+					<a class="menuLink" href="PopMain.do">Popular</a>
 					<ul class="submenu">
 						<li>
 							<a href="#" class="submenuLink">All</a>
