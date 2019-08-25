@@ -16,13 +16,18 @@ import co.bucketstargram.command.library.LibraryForm;
 import co.bucketstargram.command.member.LogOut;
 import co.bucketstargram.command.member.LoginForm;
 import co.bucketstargram.command.member.LoginOK;
-import co.bucketstargram.command.myBucket.AppendReply;
-import co.bucketstargram.command.myBucket.BucketPost;
+import co.bucketstargram.command.myBucket.AppendReplyAction;
+import co.bucketstargram.command.myBucket.BucketAddAction;
+import co.bucketstargram.command.myBucket.BucketAddForm;
+import co.bucketstargram.command.myBucket.BucketPostAction;
 import co.bucketstargram.command.myBucket.BucketPostForm;
+import co.bucketstargram.command.myBucket.CompletionAction;
+import co.bucketstargram.command.myBucket.DeleteAction;
 import co.bucketstargram.command.myBucket.GetBucketInfo;
-import co.bucketstargram.command.myBucket.GetWishInfo;
+import co.bucketstargram.command.myBucket.WishListAction;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
+import co.bucketstargram.command.myBucket.OtherBucket;
 import co.bucketstargram.command.search.GetSearch;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.Trace;
@@ -49,11 +54,16 @@ public class Controller extends HttpServlet {
         //재문
         map.put("/MyBucket.do", new MyBucket());
         map.put("/BucketPostForm.do", new BucketPostForm());
-        map.put("/BucketPost.do", new BucketPost());
+        map.put("/BucketPostAction.do", new BucketPostAction());
         map.put("/GetBucketInfo.do", new GetBucketInfo());
-        map.put("/AppendReply.do", new AppendReply());
+        map.put("/AppendReplyAction.do", new AppendReplyAction());
         map.put("/LikeAction.do", new LikeAction());
-        map.put("/GetWishInfo.do", new GetWishInfo()); 
+        map.put("/WishListAction.do", new WishListAction());
+        map.put("/DeleteAction.do", new DeleteAction());
+        map.put("/CompletionAction.do", new CompletionAction());
+        map.put("/OtherBucket.do", new OtherBucket());
+        map.put("/BucketAddForm.do", new BucketAddForm());
+        map.put("/BucketAddAction.do", new BucketAddAction());
         
         //화정
         map.put("/LibraryForm.do", new LibraryForm());

@@ -11,6 +11,7 @@ public class BucketDto {
 	private String bucketImagePath = null;
 	private String bucketTag = null;
 	private String bucketWriteDate = null;
+	private String bucketLiketYN = null;
 	
 	public BucketDto() {
 		// TODO Auto-generated constructor stub
@@ -21,6 +22,12 @@ public class BucketDto {
 		this.bucketTitle = bucketTitle;
 		this.bucketContents = bucketContents;
 		this.bucketType = bucketType;
+	}
+	public String getBucketLiketYN() {
+		return bucketLiketYN;
+	}
+	public void setBucketLiketYN(String bucketLiketYN) {
+		this.bucketLiketYN = bucketLiketYN;
 	}
 	public String getBucketId() {
 		return bucketId;

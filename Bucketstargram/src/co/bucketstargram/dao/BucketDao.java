@@ -63,6 +63,7 @@ public class BucketDao {
 			// 쿼리 수행
 			int insertNum = psmt.executeUpdate();
 			if(insertNum > 0) {
+				System.out.println("--- BucketDao.java | DB입력 성공 ---");
 				insertSuccess = true;
 			}
 			
@@ -118,13 +119,12 @@ public class BucketDao {
 		String likeYN = getLikeYN(imageId, userId);
 		String bucket_like = getLikeCnt(imageId, userId);
 		
-		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_member_id = ? AND bucket_id = ?";
+		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_id = ?";
 		
 		try {
 			bucketInfoList = new ArrayList<HashMap<String, String>>();
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, userId);
-			psmt.setString(2, imageId);
+			psmt.setString(1, imageId);
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
@@ -250,37 +250,96 @@ public class BucketDao {
 		return result;
 	}
 
-	public ArrayList<HashMap<String, String>> getWishInfo(String userId) {
+	public ArrayList<HashMap<String, String>> getWishBucketInfo(String userId) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-//	private void likeCntUdate(String bucketId, String likeYN) {
-//		// TODO Auto-generated method stub
-//		String sql = "";
-//		String result = "";
-//		if(likeYN == "Y") {
-//			sql = "UPDATE bucket_info_tb SET bucket_like = bucket_like - 1 WHERE bucket_id = ?";
-//			result = "likeMinus";
-//		}else {
-//			sql = "UPDATE bucket_info_tb SET bucket_like = bucket_like + 1 WHERE bucket_id = ?";
-//			result = "likePlus";
-//		}  
-//		
-//		try {
-//			psmt = conn.prepareStatement(sql);
-//			psmt.setString(1, bucketId);
-//			int updateCnt =  psmt.executeUpdate();
-//			
-//			if(updateCnt > 0) {
-//				System.out.println("Update개수 DB 반영 실패");	
-//			}
-//		} catch (SQLException e) {
-//			// TODO: handle exception
-//			System.out.println("Update개수 DB 반영 실패");
-//			result = "UpdateFail";
-//			e.printStackTrace();
-//		}
-//	}
+		
+		ArrayList<HashMap<String, String>> bucketInfoList = null;
+		HashMap<String, String> bucket = null;
+		String sql = "SELECT bucket_info_tb.*, likeCnt FROM bucket_info_tb, (SELECT mwl_bucket_id, COUNT(*) likeCnt FROM member_wish_list_Tb GROUP BY mwl_bucket_id) WHERE bucket_id=mwl_bucket_id AND mwl_bucket_id IN (SELECT mwl_bucket_id FROM member_wish_list_tb WHERE mwl_member_id = ?)";
+		
+		try {
+			bucketInfoList = new ArrayList<HashMap<String, String>>();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			rs = psmt.executeQuery();
+			System.out.println("--- getWishBucketInfo 쿼리 정상 ---");
 
+			while(rs.next()) {
+				bucket = new HashMap<String, String>();
+				
+				bucket.put("bucketId",rs.getString("BUCKET_ID"));
+				bucket.put("bucketMemberId",rs.getString("BUCKET_MEMBER_ID"));
+				bucket.put("bucket_title",rs.getString("BUCKET_TITLE"));
+				bucket.put("bucket_contents",rs.getString("BUCKET_CONTENTS"));
+				bucket.put("bucket_type",rs.getString("BUCKET_TYPE"));
+				bucket.put("bucket_compliation",rs.getString("BUCKET_COMPLIATION"));
+				bucket.put("bucket_like", rs.getString("likeCnt"));
+				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
+				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
+				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
+				bucket.put("likeYN", "Y");
+				
+				bucketInfoList.add(bucket);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("--- getWishBucketInfo DB 작업 실패---");
+		} finally {
+			close();
+		}
+		
+		return bucketInfoList;
+	}
+
+	public String delete(String bucketId) {
+		// TODO Auto-generated method stub
+		String result=null;
+		String sql = "DELETE FROM bucket_info_tb WHERE bucket_id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			int deleteCnt = psmt.executeUpdate();
+			
+			if(deleteCnt>0) {
+				result="deleteSuccess";
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			result="deleteFail";
+			return result;					
+		}
+		
+		return result;
+	}
+
+	public String completionUpdate(String bucketId, String completionYN) {
+		// TODO Auto-generated method stub
+		String result = "challenging";
+		String sql="";
+		if(completionYN.equals("challenging") ||  completionYN == "challenging") {
+			System.out.println("completion");
+			sql = "UPDATE bucket_info_tb SET bucket_compliation='completion' WHERE bucket_id= ?";
+			result = "completion";
+		}else {
+			System.out.println("challenging");
+			sql = "UPDATE bucket_info_tb SET bucket_compliation='challenging' WHERE bucket_id= ?";
+			result = "challenging";
+		}
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("DB작업 실패");
+			e.printStackTrace();
+			result="deleteFail";
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
 }

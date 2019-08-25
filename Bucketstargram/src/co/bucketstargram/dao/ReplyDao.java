@@ -107,6 +107,38 @@ public class ReplyDao {
 
 	public ArrayList<HashMap<String, String>> getWishReplyInfo(String userId) {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<HashMap<String, String>> wReplyInfoList = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> reply = null;
+
+		String sql = "SELECT re.* FROM bucket_reply_tb re, member_wish_list_tb mwl WHERE re_bucket_id = mwl_bucket_id AND re_bucket_id IN (SELECT mwl_bucket_id FROM member_wish_list_tb) AND mwl.mwl_member_id=?";
+		
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			rs = psmt.executeQuery();
+
+			while(rs.next()) {
+				reply = new HashMap<String, String>();
+				
+				reply.put("reBucketId", rs.getString("re_bucket_id"));
+				reply.put("reReplyId",rs.getString("re_reply_id"));
+				reply.put("reMemberId",rs.getString("re_member_id"));
+				reply.put("reReplyContents",rs.getString("re_reply_contents"));
+				reply.put("reWriteDate",rs.getString("re_write_date"));
+				
+				wReplyInfoList.add(reply);
+			
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("--- getWishReplyInfo DB 작업 실패---");
+		} finally {
+			close();
+		}
+		System.out.println("ReplyDao.java | wReplyInfoList.size() = " + wReplyInfoList.size());
+		
+		return wReplyInfoList;
 	}
 }

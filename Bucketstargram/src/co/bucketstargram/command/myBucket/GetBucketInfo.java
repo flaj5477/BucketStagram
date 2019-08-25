@@ -25,8 +25,8 @@ public class GetBucketInfo implements Command {
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("userid");
 		String imageId = request.getParameter("imageId");
-		System.out.println("GetReply.java | usersId = " + userId);
-		System.out.println("GetReply.java | imageId = " + imageId);
+		System.out.println("GetBucketInfo.java | usersId = " + userId);
+		System.out.println("GetBucketInfo.java | imageId = " + imageId);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		response.getWriter().write(getJSON(imageId, userId));		

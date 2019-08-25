@@ -11,7 +11,7 @@ import co.bucketstargram.common.Command;
 import co.bucketstargram.common.Primary;
 import co.bucketstargram.dao.ReplyDao;
 
-public class AppendReply implements Command {
+public class AppendReplyAction implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
