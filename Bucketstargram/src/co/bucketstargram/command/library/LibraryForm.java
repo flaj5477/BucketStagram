@@ -19,7 +19,7 @@ public class LibraryForm implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Trace.init(); //위치 출력!
 		LibraryDao dao = new LibraryDao();
-		ArrayList<LibraryDto> libraryList = dao.getLibraryList();
+		ArrayList<LibraryDto> libraryList = dao.getLibPhotoList();
 		
 		request.setAttribute("libraryList", libraryList);
 		//System.out.println("첫번째 라이브러리의 아이디: " + libraryList.get(0).getLibId());
