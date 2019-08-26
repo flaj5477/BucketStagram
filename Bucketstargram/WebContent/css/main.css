@@ -2260,3 +2260,9 @@ body.is-covered #wrapper {
 		padding: 2em 0 2em 0;
 	}
 }
+.navigation__column ul li{
+	display:inline-block;
+}
+.navigation__column{
+	disply:inline-block;
+}
