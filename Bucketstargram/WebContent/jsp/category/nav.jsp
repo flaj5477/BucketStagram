@@ -35,6 +35,7 @@
 						aria-hidden="true"></i>Logout
 				</a></li>
 			</ul>
+			
 			<%
 				String userid = (String) session.getAttribute("userid");
 			%>
@@ -65,5 +66,7 @@
 			</script>
 		</div>
 	</nav>
+
+			<hr>
 </body>
 </html>
