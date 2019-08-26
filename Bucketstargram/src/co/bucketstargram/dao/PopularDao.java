@@ -20,8 +20,8 @@ public class PopularDao {
 			try {
 	            String user = "lee"; 
 	            String pw = "1234";
-	            String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	          //  String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+	            String url = "jdbc:oracle:thin:@114.200.227.226:1521:xe";
+	         
 	            
 	            
 	            Class.forName("oracle.jdbc.driver.OracleDriver");        
