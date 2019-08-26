@@ -65,6 +65,7 @@
 }
 
 .navigation__column {
+	display: inline-block;
   position: relative;
 }
 

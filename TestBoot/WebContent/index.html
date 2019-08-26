@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+	rel="stylesheet">
 <style>
-
-
-
 .navigation__column input {
 	border: 1px solid #e6e6e6;
 	border-radius: 3px;
@@ -19,7 +19,6 @@
 form[name="frm_Search"] {
 	text-align: center;
 	margin: 0 auto;
-
 }
 
 input[name="wordSearch"] {
@@ -35,47 +34,76 @@ input[name="wordSearch"] {
 	<div id="wrapper">
 		<!-- Header -->
 		<header id="header">
-			<div class="navigation__column">
-				<form name="frm_Search" action="SetSearch.do" method="get">
-				<div>
-					<input type="text" name="wordSearch" placeholder="Search">
-					<i>검색</i>
-					</div>
-				</form>
+			<div id="navigation_header" class="navigation__column">
+				<div class="navigation__column">
+					<a href="Index.do"> <img src="images/logo2.png"
+						/ style="width: 200px; height: 50px">
+					</a>
+				</div>
+				<div class="navigation__column" style="margin: 0px 600px">
+					<form name="frm_Search" action="SetSearch.do" method="get">
+						<i class="fa fa-search"></i> <input type="text"
+							placeholder="Search">
+					</form>
+				</div>
+				<div class="navigation__column">
+					<ul class="navigations__links">
+						<li class="navigation__list-item" id="sign-in"
+							style="display: inline-block;"><a href="LoginForm.do"
+							class="navigation__link"> <i class="fa fa-sign-in"
+								aria-hidden="true"></i>Login
+						</a></li>
+						<li style="display: inline-block;">|</li>
+						<li class="navigation__list-item" id="sign-up"
+							style="display: inline-block;"><a href="#"
+							class="navigation__link"> <i class="fa fa-user-plus"
+								aria-hidden="true"></i>SignUp
+						</a></li>
+						<li style="display: inline-block;">|</li>
+						<li class="navigation__list-item" id="sign-out"
+							style="display: inline-block;"><a href="#"
+							class="navigation__link" onclick="logOut()"> <i
+								class="fa fa-sign-out" aria-hidden="true"></i>Logout
+						</a></li>
+					</ul>
+				</div>
 			</div>
-
-			<span class="logo"><img src="images/logo.png" alt="" /></span>
-
-			<ul class="topMenu">
-				<li><a class="menuLink" href="#">Library</a></li>
-				<li><a class="menuLink" href="#">Popular</a></li>
-				<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
-			</ul>
-			<hr>
+			<div>
+				<ul class="topMenu">
+					<li>|</li>
+					<li><a class="menuLink" href="#">Library</a></li>
+					<li>|</li>
+					<li><a class="menuLink" href="#">Popular</a></li>
+					<li>|</li>
+					<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
+					<li>|</li>
+				</ul>
+			</div>
 			
-			<ul class="icons">
-				<li><a href="#" class="icon style2 fa-twitter"><span
-						class="label">전체</span></a></li>
-				<li><a href="#" class="icon style2 fa-facebook"><span
-						class="label">여행</span></a></li>
-				<li><a href="#" class="icon style2 fa-instagram"><span
-						class="label">운동</span></a></li>
-				<li><a href="#" class="icon style2 fa-500px"><span
-						class="label">음식</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">배움</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">문화</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">쇼핑</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">생활</span></a></li>
-			</ul>
+			<div>
+				<ul class="icons">
+					<li><a href="#" class="icon style2 fa-twitter"><span
+							class="label">전체</span></a></li>
+					<li><a href="#" class="icon style2 fa-facebook"><span
+							class="label">여행</span></a></li>
+					<li><a href="#" class="icon style2 fa-instagram"><span
+							class="label">운동</span></a></li>
+					<li><a href="#" class="icon style2 fa-500px"><span
+							class="label">음식</span></a></li>
+					<li><a href="#" class="icon style2 fa-envelope-o"><span
+							class="label">배움</span></a></li>
+					<li><a href="#" class="icon style2 fa-envelope-o"><span
+							class="label">문화</span></a></li>
+					<li><a href="#" class="icon style2 fa-envelope-o"><span
+							class="label">쇼핑</span></a></li>
+					<li><a href="#" class="icon style2 fa-envelope-o"><span
+							class="label">생활</span></a></li>
+				</ul>
+			</div>
 		</header>
-
+		<hr>
 		<!-- Main -->
 		<div>
-
 			<!-- Thumbnails -->
 			<div class="thumbnails">
 				<div>
@@ -114,22 +142,8 @@ input[name="wordSearch"] {
 						<h3>8번째 사진</h3>
 					</a>
 				</div>
-				<div>
-					<a href="images/fulls/03.jpg"> <img src="images/thumbs/03.jpg"
-						alt="" />
-						<h3>3번째 사진</h3>
-					</a> <a href="images/fulls/04.jpg"> <img src="images/thumbs/04.jpg"
-						alt="" />
-						<h3>4번째 사진</h3>
-					</a> <a href="./assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a>
-				</div>
-
 			</div>
-
-
-</div>
-
+		</div>
 	</div>
 
 	<!-- Scripts -->

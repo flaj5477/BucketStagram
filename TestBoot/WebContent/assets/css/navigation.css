@@ -35,7 +35,12 @@
     transform: none;
   }
 }
-
+a.navigation__link{
+	color:white;
+}
+a.navigation__link:hover { 
+  color: yellow;
+}
 .navigation .navigation__list-item:nth-child(2) {
   animation-delay: 0.2s;
 }
@@ -50,10 +55,10 @@
 }
 
 .navigation__column {
+	display:block;
 	position: relative;
 	padding: 0 0 1em 0
 }
-
 .navigation__column input {
   border: 1px solid #e6e6e6;
   border-radius: 3px;
@@ -66,7 +71,7 @@
 }
 
 .navigation__column {
-  position: relative;
+ 
 }
 
 .navigation__column .fa-search {
