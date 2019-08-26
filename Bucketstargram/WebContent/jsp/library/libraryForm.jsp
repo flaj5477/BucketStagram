@@ -52,9 +52,9 @@ input[name="wordSearch"] {
 			<hr>
 
 			<ul class="icons">
-				<li><a href="LibraryForm.do" class="icon style2 fa-twitter"><span
+				<li><a href="#" class="icon style2 fa-twitter"><span
 						class="label">전체</span></a></li>
-				<li><a href="LibraryForm.do?type=여행" class="icon style2 fa-facebook"><span
+				<li><a href="#" class="icon style2 fa-facebook"><span
 						class="label">여행</span></a></li>
 				<li><a href="#" class="icon style2 fa-instagram"><span
 						class="label">운동</span></a></li>
@@ -81,8 +81,8 @@ input[name="wordSearch"] {
 			<div class="thumbnails">
 				<div>
 					<c:forEach items="${libraryList}" var="library">
-						<a href="DetailLibFrm.do?libId=${library.libId }" data-poptrox="iframe,1200x800"> 
-						<img id="${library.libId }" src="${library.libImagePath }"
+						<a href="DetailLibFrm.do?libId=${library.libId }" data-poptrox="iframe,1200x800"> <img
+							id="${library.libId }" src="${library.libImagePath }"
 							style="width: 100%; max-width: 300px" />
 						</a>
 					</c:forEach>

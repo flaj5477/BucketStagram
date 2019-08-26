@@ -46,31 +46,22 @@ public class LibraryDao {
 		}
 	}
 	
-	public ArrayList<LibraryDto> getLibPhotoList(String type) {
+	public ArrayList<LibraryDto> getLibPhotoList() {
 		// TODO Auto-generated method stub
 		ArrayList<LibraryDto> libraryList = null;
 		LibraryDto library = null;
-		String where = "";
-		System.out.println("타입: " + type);
-		if(type!=null && !type.isEmpty()) {
-			where += " where lib_type=?";
-		}
-		String sql = "SELECT lib_id, lib_type, lib_image_path FROM library_info_tb " + where;
-		System.out.println(sql);
+		String sql = "SELECT lib_id, lib_image_path FROM library_info_tb";
+		
 		try {
 			libraryList = new ArrayList<LibraryDto>();
 			psmt = conn.prepareStatement(sql);
-			if(type!=null && !type.isEmpty()) {
-				psmt.setString(1, type);
-			}
 			rs = psmt.executeQuery();
-			
 			while(rs.next()) {
 				library = new LibraryDto();
 				library.setLibId(rs.getString("LIB_ID"));
 				//library.setLibTitle(rs.getString("LIB_TITLE"));
 				//library.setLibContents(rs.getString("LIB_CONTENTS"));
-				library.setLibType(rs.getString("LIB_TYPE"));
+				//library.setLibType(rs.getString("LIB_TYPE"));
 				library.setLibImagePath(rs.getString("LIB_IMAGE_PATH"));
 				//library.setLibWriteDate(rs.getString("LIB_WRITE_DATE"));
 				
@@ -86,10 +77,9 @@ public class LibraryDao {
 		return libraryList;
 	}
 	
-	public LibraryDto getdetailLib(String libId) {	
+	public LibraryDto getdetailLib(String libId) {	//요기 좋아요 갯수 가져오는 코드 추가 할것!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		LibraryDto library = new LibraryDto();
-		String sql = "SELECT lib_title, lib_contents, lib_type, lib_image_path, lib_write_date, (select count(*) from LIBRARY_WISH_LIST_TB where LWL_LIB_ID=lib.LIB_ID) as cnt\r\n" + 
-				"FROM library_info_tb lib where lib_id = ?";
+		String sql = "SELECT lib_title, lib_contents, lib_type, lib_image_path, lib_write_date FROM library_info_tb where lib_id = ?";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -102,7 +92,6 @@ public class LibraryDao {
 				library.setLibType(rs.getString("lib_type"));
 				library.setLibImagePath(rs.getString("lib_image_path"));
 				library.setLibWriteDate(rs.getString("lib_write_date"));
-				library.setLibLike(rs.getInt("cnt"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -110,7 +99,6 @@ public class LibraryDao {
 		} finally {
 			close();
 		}
-		
 		return library;
 	}
 	
