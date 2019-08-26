@@ -7,12 +7,13 @@
 <meta charset="UTF-8">
 <title>검색 값 반환</title>
 <link rel="stylesheet" href="css/search.css">
-
+<link rel="stylesheet" href="css/styles.css"> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="js/searchSlide.js"></script>
 </head>
 <body>
+	<jsp:include page = "../category/nav.jsp"/>
 	<hr>
 	<h3>Library</h3>
   	<div class="libSlider" align ="center">

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>header</title>
+<title>Navigation</title>
 </head>
 <body>
 	<nav class="navigation">
