@@ -9,10 +9,18 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="css/test.css" />
 <style>
 
 
+.gallery{
+ 	display : inline;
+ 	float : left;
+ 	width:450px;
+ 	height:450px;
+	
 
+} 
 .navigation__column input {
 	border: 1px solid #e6e6e6;
 	border-radius: 3px;
@@ -27,9 +35,13 @@ form[name="frm_Search"] {
 
 input[name="wordSearch"] {
 	height: 2em;
-	text-align: left
-}
+	text-align: left;
+
+
+
 </style>
+
+
 </head>
 <body>
 <!-- Wrapper -->
@@ -74,7 +86,26 @@ input[name="wordSearch"] {
 			</ul>
 		</header>
 
-<div align="center">
+
+				
+ 		<!-- <div class="thumbnails" >  -->
+		<c:forEach items="${list}" var="dto">
+			 <div class="gallery" align="center">
+				<a target="_blank" href="assets/feed.html">
+					<img src="${dto.bucketImagePath}"
+					 style="width: 350px; height:328px;" />  
+				</a>
+				
+				<div>${dto.bucketTitle }</div>
+				<div>${dto.bucketType}</div>
+				<div>${dto.bucketLike}</div> 
+			</div>
+		 </c:forEach>
+	</div>  
+ 
+
+
+<%-- <div align="center">
 	<div><p></div>
 	<div align="center">
 		<div>
@@ -87,9 +118,9 @@ input[name="wordSearch"] {
 			</c:if>
 			<c:forEach items="${list }" var="dto">			
 			<tr>
-					<%-- <td align="center">${dto.bucketId }</td>
+					<td align="center">${dto.bucketId }</td>
 					</tr><tr>
-					 <td align="center">${dto.bucketMemberId }</td> </tr> --%>
+					 <td align="center">${dto.bucketMemberId }</td> </tr>
 					<tr> 
 					<td align="center">제목${dto.bucketTitle }</td></tr>
 					<tr>
@@ -97,14 +128,14 @@ input[name="wordSearch"] {
 					<tr>
 					<td align="center">좋아요  ${dto.bucketLike}</td></tr>
 					
-			</c:forEach>					
+			</c:forEach>	 --%>				
 			 	
-		</table></form></div>
+		<!-- </table></form></div>
 		<div> <p></div>
 
 
 </div>
-</div>
+</div> -->
 	 
 
 		 
