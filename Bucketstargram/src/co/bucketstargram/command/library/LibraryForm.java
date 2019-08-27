@@ -19,10 +19,15 @@ public class LibraryForm implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Trace.init(); //위치 출력!
 		String libType = request.getParameter("type");
+		String sPage = request.getParameter("page");
+		int page = 1;	//기본페이지는 1페이지
+		
+		if(sPage != null)
+			page = Integer.parseInt(sPage);
 		
 		LibraryDao dao = new LibraryDao();
 		
-		ArrayList<LibraryDto> libraryList = dao.getLibPhotoList(libType);
+		ArrayList<LibraryDto> libraryList = dao.getLibPhotoList(libType,page);
 		
 		request.setAttribute("libraryList", libraryList);
 		

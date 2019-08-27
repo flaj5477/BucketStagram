@@ -171,10 +171,22 @@ input[name="wordSearch"] {
 
 	</div>
 	<footer>
-		<a href="LibraryForm.do?page=1">1</a> <a href="LibraryForm.do?page=2">2</a>
-		<a href="LibraryForm.do?page=3">3</a> <a href="LibraryForm.do?page=4">4</a>
-		<a href="LibraryForm.do?page=5">5</a> <a href="LibraryForm.do?page=6">6</a>
+		<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
+		<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
+		<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
 	</footer>
+	
+	<form name="pagefrm" action="LibraryForm.do" method="post">
+		<input type="hidden" name="page" value="1" >
+		<input type="hidden" name="type" value="${param.type}" >
+	</form>
+	
+	<script>
+		function goList(p){
+			document.pagefrm.page.value=p;
+			document.pagefrm.submit();
+		}
+	</script>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
