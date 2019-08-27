@@ -15,8 +15,10 @@
 <script src="assets/js/all.js"></script>
 </head>
 <body>
+	<% String word = request.getParameter("word"); %>
 	<jsp:include page = "../category/header.jsp"/>
 	<div class="border">
+		<h2><strong style="color:#1A99EE">'<%=word%>'</strong>에 대한 검색 결과입니다.</h2>
 		<div class="slide1">
 			<h2>Library</h2>
 		  	<div class="libSlider" align ="center">
