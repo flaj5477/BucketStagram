@@ -45,7 +45,8 @@
 			</div>
 			<div>
 				<ul class="topMenu">
-					<li>&nbsp;&nbsp;&nbsp;|</li>
+					<li></li>
+					<li>|</li>
 					<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
 					<li>|</li>
 					<li><a class="menuLink" href="PopMain.do">Popular</a></li>
