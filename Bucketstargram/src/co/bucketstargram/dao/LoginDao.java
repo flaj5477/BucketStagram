@@ -79,6 +79,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import co.bucketstargram.dto.MemberDto;
+
 public class LoginDao {
     Connection conn = null; // DB연결된 상태(세션)을 담은 객체
     PreparedStatement psmt = null;  // SQL 문을 나타내는 객체
@@ -131,6 +133,30 @@ public class LoginDao {
 		
 		return loginSuccess;
 	} 
+	
+	
+	public int insert(MemberDto dto) {   //회원 등록
+		int n = 0;
+		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
+				+ "	member_phone) values(?,?,?,?,?)";
+//		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
+//				+ "	member_phone,member_image_path) values(?,?,?,?,?,?)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getmId());
+			psmt.setString(2, dto.getmPw());
+			psmt.setString(3, dto.getmName());
+			psmt.setString(4, dto.getmEmail());
+			psmt.setString(5, dto.getmPhone());
+//			psmt.setString(6, dto.getmImagePath());
+			n = psmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return n;
+	}
     
 	private void close() {
 		// TODO Auto-generated method stub

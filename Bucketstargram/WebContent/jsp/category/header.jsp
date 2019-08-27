@@ -77,6 +77,34 @@
 							class="label">생활</span></a></li>
 				</ul>
 			</div>
+			<%
+				String userid = (String) session.getAttribute("userid");
+			%>
+			<%
+				if (userid != null) {
+			%>
+			<script>
+				document.getElementById("sign-in").style.display = 'none';
+				document.getElementById("sign-up").style.display = 'none';
+				document.getElementById("sign-out").style.display = 'block';
+			</script>
+			<%
+				} else {
+			%>
+			<script>
+				document.getElementById("sign-in").style.display = 'block';
+				document.getElementById("sign-up").style.display = 'block';
+				document.getElementById("sign-out").style.display = 'none';
+			</script>
+			<%
+				}
+			%>
+			<script>
+				function logOut() {
+					window.alert("로그아웃 하시겠습니까?");
+					document.location.href = "LogOut.do";
+				}
+			</script>
 		</header>
 	</div>
 </body>
