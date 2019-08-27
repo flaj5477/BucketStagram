@@ -135,6 +135,10 @@ public class LoginDao {
 	} 
 	
 	
+	
+	
+	//----------------------------회원가입 --------------------------------
+	
 	public int insert(MemberDto dto) {   //회원 등록
 		int n = 0;
 		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
@@ -156,6 +160,22 @@ public class LoginDao {
 			close();
 		}
 		return n;
+	}
+	
+	public boolean memberIdCheck(String id) {   //아이디 중복 체크
+		boolean idCheck = false;
+		String sql = "select * from MEMBER_INFO_TB where member_id = ?";
+		try {
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if(rs.next()) idCheck = true;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return idCheck;
 	}
     
 	private void close() {
