@@ -14,6 +14,7 @@ public class LibraryDto {
 	
 	public LibraryDto() {
 		super();
+		libLikeMembList = new ArrayList<String>();
 	}
 	
 	

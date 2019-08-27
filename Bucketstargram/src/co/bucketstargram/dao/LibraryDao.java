@@ -46,24 +46,38 @@ public class LibraryDao {
 		}
 	}
 	
-	public ArrayList<LibraryDto> getLibPhotoList() {
+	public ArrayList<LibraryDto> getLibPhotoList(String libType) {
 		// TODO Auto-generated method stub
 		ArrayList<LibraryDto> libraryList = null;
+		String where = "";
+		
+		if(libType!=null) {
+			where = "where lib_type= ?";
+		}
 		LibraryDto library = null;
-		String sql = "SELECT lib_id, lib_type, lib_image_path, (select count(*) from LIBRARY_WISH_LIST_TB where LWL_LIB_ID=lib.LIB_ID) as cnt \r\n" + 
-				"FROM library_info_tb lib";
+		//20부터 30까지 출력
+		String sql = "SELECT X.rn, X.*\r\n" + 
+				"FROM\r\n" + 
+				"  (SELECT rownum as rn, L.* \r\n" + 
+				"  FROM \r\n" + 
+				"    (select lib_id, lib_image_path, lib_type from library_info_tb " + where + " order by TO_NUMBER(lib_id)) L\r\n" + 
+				"  WHERE rownum <=30) X\r\n" + 
+				"WHERE X.rn >=20";
 		
 		try {
 			libraryList = new ArrayList<LibraryDto>();
 			psmt = conn.prepareStatement(sql);
+			if(libType!=null) {
+				psmt.setString(1, libType);
+			}
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				library = new LibraryDto();
 				library.setLibId(rs.getString("LIB_ID"));
+				System.out.println(rs.getString("LIB_ID"));
 				//library.setLibTitle(rs.getString("LIB_TITLE"));
 				//library.setLibContents(rs.getString("LIB_CONTENTS"));
 				library.setLibType(rs.getString("LIB_TYPE"));
-				library.setLibLike(rs.getInt("cnt"));	//나중에 library순위대로 출력 할때 필요할듯
 				library.setLibImagePath(rs.getString("LIB_IMAGE_PATH"));
 				//library.setLibWriteDate(rs.getString("LIB_WRITE_DATE"));
 				
@@ -83,6 +97,7 @@ public class LibraryDao {
 		LibraryDto library = new LibraryDto();
 		String sql = "SELECT lib_title, lib_contents, lib_type, lib_image_path, lib_write_date " + 
 				"FROM library_info_tb lib where lib_id = ?";
+		
 		String sql2 = "select lwl_member_id from LIBRARY_WISH_LIST_TB where LWL_LIB_ID= ? ";
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -105,8 +120,7 @@ public class LibraryDao {
 			while(rs2.next()) {
 				System.out.println(rs2.getString("lwl_member_id"));
 				libLikeCnt++;
-			//	library.addLibLikeMembList(rs2.getString("lwl_member_id"));
-				//여기서 에러났음 왜났을까.............................................???????????????????????????????????????????????????
+				library.addLibLikeMembList(rs2.getString("lwl_member_id"));
 			}     
 	        library.setLibLike(libLikeCnt); //좋아하는 사람 숫자
 			
