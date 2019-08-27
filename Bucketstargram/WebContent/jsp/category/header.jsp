@@ -19,8 +19,8 @@
 				</div>
 				<div class="navigation__column" style="margin: 0px 600px">
 					<form name="frm_Search" action="GetSearch.do" method="get">
-						<i class="fa fa-search"></i> <input type="text"
-							placeholder="Search">
+						<i class="fa fa-search"></i>
+						<input type="text" placeholder="Search" name="word">
 					</form>
 				</div>
 				<div class="navigation__column">
@@ -47,7 +47,7 @@
 			</div>
 			<div>
 				<ul class="topMenu">
-					<li>|</li>
+					<li>&nbsp;&nbsp;&nbsp;|</li>
 					<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
 					<li>|</li>
 					<li><a class="menuLink" href="#">Popular</a></li>
@@ -56,7 +56,7 @@
 					<li>|</li>
 				</ul>
 			</div>
-			<hr>
+			<br><br>
 			<div>
 				<ul class="icons">
 					<li><a href="#" class="icon style2 fa-twitter"><span
@@ -107,5 +107,6 @@
 			</script>
 		</header>
 	</div>
+	<hr>
 </body>
 </html>
