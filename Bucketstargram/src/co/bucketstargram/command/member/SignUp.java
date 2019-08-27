@@ -14,8 +14,8 @@ public class SignUp implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String viewPage="jsp/signup/memberInsert.jsp";  
-		String viewPage="jsp/signup/dasd.jsp";  
+		String viewPage="jsp/signup/memberInsert.jsp";  
+//		String viewPage="jsp/signup/dasd.jsp";  
 		HttpRes.forward(request, response, viewPage);
 
 	}
