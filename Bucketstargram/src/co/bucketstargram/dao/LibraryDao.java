@@ -46,10 +46,14 @@ public class LibraryDao {
 		}
 	}
 	
-	public ArrayList<LibraryDto> getLibPhotoList(String libType) {
+	public ArrayList<LibraryDto> getLibPhotoList(String libType, int page) {
 		// TODO Auto-generated method stub
 		ArrayList<LibraryDto> libraryList = null;
 		String where = "";
+		
+		//가져올 게시글 번호
+		int begin = (page-1) * 20 + 1;
+		int end = page * 20;
 		
 		if(libType!=null) {
 			where = "where lib_type= ?";
@@ -61,14 +65,20 @@ public class LibraryDao {
 				"  (SELECT rownum as rn, L.* \r\n" + 
 				"  FROM \r\n" + 
 				"    (select lib_id, lib_image_path, lib_type from library_info_tb " + where + " order by TO_NUMBER(lib_id)) L\r\n" + 
-				"  WHERE rownum <=30) X\r\n" + 
-				"WHERE X.rn >=20";
+				"  WHERE rownum <=?) X\r\n" + 
+				"WHERE X.rn >=?";
 		
 		try {
 			libraryList = new ArrayList<LibraryDto>();
 			psmt = conn.prepareStatement(sql);
-			if(libType!=null) {
+			if(libType!=null) {	//타입이 있을때
 				psmt.setString(1, libType);
+				psmt.setInt(2, end);
+				psmt.setInt(3, begin);
+			}
+			else {	//타입이 없을때 
+				psmt.setInt(1, end);
+				psmt.setInt(2, begin);
 			}
 			rs = psmt.executeQuery();
 			while(rs.next()) {
