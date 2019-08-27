@@ -44,6 +44,5 @@ $(function() {
 				windowMargin: (skel.breakpoint('small').active ? 5 : 50)
 			});
 
-		});
-
+		});	
 });

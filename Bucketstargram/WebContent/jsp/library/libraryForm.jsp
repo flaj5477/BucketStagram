@@ -129,8 +129,7 @@ input[name="wordSearch"] {
 			</ul>
 		</header>
 
-		<%-- <!-- Main -->
-		<div>
+	
 			<!-- Thumbnails -->
 			<div class="thumbnails">
 				<!-- 4*5 배열 -->
@@ -181,20 +180,6 @@ input[name="wordSearch"] {
 				</div>
 			</div>
 		</div>
-	</div> --%>
-
-		<!-- <div class="thumbnails"> -->
-			<c:forEach items="${libraryList}" var="library">
-				<div class="gallery" align="center">
-					<a href="DetailLibFrm.do?libId=${library.libId }" data-poptrox="iframe,1200x800"> 
-					<img 
-						src="${library.libImagePath}" style="width: 350px; height: 328px;" />
-					</a>
-				</div>
-			</c:forEach>
-		<!-- </div> -->
-
-
 
 		<footer>
 			<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
