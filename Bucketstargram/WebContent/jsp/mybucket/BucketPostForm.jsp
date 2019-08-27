@@ -6,9 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-	$('form')
-</script>
 </head>
 <body>
 	<form action="BucketPostAction.do" method="post" enctype="multipart/form-data">
@@ -17,12 +14,12 @@
 		<br>
 		내용: <input type="text" name="bucketContent">
 		<br>
-		사진: <input type="file" id="getfile" accept="image/*">
+		사진: <input type="file" id="getfile" name="getfile">
 		<br>
 		<input type="submit" value="전송">
-		<a id="download" download="thumbnail.jpg" target="_blank" style="display:none">
+ 		<a id="download" download="thumbnail.jpg" target="_blank" style="display:none">
     		<img id="thumbnail" src="" width="100" alt="썸네일영역 (클릭하면 다운로드 가능)">
-		</a>
+		</a> 
 	</form>
 	
 <script type="text/javascript">
@@ -65,7 +62,7 @@ file.onchange = function () {
             document.querySelector('#download').href = dataURI;
         };
     }; 
-}; 
+};
 </script>	
 </body>
 </html>

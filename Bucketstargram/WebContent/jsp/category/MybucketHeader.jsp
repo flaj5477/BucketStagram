@@ -50,7 +50,7 @@
 					<li>|</li>
 					<li><a class="menuLink" href="#">Popular</a></li>
 					<li>|</li>
-					<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
+					<li><a class="menuLink" href="BucketPostForm.do">Post</a></li>
 					<li>|</li>
 				</ul>
 			</div>

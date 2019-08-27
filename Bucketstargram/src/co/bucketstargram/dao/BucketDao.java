@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.bucketstargram.dto.BucketDto;
+import co.bucketstargram.dto.ReplyDto;
 
 public class BucketDao {
     Connection conn = null; // DB연결된 상태(세션)을 담은 객체
@@ -112,47 +113,47 @@ public class BucketDao {
 		return bucketList;
 	}
 
-	public HashMap<String, String> getBucketInfo(String imageId, String userId) {
-		// TODO Auto-generated method stub'
-		ArrayList<HashMap<String, String>> bucketInfoList = null;
-		HashMap<String, String> bucket = null;
-		String likeYN = getLikeYN(imageId, userId);
-		String bucket_like = getLikeCnt(imageId, userId);
-		
-		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_id = ?";
-		
-		try {
-			bucketInfoList = new ArrayList<HashMap<String, String>>();
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, imageId);
-			rs = psmt.executeQuery();
-			
-			while(rs.next()) {
-				bucket = new HashMap<String, String>();
-				
-				bucket.put("bucketId",rs.getString("BUCKET_ID"));
-				bucket.put("bucketMemberId",rs.getString("BUCKET_MEMBER_ID"));
-				bucket.put("bucket_title",rs.getString("BUCKET_TITLE"));
-				bucket.put("bucket_contents",rs.getString("BUCKET_CONTENTS"));
-				bucket.put("bucket_type",rs.getString("BUCKET_TYPE"));
-				bucket.put("bucket_compliation",rs.getString("BUCKET_COMPLIATION"));
-				bucket.put("bucket_like", bucket_like);
-				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
-				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
-				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
-				bucket.put("likeYN", likeYN);
-				
-				bucketInfoList.add(bucket);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		
-		return bucket;
-	}
+//	public HashMap<String, String> getBucketInfo(String imageId, String userId) {
+//		// TODO Auto-generated method stub'
+//		ArrayList<HashMap<String, String>> bucketInfoList = null;
+//		HashMap<String, String> bucket = null;
+//		String likeYN = getLikeYN(imageId, userId);
+//		String bucket_like = getLikeCnt(imageId, userId);
+//		
+//		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_id = ?";
+//		
+//		try {
+//			bucketInfoList = new ArrayList<HashMap<String, String>>();
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1, imageId);
+//			rs = psmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				bucket = new HashMap<String, String>();
+//				
+//				bucket.put("bucketId",rs.getString("BUCKET_ID"));
+//				bucket.put("bucketMemberId",rs.getString("BUCKET_MEMBER_ID"));
+//				bucket.put("bucket_title",rs.getString("BUCKET_TITLE"));
+//				bucket.put("bucket_contents",rs.getString("BUCKET_CONTENTS"));
+//				bucket.put("bucket_type",rs.getString("BUCKET_TYPE"));
+//				bucket.put("bucket_compliation",rs.getString("BUCKET_COMPLIATION"));
+//				bucket.put("bucket_like", bucket_like);
+//				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
+//				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
+//				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
+//				bucket.put("likeYN", likeYN);
+//				
+//				bucketInfoList.add(bucket);
+//			}
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close();
+//		}
+//		
+//		return bucket;
+//	}
 	
 	private String getLikeCnt(String imageId, String userId) {
 		// TODO Auto-generated method stub
@@ -342,4 +343,41 @@ public class BucketDao {
 		
 		return result;
 	}
+
+	public BucketDto getBucketInfo(String userId, String bucketId) {
+		// TODO Auto-generated method stub
+		BucketDto bucket = new BucketDto();
+		
+		String likeYN = getLikeYN(bucketId, userId);
+		String sql = "SELECT bi.*, li.like_cnt FROM bucket_info_tb bi, (SELECT mwl_bucket_id, count(*) AS like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) li WHERE bucket_id = mwl_bucket_id AND bucket_id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {				
+				bucket.setBucketId(rs.getString("BUCKET_ID"));
+				bucket.setBucketMemberId(rs.getString("BUCKET_MEMBER_ID"));
+				bucket.setBucketTitle(rs.getString("BUCKET_TITLE"));
+				bucket.setBucketContents(rs.getString("BUCKET_CONTENTS"));
+				bucket.setBucketType(rs.getString("BUCKET_TYPE"));
+				bucket.setBucketCompliation(rs.getString("BUCKET_COMPLIATION"));
+				bucket.setBucketLike(rs.getInt("like_cnt"));
+				bucket.setBucketImagePath(rs.getString("BUCKET_IMAGE_PATH"));
+				bucket.setBucketTag(rs.getString("BUCKET_TAG"));
+				bucket.setBucketWriteDate(rs.getString("BUCKET_WRITE_DATE"));
+				bucket.setBucketLiketYN(likeYN);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return bucket;
+	}
+
+
 }
