@@ -35,18 +35,6 @@ hr {
 	margin: 1.5em 0;
 }
 
-.align-left {
-	text-align: left;
-}
-
-.align-center {
-	text-align: center;
-}
-
-.align-right {
-	text-align: right;
-}
-
 div.border {
 	margin: 0px 70px 0 70px;
 	color: black;
@@ -87,3 +75,25 @@ div.like {
 	padding: 10px;
 	text-align: center;
 }
+div.slide1,div.slide2 {
+	margin:2em auto;
+	position: relative;
+}
+div.slide1 .bx-prev,div.slide1 .bx-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 3em;
+}
+div.slide2 .bx-prev,div.slide2 .bx-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 3em;
+}
+div.slide1 .bx-prev,div.slide2 .bx-prev {
+	right: calc(100% + 20px);	
+}	
+div.slide1 .bx-next,div.slide2 .bx-next {
+	left: calc(100% + 20px);	
+}	
