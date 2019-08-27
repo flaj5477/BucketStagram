@@ -98,8 +98,8 @@
 	}
 	function openIdChk(){
 		var cid = document.frm.id;
-		if(cid.value == '') {
-			alert("아이디 값을 입력하세요");
+		if(cid.value == '' || cid.value.length < 4) {
+			alert("아이디를 4자 이상 입력하세요.");
 			cid.focus();
 			return false;
 		}
