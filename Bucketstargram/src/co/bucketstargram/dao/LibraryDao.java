@@ -55,7 +55,8 @@ public class LibraryDao {
 		int begin = (page-1) * 20 + 1;
 		int end = page * 20;
 		
-		if(libType!=null) {
+		if(libType!=null && libType!="") {
+
 			where = "where lib_type= ?";
 		}
 		LibraryDto library = null;
@@ -71,7 +72,7 @@ public class LibraryDao {
 		try {
 			libraryList = new ArrayList<LibraryDto>();
 			psmt = conn.prepareStatement(sql);
-			if(libType!=null) {	//타입이 있을때
+			if(libType!=null && libType!="") {	//타입이 있을때
 				psmt.setString(1, libType);
 				psmt.setInt(2, end);
 				psmt.setInt(3, begin);

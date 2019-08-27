@@ -203,7 +203,7 @@ input[name="wordSearch"] {
 		<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
 	</footer>
 
-	<form name="pagefrm" action="LibraryForm.do" method="post">
+	<form name="pagefrm" action="LibraryForm.do">
 		<input type="hidden" name="page" value="1"> <input
 			type="hidden" name="type" value="${param.type}">
 	</form>
