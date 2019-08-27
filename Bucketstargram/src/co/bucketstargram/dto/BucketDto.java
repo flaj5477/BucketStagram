@@ -12,7 +12,14 @@ public class BucketDto {
 	private String bucketTag = null;
 	private String bucketWriteDate = null;
 	private String bucketLiketYN = null;
+	private int bucketReplyCnt = 0;
 	
+	public int getBucketReplyCnt() {
+		return bucketReplyCnt;
+	}
+	public void setBucketReplyCnt(int bucketReplyCnt) {
+		this.bucketReplyCnt = bucketReplyCnt;
+	}
 	public BucketDto() {
 		// TODO Auto-generated constructor stub
 	}

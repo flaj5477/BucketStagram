@@ -19,7 +19,7 @@ public class LikeAction implements Command {
 		
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("userid");
-		String bucketId = (String)request.getParameter("imageId");
+		String bucketId = (String)request.getParameter("bucketId");
 		String likeYN = (String)request.getParameter("likeYN");
 		String result = null;
 		System.out.println("LikeAction.java | userId = " + userId);

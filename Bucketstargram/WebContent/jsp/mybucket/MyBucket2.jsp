@@ -26,7 +26,6 @@ input[name="wordSearch"] {
 </style>
 </head>
 <body>
-
 	<div id="wrapper">
 		<!-- Header -->
 		<jsp:include page="../../jsp/category/MybucketHeader.jsp"/>

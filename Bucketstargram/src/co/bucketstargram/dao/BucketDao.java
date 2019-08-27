@@ -349,6 +349,7 @@ public class BucketDao {
 		BucketDto bucket = new BucketDto();
 		
 		String likeYN = getLikeYN(bucketId, userId);
+		int replyCnt = getReplyCnt(bucketId);
 		String sql = "SELECT bi.*, li.like_cnt FROM bucket_info_tb bi, (SELECT mwl_bucket_id, count(*) AS like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) li WHERE bucket_id = mwl_bucket_id AND bucket_id = ?";
 		
 		try {
@@ -368,6 +369,8 @@ public class BucketDao {
 				bucket.setBucketTag(rs.getString("BUCKET_TAG"));
 				bucket.setBucketWriteDate(rs.getString("BUCKET_WRITE_DATE"));
 				bucket.setBucketLiketYN(likeYN);
+				bucket.setBucketReplyCnt(replyCnt);
+				
 			}
 			
 		} catch (SQLException e) {
@@ -377,6 +380,27 @@ public class BucketDao {
 		}
 		
 		return bucket;
+	}
+
+	private int getReplyCnt(String bucketId) {
+		// TODO Auto-generated method stub
+		int replyCnt = 0;
+		String sql = "SELECT re_bucket_id, COUNT(*) reply_cnt FROM bucket_reply_tb WHERE re_bucket_id=? GROUP BY re_bucket_id";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				replyCnt = rs.getInt("reply_cnt"); 
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return replyCnt;
 	}
 
 

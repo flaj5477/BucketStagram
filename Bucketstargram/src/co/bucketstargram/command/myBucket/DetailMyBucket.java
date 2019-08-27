@@ -24,14 +24,15 @@ public class DetailMyBucket implements Command {
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("userid");
 		String bucketId = request.getParameter("bucketId");
-		System.out.println("GetBucketInfo.java | usersId = " + userId);
-		System.out.println("GetBucketInfo.java | bucketId = " + bucketId);
+		System.out.println("DetailMyBucket.java | usersId = " + userId);
+		System.out.println("DetailMyBucket.java | bucketId = " + bucketId);
 		
 		BucketDao bucketDao = new BucketDao();
 		ReplyDao replyDao = new ReplyDao();
 		BucketDto bucket = bucketDao.getBucketInfo(userId, bucketId);
 		ArrayList<ReplyDto> replyList = replyDao.getReplyInfo(bucketId);
 		System.out.println(bucket.getBucketImagePath());
+		session.setAttribute("ownerId", userId);
 		request.setAttribute("bucket", bucket);
 		request.setAttribute("replyList", replyList);
 		

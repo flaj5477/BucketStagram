@@ -16,11 +16,11 @@ public class AppendReplyAction implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(true);
-		String memberId = (String) session.getAttribute("userid");
-		String bucketId = (String)request.getParameter("imageId");
+		String memberId = (String)request.getParameter("ownerId");
+		String bucketId = (String)request.getParameter("bucketId");
 		String replyCotents = (String)request.getParameter("replyCotent");
 		String replyId = Primary.create(); 
+		
 		System.out.println("AppendReply.java | imageId = " + bucketId);
 		System.out.println("AppendReply.java | content = " + replyCotents); 
 		System.out.println("AppendReply.java | usersId = " + memberId);
@@ -31,6 +31,7 @@ public class AppendReplyAction implements Command {
 		response.setContentType("text/html;charset=UTF-8");
 		ReplyDao dao = new ReplyDao();
 		insertSuccess = dao.insert(replyId, bucketId, memberId, replyCotents);
+		
 		if(insertSuccess) {
 			System.out.println("AppendReply.java | String.valueOf(insertSuccess) = " + String.valueOf(insertSuccess));
 			response.getWriter().write(String.valueOf(insertSuccess));
