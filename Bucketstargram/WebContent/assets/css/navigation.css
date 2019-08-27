@@ -6,9 +6,23 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 100px;
-
+  margin-bottom: 60px;
+}
+.navigation__column input {
+	border: 1px solid #e6e6e6;
+	border-radius: 3px;
+	font-size: 10px;
 }
 
+form[name="frm_Search"] {
+	text-align: center;
+	margin: 0 auto;
+}
+
+input[name="wordSearch"] {
+	height: 2em;
+	text-align: left
+}
 .navigation .navigation__column:first-child img {
   height: 45px;
 }
@@ -35,7 +49,12 @@
     transform: none;
   }
 }
-
+a.navigation__link{
+	color: rgba(0,106,213,0.65);
+}
+a.navigation__link:hover { 
+  color: white;
+}
 .navigation .navigation__list-item:nth-child(2) {
   animation-delay: 0.2s;
 }
@@ -50,13 +69,14 @@
 }
 
 .navigation__column {
+	display:block;
 	position: relative;
 	padding: 0 0 1em 0
 }
-
 .navigation__column input {
   border: 1px solid #e6e6e6;
   border-radius: 3px;
+  font-size: 10px;
 }
 
 .navigation__column input:focus {
@@ -65,7 +85,7 @@
 }
 
 .navigation__column {
-  position: relative;
+ 
 }
 
 .navigation__column .fa-search {
