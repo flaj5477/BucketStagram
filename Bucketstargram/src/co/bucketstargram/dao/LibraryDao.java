@@ -50,7 +50,8 @@ public class LibraryDao {
 		// TODO Auto-generated method stub
 		ArrayList<LibraryDto> libraryList = null;
 		LibraryDto library = null;
-		String sql = "SELECT lib_id, lib_image_path FROM library_info_tb";
+		String sql = "SELECT lib_id, lib_type, lib_image_path, (select count(*) from LIBRARY_WISH_LIST_TB where LWL_LIB_ID=lib.LIB_ID) as cnt \r\n" + 
+				"FROM library_info_tb lib";
 		
 		try {
 			libraryList = new ArrayList<LibraryDto>();
@@ -61,7 +62,8 @@ public class LibraryDao {
 				library.setLibId(rs.getString("LIB_ID"));
 				//library.setLibTitle(rs.getString("LIB_TITLE"));
 				//library.setLibContents(rs.getString("LIB_CONTENTS"));
-				//library.setLibType(rs.getString("LIB_TYPE"));
+				library.setLibType(rs.getString("LIB_TYPE"));
+				library.setLibLike(rs.getInt("cnt"));	//나중에 library순위대로 출력 할때 필요할듯
 				library.setLibImagePath(rs.getString("LIB_IMAGE_PATH"));
 				//library.setLibWriteDate(rs.getString("LIB_WRITE_DATE"));
 				
@@ -77,10 +79,11 @@ public class LibraryDao {
 		return libraryList;
 	}
 	
-	public LibraryDto getdetailLib(String libId) {	//요기 좋아요 갯수 가져오는 코드 추가 할것!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public LibraryDto getdetailLib(String libId) {	
 		LibraryDto library = new LibraryDto();
-		String sql = "SELECT lib_title, lib_contents, lib_type, lib_image_path, lib_write_date FROM library_info_tb where lib_id = ?";
-		
+		String sql = "SELECT lib_title, lib_contents, lib_type, lib_image_path, lib_write_date " + 
+				"FROM library_info_tb lib where lib_id = ?";
+		String sql2 = "select lwl_member_id from LIBRARY_WISH_LIST_TB where LWL_LIB_ID= ? ";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, libId);
@@ -90,9 +93,23 @@ public class LibraryDao {
 				library.setLibTitle(rs.getString("lib_title"));
 				library.setLibContents(rs.getString("lib_contents"));
 				library.setLibType(rs.getString("lib_type"));
+				//library.setLibLike(rs.getInt("cnt"));
 				library.setLibImagePath(rs.getString("lib_image_path"));
 				library.setLibWriteDate(rs.getString("lib_write_date"));
 			}
+			
+			psmt = conn.prepareStatement(sql2);	//라이브러리를 좋아요한 사람 리스트
+			psmt.setString(1, libId);
+			ResultSet rs2 = psmt.executeQuery();
+			int libLikeCnt = 0;
+			while(rs2.next()) {
+				System.out.println(rs2.getString("lwl_member_id"));
+				libLikeCnt++;
+			//	library.addLibLikeMembList(rs2.getString("lwl_member_id"));
+				//여기서 에러났음 왜났을까.............................................???????????????????????????????????????????????????
+			}     
+	        library.setLibLike(libLikeCnt); //좋아하는 사람 숫자
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
