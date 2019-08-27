@@ -82,7 +82,7 @@ public class BucketDao {
 		// TODO Auto-generated method stub
 		ArrayList<BucketDto> bucketList = null;
 		BucketDto bucket = null;
-		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_member_id = ?";
+		String sql = "SELECT * FROM bucket_info_tb JOIN (SELECT mwl_bucket_id, COUNT(*) like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) ON bucket_id = mwl_bucket_id AND bucket_member_id=?";
 		
 		try {
 			bucketList = new ArrayList<BucketDto>();
@@ -100,6 +100,7 @@ public class BucketDao {
 				bucket.setBucketImagePath(rs.getString("BUCKET_IMAGE_PATH"));
 				bucket.setBucketTag(rs.getString("BUCKET_TAG"));
 				bucket.setBucketWriteDate(rs.getString("BUCKET_WRITE_DATE"));
+				bucket.setBucketLike(rs.getInt("like_cnt"));
 				
 				bucketList.add(bucket);
 			}
