@@ -11,6 +11,19 @@
 <link rel="stylesheet" href="assets/css/styles.css" />
 
 <style>
+.gallery {
+	display: inline;
+	float: left;
+	width: 450px;
+	height: 450px;
+}
+
+.navigation__column input {
+	border: 1px solid #e6e6e6;
+	border-radius: 3px;
+	font-size: 10px;
+}
+
 form[name="frm_Search"] {
 	text-align: center;
 	margin: 0 auto;
@@ -25,13 +38,13 @@ input[name="wordSearch"] {
 </head>
 <body>
 	<nav class=navigation>
-		<div class="navigation__column">&nbsp;&nbsp;&nbsp;</div>
 		<div class="navigation__column">
 			<form name="frm_Search" action="GetSearch.do" method="get">
 				<input type="text" name="word" placeholder="Search">
 			</form>
 
 		</div>
+		<div class="navigation__column">검색</div>
 		<div class="navigation__column">
 			<ul class="navigations__links">
 				<li class="navigation__list-item" id="sign-in"
@@ -116,7 +129,7 @@ input[name="wordSearch"] {
 			</ul>
 		</header>
 
-		<!-- Main -->
+		<%-- <!-- Main -->
 		<div>
 			<!-- Thumbnails -->
 			<div class="thumbnails">
@@ -168,30 +181,43 @@ input[name="wordSearch"] {
 				</div>
 			</div>
 		</div>
+	</div> --%>
 
-	</div>
-	<footer>
-		<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
-		<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
-		<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
-	</footer>
-	
-	<form name="pagefrm" action="LibraryForm.do" method="post">
-		<input type="hidden" name="page" value="1" >
-		<input type="hidden" name="type" value="${param.type}" >
-	</form>
-	
-	<script>
-		function goList(p){
-			document.pagefrm.page.value=p;
-			document.pagefrm.submit();
-		}
-	</script>
+		<!-- <div class="thumbnails"> -->
+			<c:forEach items="${libraryList}" var="library">
+				<div class="gallery" align="center">
+					<a href="DetailLibFrm.do?libId=${library.libId }" data-poptrox="iframe,1200x800"> 
+					<img 
+						src="${library.libImagePath}" style="width: 350px; height: 328px;" />
+					</a>
+				</div>
+			</c:forEach>
+		<!-- </div> -->
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.poptrox.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/main.js"></script>
+
+
+		<footer>
+			<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
+			<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
+			<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
+		</footer>
+
+		<form name="pagefrm" action="LibraryForm.do" method="post">
+			<input type="hidden" name="page" value="1"> <input
+				type="hidden" name="type" value="${param.type}">
+		</form>
+
+		<script>
+			function goList(p) {
+				document.pagefrm.page.value = p;
+				document.pagefrm.submit();
+			}
+		</script>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.poptrox.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/main.js"></script>
 </body>
 </html>
