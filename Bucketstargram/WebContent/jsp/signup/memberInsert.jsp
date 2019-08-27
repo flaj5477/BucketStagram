@@ -3,105 +3,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입 </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css"> 
+    <style>
+ #c { 
+  margin-left: 10px;
+  border: 0;
+  color: white;
+  font-weight: 600;
+  border-radius: 3px;
+  background-color: var(--fd-blue);
+  font-size: 14px;
+  padding: 7px 25px;
+    }
+ #s {  
+ margin-left: 235px;
+  border: 0;
+  color: white;
+  font-weight: 600;
+  border-radius: 3px;
+  background-color: var(--fd-blue);
+  font-size: 14px;
+  padding: 7px 25px;
+ } 
+ #b {  
+  margin-left: 10px;
+  border: 0;
+  color: white;
+  font-weight: 600;
+  border-radius: 3px;
+  background-color: var(--fd-blue);
+  font-size: 14px;
+  padding: 7px 25px;
+ } 
+    
+    </style>
+     <script>
 	function formCheck(){
-		var name = document.frm.name;
-		if(name.value == ''){
-			alert("성명을 입력하세요.");
-			name.focus();
-			return false;
-		}
-		
 		var id = document.frm.id;
-		if(id.value == '') {
-			alert("아이디를 입력하세요.");
+		if(id.value == '' || id.value.length < 4) {
+			alert("아이디를 4자 이상 입력하세요.");
 			id.focus();
 			return false;
 		}
 		
-/* 		var chkId = document.frm.chk;
-		if(chkId.value != "idChk") {
-			alert("아이디 중복 체크를 하세요")
+		var password = document.frm.password;
+		if(password.value == '' || password.value.length < 4) {
+			alert("패스워드를 4자 이상 입력하세요");
+			password.focus();
 			return false;
-		} */
-		
-		var pw = document.frm.password;
-		if(pw.value =='') {
-			alert("패스워드를 입력하세요.");
-			pw.focus();
+		}
+		var pw2 = document.frm.pw2;
+		if(password.value != pw2.value) {
+			alert("패스워드가 일치하지 않습니다.");
+			pw2.focus();
 			return false;
 		}
 		
-		var email = document.frm.email;
+		var name = document.frm.name;
+		if(name.value == ''){
+			alert("이름을 입력하세요.");
+			name.focus();
+			return false;
+		}
+		
+		
+  		var chkId = document.frm.chk;
+		if(chkId.value != "idChk") {
+			alert("아이디 중복 체크를 하세요")
+			return false;
+		} 
+		
+		
+		
+ 	  	var email = document.frm.email;
 		if(email.value =='') {
 			alert("이메일을 입력하세요.");
 			email.focus();
 			return false;
-		}
-		var phone = document.frm.phone;
+		}  
+		
+	 	var phone = document.frm.phone;
 		if(phone.value =='') {
 			alert("번호를 입력하세요.");
 			phone.focus();
 			return false;
-		}
+		}   
+		
 	 	document.frm.submit();
 	}
-
-/* 	function openIdChk(){
+	function openIdChk(){
 		var cid = document.frm.id;
-		if(cid.value == '') {
-			alert("아이디 값을 입력하세요");
+		if(cid.value == '' || cid.value.length < 4) {
+			alert("아이디를 4자 이상 입력하세요.");
 			cid.focus();
 			return false;
 		}
 		url = "IdCheck.do?id="+cid.value;
 		open(url, "checkForm","location=no, width=500, height=300, resizable=no, scrollvars=no");
-	}  */
-
-</script>
+	} 
+	</script> 
+	
 </head>
 <body>
-<div align="center">
-		 
-		<div><p></div>
-		<div align="center"> <h3>회원가입</h3></div>
-		<div align="center">
-		<form id="frm" name="frm" action="MemberInsert.do" method="post">
-			<div>
-			<table border="1">
-				<tr>
-					<th align="center" width="100">성&nbsp;&nbsp;&nbsp;&nbsp;명 </th>
-					<td><input type="text" name="name"></td>
-				</tr>
-				<tr>
-					<th align="center">아 이 디 </th>
-					<td><input type="text" name="id" size=10>
-						<!-- <input type="button" value="중복확인" onclick="openIdChk();">
-						<input type="hidden" id="chk" name="chk" value="idUnChk"> -->
-					</td>
-				</tr>
-				<tr>
-					<th align="center">패스워드 </th>
-					<td><input type="password" name="password"></td>
-				</tr>
-				<tr>
-					<th align="center">이 메 일 </th>
-					<td><input type="text" name="email" size="30"></td>
-				</tr>
-				<tr>
-					<th align="center">폰번호 </th>
-					<td><input type="text" name="phone" size="20"></td>
-				</tr>
-			</table></div>
-			<div><p></div>
-			<div>
-			&nbsp;&nbsp;&nbsp;<input type="button" value="회원가입" onclick="formCheck();">&nbsp;&nbsp;&nbsp;
-			<input type="button" value="가입취소" onclick="location.href='Index.do'">
-			</div>
-		</form>
-		</div>
-</div>
+ <main id="edit-profile">
+        <div class="edit-profile__container">
+            <header class="edit-profile__header">
+                <div class="edit-profile__avatar-container">
+                </div>
+                <h4 class="edit-profile__username">회 원 가 입 </h4>
+            </header>
+            <form id="frm" name ="frm" action="MemberInsert.do" method="post" class="edit-profile__form" >
+                <div class="form__row">
+                    <label for="id" class="form__label">아이디 :</label>	
+                    <input name="id" type="text" class="form__input"/>
+                    <input id = "b" type="button" value="중복확인" onclick="openIdChk();">
+					<input type="hidden" id="chk" name="chk" value="idUnChk">
+                </div>
+                <div class="form__row">
+                    <label for="password" class="form__label">비밀번호 :</label>
+                    <input name="password" type="password" class="form__input" />
+                </div>
+                <div class="form__row">
+                <label for="pw2" class="form__label">비밀번호 확인:</label>
+                <input name="pw2" type="password" class="form__input" />
+           		</div>
+                <div class="form__row">
+                    <label for="name" class="form__label">이름 :</label>
+                    <input name="name" type="text" class="form__input"  />
+                </div>
+                <div class="form__row">
+                    <label for="email" class="form__label">이메일 :</label>
+                    <input name="email" type="email" class="form__input"  />
+                </div>
+                <div class="form__row">
+                    <label for="phone" class="form__label">전화번호 :</label>
+                    <input name="phone" type="tel" class="form__input"  />
+                </div>
+              
+			<input id= "s" type="button" value="회원가입" onclick="formCheck();" > 
+			<!-- <input id= "s" type="button" value="회원가입" > -->
+			<input id= "c" type="button" value="가입취소" onclick="location.href='Index.do'"  >
+            </form>
+        </div>
+    </main>
 </body>
 </html>

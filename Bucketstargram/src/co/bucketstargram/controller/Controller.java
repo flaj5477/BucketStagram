@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import co.bucketstargram.command.index.Index;
 import co.bucketstargram.command.library.DetailLibFrm;
 import co.bucketstargram.command.library.LibraryForm;
+import co.bucketstargram.command.member.IdCheck;
 import co.bucketstargram.command.member.LogOut;
 import co.bucketstargram.command.member.LoginForm;
 import co.bucketstargram.command.member.LoginOK;
@@ -63,6 +64,7 @@ public class Controller extends HttpServlet {
         map.put("/LogOut.do", new LogOut());
         map.put("/SignUp.do", new SignUp());
         map.put("/MemberInsert.do", new MemberInsert());
+        map.put("/IdCheck.do", new IdCheck());
        
         //재문
         map.put("/MyBucket.do", new MyBucket());

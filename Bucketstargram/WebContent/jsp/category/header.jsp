@@ -32,7 +32,7 @@
 						</a></li>
 						<li style="display: inline-block;">|</li>
 						<li class="navigation__list-item" id="sign-up"
-							style="display: inline-block;"><a href="#"
+							style="display: inline-block;"><a href="SignUp.do"
 							class="navigation__link"> <i class="fa fa-user-plus"
 								aria-hidden="true"></i>SignUp
 						</a></li>
@@ -50,7 +50,7 @@
 					<li>&nbsp;&nbsp;&nbsp;|</li>
 					<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
 					<li>|</li>
-					<li><a class="menuLink" href="#">Popular</a></li>
+					<li><a class="menuLink" href="PopMain.do">Popular</a></li>
 					<li>|</li>
 					<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
 					<li>|</li>
