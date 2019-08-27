@@ -26,6 +26,7 @@ import co.bucketstargram.command.myBucket.BucketPostAction;
 import co.bucketstargram.command.myBucket.BucketPostForm;
 import co.bucketstargram.command.myBucket.CompletionAction;
 import co.bucketstargram.command.myBucket.DeleteAction;
+import co.bucketstargram.command.myBucket.DetailMyBucket;
 import co.bucketstargram.command.myBucket.GetBucketInfo;
 import co.bucketstargram.command.myBucket.WishListAction;
 import co.bucketstargram.command.myBucket.LikeAction;
@@ -68,6 +69,7 @@ public class Controller extends HttpServlet {
        
         //재문
         map.put("/MyBucket.do", new MyBucket());
+        map.put("/DetailMyBucket.do", new DetailMyBucket());
         map.put("/BucketPostForm.do", new BucketPostForm());
         map.put("/BucketPostAction.do", new BucketPostAction());
         map.put("/GetBucketInfo.do", new GetBucketInfo());

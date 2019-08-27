@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import co.bucketstargram.dto.ReplyDto;
+
 public class ReplyDao {
 
 	Connection conn = null; // DB연결된 상태(세션)을 담은 객체
@@ -47,39 +49,39 @@ public class ReplyDao {
 	}
 	
 	
-	public ArrayList<HashMap<String, String>> getReplyInfo(String imageId) {
-		// TODO Auto-generated method stub
-		ArrayList<HashMap<String, String>> replyInfoList = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> reply = null;
-		//String sql = "SELECT re_member_id, re_reply_contents FROM bucket_reply_tb WHERE re_bucket_id = '" + imageId + "'";
-		String sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
-		
-		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, imageId);
-			rs = psmt.executeQuery();
-
-			while(rs.next()) {
-				reply = new HashMap<String, String>();
-				
-				reply.put("reBucketId", rs.getString("re_bucket_id"));
-				reply.put("reReplyId",rs.getString("re_reply_id"));
-				reply.put("reMemberId",rs.getString("re_member_id"));
-				reply.put("reReplyContents",rs.getString("re_reply_contents"));
-				reply.put("reWriteDate",rs.getString("re_write_date"));
-				
-				replyInfoList.add(reply);
-			
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		System.out.println("ReplyDao.java | replyInfoList.size() = " + replyInfoList.size());
-		return replyInfoList;
-	}
+//	public ArrayList<HashMap<String, String>> getReplyInfo(String imageId) {
+//		// TODO Auto-generated method stub
+//		ArrayList<HashMap<String, String>> replyInfoList = new ArrayList<HashMap<String, String>>();
+//		HashMap<String, String> reply = null;
+//		//String sql = "SELECT re_member_id, re_reply_contents FROM bucket_reply_tb WHERE re_bucket_id = '" + imageId + "'";
+//		String sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
+//		
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1, imageId);
+//			rs = psmt.executeQuery();
+//
+//			while(rs.next()) {
+//				reply = new HashMap<String, String>();
+//				
+//				reply.put("reBucketId", rs.getString("re_bucket_id"));
+//				reply.put("reReplyId",rs.getString("re_reply_id"));
+//				reply.put("reMemberId",rs.getString("re_member_id"));
+//				reply.put("reReplyContents",rs.getString("re_reply_contents"));
+//				reply.put("reWriteDate",rs.getString("re_write_date"));
+//				
+//				replyInfoList.add(reply);
+//			
+//			}
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close();
+//		}
+//		System.out.println("ReplyDao.java | replyInfoList.size() = " + replyInfoList.size());
+//		return replyInfoList;
+//	}
 
 	public boolean insert(String replyId, String bucketId, String memberId, String replyCotents) {
 		// TODO Auto-generated method stub
@@ -140,5 +142,39 @@ public class ReplyDao {
 		System.out.println("ReplyDao.java | wReplyInfoList.size() = " + wReplyInfoList.size());
 		
 		return wReplyInfoList;
+	}
+
+	public ArrayList<ReplyDto> getReplyInfo(String bucketId) {
+		// TODO Auto-generated method stubString sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
+		ArrayList<ReplyDto> replyInfoList = new ArrayList<ReplyDto>();
+		ReplyDto reply = null;
+		String sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			rs = psmt.executeQuery();
+
+			while(rs.next()) {
+				reply = new ReplyDto();
+				
+				reply.setReBucketId(rs.getString("re_bucket_id"));
+				reply.setReReplyId(rs.getString("re_reply_id"));
+				reply.setReMemberId(rs.getString("re_member_id"));
+				reply.setReReplyContents(rs.getString("re_reply_contents"));
+				reply.setReWriteDate(rs.getString("re_write_date"));
+				
+				replyInfoList.add(reply);
+			
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		System.out.println("ReplyDao.java | replyInfoList.size() = " + replyInfoList.size());
+		return replyInfoList;
 	}
 }

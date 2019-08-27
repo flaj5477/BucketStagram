@@ -19,8 +19,8 @@
 				</div>
 				<div class="navigation__column" style="margin: 0px 600px">
 					<form name="frm_Search" action="GetSearch.do" method="get">
-						<i class="fa fa-search"></i>
-						<input type="text" placeholder="Search" name="word">
+						<i class="fa fa-search"></i> <input type="text"
+							placeholder="Search">
 					</form>
 				</div>
 				<div class="navigation__column">
@@ -31,7 +31,7 @@
 								aria-hidden="true"></i>Login
 						</a></li>
 						<li class="navigation__list-item" id="sign-up"
-							style="display: inline-block;"><a href="SignUp.do"
+							style="display: inline-block;"><a href="#"
 							class="navigation__link"> <i class="fa fa-user-plus"
 								aria-hidden="true"></i>SignUp
 						</a></li>
@@ -45,16 +45,16 @@
 			</div>
 			<div>
 				<ul class="topMenu">
-					<li>&nbsp;&nbsp;&nbsp;|</li>
+					<li>|</li>
 					<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
 					<li>|</li>
-					<li><a class="menuLink" href="PopMain.do">Popular</a></li>
+					<li><a class="menuLink" href="#">Popular</a></li>
 					<li>|</li>
-					<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
+					<li><a class="menuLink" href="BucketPostForm.do">Post</a></li>
 					<li>|</li>
 				</ul>
 			</div>
-			<br><br>
+			<hr>
 			<div>
 				<ul class="icons">
 					<li><a href="#" class="icon style2 fa-twitter"><span
@@ -105,6 +105,5 @@
 			</script>
 		</header>
 	</div>
-	<hr>
 </body>
 </html>

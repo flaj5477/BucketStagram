@@ -44,6 +44,7 @@ public class BucketPostAction implements Command {
 		// 파일 크기 15MB로 제한
 		int sizeLimit = 1024 * 1024 * 15;
 		String savePath = serverPath + "\\" + bucketMemberId + "\\" + bucketId;
+		System.out.println("savePath = " + savePath);
 		/*
 		 * String bucketImagePath 저장될 서버 경로
 		 * int maxPostSize 파일 최대 크기
@@ -57,51 +58,55 @@ public class BucketPostAction implements Command {
 		System.out.println("Image File 생성");
 //		//업로드된 파일의 이름을 반환한다
 		Enumeration files = multi.getFileNames();
-		String file = (String)files.nextElement();
-		String upFileName = multi.getFilesystemName(file);
-//		System.out.println("upFileName = " + upFileName);
-		
-		bucketTitle = multi.getParameter("bucketTitle");
-		bucketContents = multi.getParameter("bucketContent");
-		bucketType = "여행";
-		bucketImagePath = "images" + "\\" + bucketMemberId + "\\" + bucketId + "\\" + upFileName;
-		
-		bucket.setBucketId(bucketId);
-		bucket.setBucketMemberId(bucketMemberId);
-		bucket.setBucketTitle(bucketTitle);
-		bucket.setBucketContents(bucketContents);
-		bucket.setBucketType(bucketType);
-		bucket.setBucketImagePath(bucketImagePath);
-		
-		
-		BucketDao dao = new BucketDao();
-		insertSuccess = dao.insert(bucket);
-		
-		//DB에러 났을 경우 생성된 파일을 자동 삭제 해주는 로직
-		if(insertSuccess) {
-			System.out.println("BucketPost.java |  DB저장 성공");
-			String viewPage = "MyBucket.do";
-			HttpRes.forward(request, response, viewPage);
-		}else {
-			System.out.println("BucketPost.java |  DB저장 실패");
-			deleteFolderList = directory.listFiles();
+		while( files.hasMoreElements() ) {
 			
-			boolean dirDelFlag = true;
-			while(true) {
-				if(dirDelFlag) {
-					for (int i = 0; i < deleteFolderList.length; i++  ) {
-						dirDelFlag = deleteFolderList[i].delete();
-						System.out.println("Image File 삭제");
+
+			String file = (String)files.nextElement();
+			String upFileName = multi.getFilesystemName(file);
+	//		System.out.println("upFileName = " + upFileName);
+			
+			bucketTitle = multi.getParameter("bucketTitle");
+			bucketContents = multi.getParameter("bucketContent");
+			bucketType = "여행";
+			bucketImagePath = "images" + "\\" + bucketMemberId + "\\" + bucketId + "\\" + upFileName;
+			
+			bucket.setBucketId(bucketId);
+			bucket.setBucketMemberId(bucketMemberId);
+			bucket.setBucketTitle(bucketTitle);
+			bucket.setBucketContents(bucketContents);
+			bucket.setBucketType(bucketType);
+			bucket.setBucketImagePath(bucketImagePath);
+			
+			
+			BucketDao dao = new BucketDao();
+			insertSuccess = dao.insert(bucket);
+			
+			//DB에러 났을 경우 생성된 파일을 자동 삭제 해주는 로직
+			if(insertSuccess) {
+				System.out.println("BucketPost.java |  DB저장 성공");
+				String viewPage = "MyBucket.do";
+				HttpRes.forward(request, response, viewPage);
+			}else {
+				System.out.println("BucketPost.java |  DB저장 실패");
+				deleteFolderList = directory.listFiles();
+				
+				boolean dirDelFlag = true;
+				while(true) {
+					if(dirDelFlag) {
+						for (int i = 0; i < deleteFolderList.length; i++  ) {
+							dirDelFlag = deleteFolderList[i].delete();
+							System.out.println("Image File 삭제");
+						}
+					}else {
+						directory.delete();
+						System.out.println("BuckId Folder 삭제");
+						break;
 					}
-				}else {
-					directory.delete();
-					System.out.println("BuckId Folder 삭제");
-					break;
 				}
+				
+				String viewPage = "BucketPostForm.do";
+				HttpRes.forward(request, response, viewPage);
 			}
-			
-			String viewPage = "BucketPostForm.do";
-			HttpRes.forward(request, response, viewPage);
 		}
 	}
 	
