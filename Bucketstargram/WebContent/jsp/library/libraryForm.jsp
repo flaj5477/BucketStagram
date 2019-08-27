@@ -9,9 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+
 <style>
-
-
 form[name="frm_Search"] {
 	text-align: center;
 	margin: 0 auto;
@@ -26,14 +25,12 @@ input[name="wordSearch"] {
 </head>
 <body>
 	<nav class=navigation>
-		<div class="navigation__column">
-			&nbsp;&nbsp;&nbsp;
-		</div>
+		<div class="navigation__column">&nbsp;&nbsp;&nbsp;</div>
 		<div class="navigation__column">
 			<form name="frm_Search" action="GetSearch.do" method="get">
 				<input type="text" name="word" placeholder="Search">
 			</form>
-		
+
 		</div>
 		<div class="navigation__column">
 			<ul class="navigations__links">
@@ -52,7 +49,7 @@ input[name="wordSearch"] {
 						aria-hidden="true"></i>Logout
 				</a></li>
 			</ul>
-			
+
 			<%
 				String userid = (String) session.getAttribute("userid");
 			%>
@@ -98,77 +95,86 @@ input[name="wordSearch"] {
 			<hr>
 
 			<ul class="icons">
-				<li><a href="#" class="icon style2 fa-twitter"><span
+				<li><a href="LibraryForm.do" class="icon style2 fa-twitter"><span
 						class="label">전체</span></a></li>
-				<li><a href="#" class="icon style2 fa-facebook"><span
-						class="label">여행</span></a></li>
-				<li><a href="#" class="icon style2 fa-instagram"><span
-						class="label">운동</span></a></li>
-				<li><a href="#" class="icon style2 fa-500px"><span
-						class="label">음식</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">배움</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">문화</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">야외</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">쇼핑</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">생활</span></a></li>
+				<li><a href="LibraryForm.do?type=여행"
+					class="icon style2 fa-facebook"><span class="label">여행</span></a></li>
+				<li><a href="LibraryForm.do?type=운동"
+					class="icon style2 fa-instagram"><span class="label">운동</span></a></li>
+				<li><a href="LibraryForm.do?type=음식"
+					class="icon style2 fa-500px"><span class="label">음식</span></a></li>
+				<li><a href="LibraryForm.do?type=배움"
+					class="icon style2 fa-envelope-o"><span class="label">배움</span></a></li>
+				<li><a href="LibraryForm.do?type=문화"
+					class="icon style2 fa-envelope-o"><span class="label">문화</span></a></li>
+				<li><a href="LibraryForm.do?type=야외"
+					class="icon style2 fa-envelope-o"><span class="label">야외</span></a></li>
+				<li><a href="LibraryForm.do?type=쇼핑"
+					class="icon style2 fa-envelope-o"><span class="label">쇼핑</span></a></li>
+				<li><a href="LibraryForm.do?type=생활"
+					class="icon style2 fa-envelope-o"><span class="label">생활</span></a></li>
 			</ul>
 		</header>
 
 		<!-- Main -->
 		<div>
-
-
 			<!-- Thumbnails -->
 			<div class="thumbnails">
+				<!-- 4*5 배열 -->
 				<div>
-					<c:forEach items="${libraryList}" var="library">
-						<a href="DetailLibFrm.do?libId=${library.libId }" data-poptrox="iframe,1200x800"> <img
-							id="${library.libId }" src="${library.libImagePath }"
+					<c:forEach items="${libraryList}" var="library" begin="0" end="3">
+						<a href="DetailLibFrm.do?libId=${library.libId }"
+							data-poptrox="iframe,1200x800"> <img id="${library.libId }"
+							src="${library.libImagePath }"
 							style="width: 100%; max-width: 300px" />
 						</a>
 					</c:forEach>
 				</div>
 				<div>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a> <a href="assets/feed.html"
-						data-poptrox="iframe,1200x800"><img src="images/thumbs/01.jpg" /></a>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a>
+					<c:forEach items="${libraryList}" var="library" begin="4" end="7">
+						<a href="DetailLibFrm.do?libId=${library.libId }"
+							data-poptrox="iframe,1200x800"> <img id="${library.libId }"
+							src="${library.libImagePath }"
+							style="width: 100%; max-width: 300px" />
+						</a>
+					</c:forEach>
 				</div>
 				<div>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a> <a href="assets/feed.html"
-						data-poptrox="iframe,1200x800"><img src="images/thumbs/01.jpg" /></a>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a>
+					<c:forEach items="${libraryList}" var="library" begin="8" end="11">
+						<a href="DetailLibFrm.do?libId=${library.libId }"
+							data-poptrox="iframe,1200x800"> <img id="${library.libId }"
+							src="${library.libImagePath }"
+							style="width: 100%; max-width: 300px" />
+						</a>
+					</c:forEach>
 				</div>
 				<div>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a> <a href="assets/feed.html"
-						data-poptrox="iframe,1200x800"><img src="images/thumbs/01.jpg" /></a>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a>
+					<c:forEach items="${libraryList}" var="library" begin="12" end="15">
+						<a href="DetailLibFrm.do?libId=${library.libId }"
+							data-poptrox="iframe,1200x800"> <img id="${library.libId }"
+							src="${library.libImagePath }"
+							style="width: 100%; max-width: 300px" />
+						</a>
+					</c:forEach>
 				</div>
 				<div>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a> <a href="assets/feed.html"
-						data-poptrox="iframe,1200x800"><img src="images/thumbs/01.jpg" /></a>
-					<a href="assets/feed.html" data-poptrox="iframe,1200x800"><img
-						src="images/thumbs/01.jpg" /></a>
+					<c:forEach items="${libraryList}" var="library" begin="16" end="19">
+						<a href="DetailLibFrm.do?libId=${library.libId }"
+							data-poptrox="iframe,1200x800"> <img id="${library.libId }"
+							src="${library.libImagePath }"
+							style="width: 100%; max-width: 300px" />
+						</a>
+					</c:forEach>
 				</div>
-		
-
 			</div>
-
-
 		</div>
 
 	</div>
+	<footer>
+		<a href="LibraryForm.do?page=1">1</a> <a href="LibraryForm.do?page=2">2</a>
+		<a href="LibraryForm.do?page=3">3</a> <a href="LibraryForm.do?page=4">4</a>
+		<a href="LibraryForm.do?page=5">5</a> <a href="LibraryForm.do?page=6">6</a>
+	</footer>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>

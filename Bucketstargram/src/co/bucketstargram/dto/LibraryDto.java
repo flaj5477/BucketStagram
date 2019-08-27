@@ -1,5 +1,7 @@
 package co.bucketstargram.dto;
 
+import java.util.ArrayList;
+
 public class LibraryDto {
 	private String libId = null;
 	private String libTitle = null;
@@ -7,10 +9,22 @@ public class LibraryDto {
 	private String libType = null;
 	private String libImagePath = null;
 	private int libLike = 0;
+	private ArrayList<String> libLikeMembList = null;
 	private String libWriteDate = null;
 	
 	public LibraryDto() {
 		super();
+		libLikeMembList = new ArrayList<String>();
+	}
+	
+	
+	public ArrayList<String> getLibLikeMembList() {
+		return libLikeMembList;
+	}
+
+
+	public void addLibLikeMembList(String likeMemb) {
+		this.libLikeMembList.add(likeMemb);
 	}
 	
 	public String getLibId() {
