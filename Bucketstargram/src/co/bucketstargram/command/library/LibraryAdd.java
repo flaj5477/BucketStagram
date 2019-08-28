@@ -1,4 +1,4 @@
-package co.bucketstargram.command.myBucket;
+package co.bucketstargram.command.library;
 
 import java.io.IOException;
 
@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.HttpRes;
 
-public class BucketAddForm implements Command {
+public class LibraryAdd implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("\n--- BucketAddForm.java ---");
+		System.out.println("\n--- LibraryAddForm.java ---");
 		
 		String imagePath = request.getParameter("imagePath");
 		String bucketTitle = request.getParameter("bucketTitle");
@@ -31,8 +31,11 @@ public class BucketAddForm implements Command {
 		request.setAttribute("bucketContent", bucketContent);
 		request.setAttribute("bucketMemberId", bucketMemberId);
 		
-		String viewPage = "jsp/mybucket/BucketAddForm.jsp";
-		HttpRes.forward(request, response, viewPage);
+		String viewPage = "jsp/library/libraryForm.jsp";
+		//HttpRes.forward(request, response, viewPage);
+		response.getWriter().append("<script>")
+		.append("opener.location='"+viewPage+"';")
+		.append("</script>");
 	}
 
 }

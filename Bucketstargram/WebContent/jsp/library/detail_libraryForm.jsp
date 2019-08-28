@@ -10,7 +10,9 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/styles.css">
-<
+<%
+	String userId = (String)session.getAttribute("userid");
+%>
 </head>
 <body>
 	<div class="photo">
@@ -32,17 +34,15 @@
 				<span class="photo__action"> <i class="fa fa-heart-o fa-lg"></i>
 				</span> <span class="photo__action"> <i
 					class="fa fa-comment-o fa-lg"></i>
-				</span> <span class="addBucket"> <a href="javascript:addBucket()"
-					data-poptrox="iframe,600x800">버킷으로 추가(ADD)</a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
+				</span> <span class="addBucket"> <a href="javascript:addBucket()">버킷으로 추가(ADD)</a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
 				</span>
 			</div>
 
 			<form name="addFrm" action="BucketAddForm.do">
 				<input type="hidden" name="imagePath" value="${library.libImagePath }">
-				 
 				<input type="hidden" name="bucketTitle" value="${library.libTitle }"> 
 				<input type="hidden" name="bucketContent" value="${library.libContents }">
-				<input type="hidden" name="bucketMemberId" value="">
+				<input type="hidden" name="bucketMemberId" value="<%=userId%>">
 			</form>
 
 
