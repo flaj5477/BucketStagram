@@ -38,14 +38,14 @@ public class WishListAction implements Command {
 		ReplyDao reDao = new ReplyDao();
 
 		ArrayList<HashMap<String, String>> wBucketInfoList = bDao.getWishBucketInfo(id);
-		ArrayList<HashMap<String, String>> wReplyInfoList = reDao.getWishReplyInfo(id);	
+		//ArrayList<HashMap<String, String>> wReplyInfoList = reDao.getWishReplyInfo(id);	
 		
 		JSONObject wishJson = new JSONObject();
 		
 //		json.put("bucket", JSONObject.toJSONString(wBucketInfoList)); 
 //		json.put("reply", JSONArray.toJSONString(wReplyInfoList)); 이렇게 할 경우 제이슨 객체의 value값으로 배열이 담기는게 아니라 스틀링으로 담긴다 그래서 파싱을 두 번 해줘야됨
 		wishJson.put("bucket", wBucketInfoList);
-		wishJson.put("reply", wReplyInfoList);
+		//wishJson.put("reply", wReplyInfoList);
 		System.out.println("json.toString() = " + wishJson.toString());
 		
 		return wishJson.toString();

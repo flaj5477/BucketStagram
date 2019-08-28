@@ -102,7 +102,11 @@ input[name="wordSearch"] {
 <title>Insert title here</title>
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
-<link rel="stylesheet" href="css/test.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<%
+	String userId = (String)session.getAttribute("userid");
+	String ownerId = (String)session.getAttribute("ownerId");
+%>
 <style>
 
 
@@ -133,8 +137,143 @@ input[name="wordSearch"] {
 
 
 </style>
+<script>
+//위시리스트 JSON 저장 변수
+let wishJson;
+//버킷의 갯수 저장 변수
+let bucketCtn;
+//myBucketList 출력해주는 태그 저장 변수
+let myBucketCloneTag;
 
+let request = new XMLHttpRequest();
 
+function wishList(){
+	console.log("--- wishList() 호출 ---");
+	//document.getElementById("loading").style.display = "block";
+	//wishList 호출 시 mybucketList 이미지 태그들 복사
+	//myBucketCloneTag = $('#bucket_list_container').html();
+	//console.log("myBucketCloneTag = " + myBucketCloneTag);
+	request.open("Post", "WishListAction.do");
+	//성공적으로 요청이 끝났으면 getWishListProcess 실행
+	request.onreadystatechange = getWishListProcess;
+	request.send(null);
+}
+
+function getWishListProcess() {
+	
+	if (request.readyState == 4 && request.status == 200) {
+		console.log("--- wishList Ajax 응답 성공 ---")
+		//document.getElementById("loading").style.display = "none";
+		wishJson = request.responseText;
+		//console.log("wishJson = " + wishJson);
+		
+		//서버로 부터 받은 string 형태의 json 데이터를 json객체로 파싱
+		wishBucketJson = JSON.parse(wishJson);
+		//버킷 갯수 저장
+		wishBucketCtn = wishBucketJson.bucket.length;
+		//태그 초기화
+		tag = "";
+		
+		for (var key=0 ; key<wishBucketCtn ; key++){
+			tag += '<div class="gallery" align="center">' +
+			'<a href="DetailMyBucket.do?bucketId=' + wishBucketJson.bucket[key].bucketId +'" data-poptrox="iframe,1200x805">' +
+			'<img src="' + wishBucketJson.bucket[key].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
+			'<div>' + wishBucketJson.bucket[key].bucket_title + '</div>' +
+			'<div>' + wishBucketJson.bucket[key].bucket_type + '</div>' +
+			'<div>' + wishBucketJson.bucket[key].bucket_like + '</div>' + 
+			'</div>';
+		}
+		//console.log("tag = " + tag)
+		
+		
+		document.getElementById("bucket_list_container").innerHTML = tag;
+		modal();
+	}
+}
+
+//위시리스트 리스트 출력 해주는 태그들 복사 저장 변수
+//let wishCloneTag;
+
+let bucketJson;
+
+//$("#wish").on("click", bucketList());
+		
+function bucketList(){
+/* 	console.log("--- bucketList() 호출 ---");
+	//위시리스트 출력 태그들 복사
+	//wishCloneTag = $('#bucket-list').html();
+	console.log(myBucketCloneTag);
+	//myBucketCloneTag => 위시리스트 이벤트 function시작 시점에 저장됨
+	document.getElementById("bucket_list_container-list").innerHTML = myBucketCloneTag; */
+	
+	console.log("--- bucketList() 호출 ---");
+	//document.getElementById("loading").style.display = "block";\
+	request.open("Post", "MyBucketListAction.do");
+	//성공적으로 요청이 끝났으면 getWishListProcess 실행
+	request.onreadystatechange = getBucketListProcess;
+	request.send(null);
+}
+
+function getBucketListProcess() {
+	
+	if (request.readyState == 4 && request.status == 200) {
+		console.log("--- bucketList Ajax 응답 성공 ---")
+		//document.getElementById("loading").style.display = "none";
+		result = request.responseText;
+		//console.log("result = " + result);
+		
+		//서버로 부터 받은 string 형태의 json 데이터를 json객체로 파싱
+		var bucketJson = JSON.parse(result);
+		//버킷 갯수 저장
+		var bucketCtn = bucketJson.length;
+		//태그 초기화
+		tag = "";
+		var i=0
+		for (i=0 ; i<bucketCtn ; i++){
+			//댓글 정보 태크 생성 작업 부분
+			tag += '<div class="gallery" align="center">' +
+			'<a href="DetailMyBucket.do?bucketId=' + bucketJson[i].bucketId +'" data-poptrox="iframe,1200x805">' +
+			'<img src="' + bucketJson[i].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
+			'<div>' + bucketJson[i].bucket_title + '</div>' +
+			'<div>' + bucketJson[i].bucket_type + '</div>' +
+			'<div>' + bucketJson[i].bucket_like + '</div>' + 
+			'</div>';
+		}
+		//console.log("bucketJson[0].bucketId = " + bucketJson[0].bucketId)
+		//console.log(tag);
+		
+		document.getElementById("bucket_list_container").innerHTML = tag;
+		modal();
+	}
+}
+
+function bucketPost(){
+	location.href = "BucketPostForm.do";
+}
+
+</script>
+<script>
+
+function modal(){
+	var	$window = $(window),
+	$body = $('body'),
+	$wrapper = $('#wrapper');
+
+	$('.gallery').poptrox({
+		onPopupClose: function() { $body.removeClass('is-covered'); },
+		onPopupOpen: function() { $body.addClass('is-covered'); },
+		baseZIndex: 10001,
+		useBodyOverflow: false,
+		usePopupEasyClose: true,
+		overlayColor: '#000000',
+		overlayOpacity: 0.75,
+		popupLoaderText: '',
+		fadeSpeed: 500,
+		usePopupDefaultStyling: false,
+		windowMargin: (skel.breakpoint('small').active ? 5 : 50)
+	});
+}
+</script>
 </head>
 <body>
 	<nav class=navigation>
@@ -195,52 +334,56 @@ input[name="wordSearch"] {
 			</script>
 		</div>
 	</nav>
+	<hr style="margin:0px;">
 <!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Header -->
 		<header id="header">
-			<span class="logo"><a href="Index.do"><img src="images/logo2.png" alt="" /></a></span>
+			<span class="logo" style="margin:0px;"><a href="Index.do"><img src="images/logo2.png" alt="" /></a></span>
 
 			<ul class="topMenu">
 				<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
 				<li><a class="menuLink" href="PopMain.do">Popular</a></li>
 				<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
 			</ul>
-			<hr>
-			
+			<ul class="topMenu" style="margin:15px;">
+				<li id = "myBucket" onclick="bucketList()" style="cursor:pointer;" >버킷리스트</li>
+				<li id ="wishBucket" onclick="wishList()" style="cursor:pointer;" >위시리스트</li>
+				<li id ="post" onclick = "bucketPost()" style="cursor:pointer;" >등록</li>
+			</ul>
+			<br>
 			<ul class="icons">
-				<li><a href="PopMain.do" class="icon style2 fa-twitter"><span
+				<li><a href="#" class="icon style2 fa-twitter"><span
 						class="label">전체</span></a></li>
-				<li><a href="Travel.do" class="icon style2 fa-facebook"><span
+				<li><a href="#" class="icon style2 fa-facebook"><span
 						class="label">여행</span></a></li>
-				<li><a href="Sport.do" class="icon style2 fa-instagram"><span
+				<li><a href="#" class="icon style2 fa-instagram"><span
 						class="label">운동</span></a></li>
-				<li><a href="Food.do" class="icon style2 fa-500px"><span
+				<li><a href="#" class="icon style2 fa-500px"><span
 						class="label">음식</span></a></li>
-				<li><a href="NewSkill.do" class="icon style2 fa-envelope-o"><span
+				<li><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">배움</span></a></li>
-				<li><a href="Culture.do" class="icon style2 fa-envelope-o"><span
+				<li><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">문화</span></a></li>
-				<li><a href="Shopping.do" class="icon style2 fa-envelope-o"><span
+				<li><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">쇼핑</span></a></li>
-				<li><a href="LifeStyle.do" class="icon style2 fa-envelope-o"><span
+				<li><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">생활</span></a></li>
 			</ul>
 		</header>
-				
- 		<!-- <div class="thumbnails" >  -->
-		<c:forEach items="${bucketList}" var="bucket">
-			 <div class="gallery" align="center">
-				<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805">
-					<img src="${bucket.bucketImagePath }" style="width: 350px; height:328px;" />  
-				</a>
-				
-				<div>${bucket.bucketTitle }</div>
-				<div>${bucket.bucketType}</div>
-				<div>${bucket.bucketLike}</div> 
-			</div>
-		 </c:forEach>
-	</div>  
+		<div id="bucket_list_container">
+			<c:forEach items="${bucketList}" var="bucket">
+				 <div class="gallery" align="center">
+					<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805">
+						<img src="${bucket.bucketImagePath }" style="width: 350px; height:328px;" />  
+					</a>
+					<div>${bucket.bucketTitle }</div>
+					<div>${bucket.bucketType}</div>
+					<div>${bucket.bucketLike}</div> 
+				</div>
+			 </c:forEach>
+		 </div>
+	</div> 
     <script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.poptrox.min.js"></script>
 	<script src="assets/js/skel.min.js"></script>

@@ -19,19 +19,20 @@ public class OtherBucket implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("--- OtherBucket.java ---");
-		BucketDao bucketDao = new BucketDao();
-		//ReplyDao replyDao = new ReplyDao();
-		
-		HttpSession session = request.getSession(true);
 		String ownerId = request.getParameter("ownerId");
 		System.out.println("ownerId = " + ownerId);
 		
+		BucketDao bucketDao = new BucketDao();
+		//ReplyDao replyDao = new ReplyDao();
 		ArrayList<BucketDto> bucketList = bucketDao.select(ownerId);
 		//ArrayList<HashMap<String, String>> myBucketList = bucketDao.getMyBucketInfo(userid);
 		
+		HttpSession session = request.getSession(true);
 		session.setAttribute("ownerId", ownerId);
+		String idTest = (String)session.getAttribute("ownerId");
+		System.out.println("ownerIdTest = " + idTest);
 		request.setAttribute("bucketList", bucketList);
-		String viewPage = "jsp/mybucket/MyBucket.jsp";
+		String viewPage = "jsp/mybucket/MyBucket2.jsp";
 		HttpRes.forward(request, response, viewPage);
 	}
 

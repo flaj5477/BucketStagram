@@ -10,11 +10,20 @@
 <body>
 	<form action="BucketPostAction.do" method="post" enctype="multipart/form-data">
 		<br>
-		제목: <input type="text" name="bucketTitle">
+		버킷 제목 : <input type="text" name="bucketTitle">
 		<br>
-		내용: <input type="text" name="bucketContent">
+		버킷 내용 : <input type="text" name="bucketContent">
 		<br>
-		사진: <input type="file" id="getfile" name="getfile">
+		버킷 타입 : <select name="bucketType">
+					<option value ="여행">여행</option>
+					<option value ="운동">운동</option>
+					<option value ="음식">음식</option>
+					<option value ="배움">배움</option>
+					<option value ="문화">문화</option>
+					<option value ="쇼핑">쇼핑</option>
+					<option value ="생활">생활</option>
+				</select>
+		버킷 사진 : <input type="file" id="getfile" name="getfile">
 		<br>
 		<input type="submit" value="전송">
  		<a id="download" download="thumbnail.jpg" target="_blank" style="display:none">

@@ -82,7 +82,10 @@ public class BucketDao {
 		// TODO Auto-generated method stub
 		ArrayList<BucketDto> bucketList = null;
 		BucketDto bucket = null;
-		String sql = "SELECT * FROM bucket_info_tb JOIN (SELECT mwl_bucket_id, COUNT(*) like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) ON bucket_id = mwl_bucket_id AND bucket_member_id=?";
+		String sql = "SELECT * FROM bucket_info_tb LEFT OUTER JOIN " + 
+				             "(SELECT mwl_bucket_id, COUNT(*) like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) " + 
+				              "ON bucket_id = mwl_bucket_id " + 
+				              "WHERE bucket_member_id=?";
 		
 		try {
 			bucketList = new ArrayList<BucketDto>();
@@ -114,47 +117,50 @@ public class BucketDao {
 		return bucketList;
 	}
 
-//	public HashMap<String, String> getBucketInfo(String imageId, String userId) {
-//		// TODO Auto-generated method stub'
-//		ArrayList<HashMap<String, String>> bucketInfoList = null;
-//		HashMap<String, String> bucket = null;
-//		String likeYN = getLikeYN(imageId, userId);
-//		String bucket_like = getLikeCnt(imageId, userId);
-//		
-//		String sql = "SELECT * FROM bucket_info_tb WHERE bucket_id = ?";
-//		
-//		try {
-//			bucketInfoList = new ArrayList<HashMap<String, String>>();
-//			psmt = conn.prepareStatement(sql);
-//			psmt.setString(1, imageId);
-//			rs = psmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				bucket = new HashMap<String, String>();
-//				
-//				bucket.put("bucketId",rs.getString("BUCKET_ID"));
-//				bucket.put("bucketMemberId",rs.getString("BUCKET_MEMBER_ID"));
-//				bucket.put("bucket_title",rs.getString("BUCKET_TITLE"));
-//				bucket.put("bucket_contents",rs.getString("BUCKET_CONTENTS"));
-//				bucket.put("bucket_type",rs.getString("BUCKET_TYPE"));
-//				bucket.put("bucket_compliation",rs.getString("BUCKET_COMPLIATION"));
-//				bucket.put("bucket_like", bucket_like);
-//				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
-//				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
-//				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
-//				bucket.put("likeYN", likeYN);
-//				
-//				bucketInfoList.add(bucket);
-//			}
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			close();
-//		}
-//		
-//		return bucket;
-//	}
+	public ArrayList<HashMap<String, String>> getBucketInfo(String userId) {
+		// TODO Auto-generated method stub'
+		ArrayList<HashMap<String, String>> bucketInfoList = null;
+		HashMap<String, String> bucket = null;
+		
+		String sql = "select * from (select * from (select * from bucket_info_tb where bucket_member_id = ?) left outer join " + 
+				                   "(select mwl_bucket_id, count(*) likeCnt from member_wish_list_Tb GROUP BY mwl_bucket_id) " + 
+				                   "on bucket_id = mwl_bucket_id) " + 
+				                   "left outer join " + 
+				                   "(select re_bucket_id, count(*) replyCnt from bucket_reply_tb group by re_bucket_id) " + 
+				                   "on bucket_id = re_bucket_id";
+		
+		try {
+			bucketInfoList = new ArrayList<HashMap<String, String>>();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				bucket = new HashMap<String, String>();
+				
+				bucket.put("bucketId",rs.getString("BUCKET_ID"));
+				bucket.put("bucketMemberId",rs.getString("BUCKET_MEMBER_ID"));
+				bucket.put("bucket_title",rs.getString("BUCKET_TITLE"));
+				bucket.put("bucket_contents",rs.getString("BUCKET_CONTENTS"));
+				bucket.put("bucket_type",rs.getString("BUCKET_TYPE"));
+				bucket.put("bucket_compliation",rs.getString("BUCKET_COMPLIATION"));
+				bucket.put("bucket_like", Integer.toString(rs.getInt("likeCnt")));
+				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
+				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
+				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
+				bucket.put("likeYN", "N");
+				
+				bucketInfoList.add(bucket);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return bucketInfoList;
+	}
 	
 	private String getLikeCnt(String imageId, String userId) {
 		// TODO Auto-generated method stub
@@ -257,7 +263,10 @@ public class BucketDao {
 		
 		ArrayList<HashMap<String, String>> bucketInfoList = null;
 		HashMap<String, String> bucket = null;
-		String sql = "SELECT bucket_info_tb.*, likeCnt FROM bucket_info_tb, (SELECT mwl_bucket_id, COUNT(*) likeCnt FROM member_wish_list_Tb GROUP BY mwl_bucket_id) WHERE bucket_id=mwl_bucket_id AND mwl_bucket_id IN (SELECT mwl_bucket_id FROM member_wish_list_tb WHERE mwl_member_id = ?)";
+		String sql = "SELECT * FROM (SELECT bucket_info_tb.*, likeCnt FROM bucket_info_tb, (SELECT mwl_bucket_id, COUNT(*) likeCnt FROM member_wish_list_Tb GROUP BY mwl_bucket_id) " + 
+				                    "WHERE bucket_id=mwl_bucket_id AND mwl_bucket_id IN (SELECT mwl_bucket_id FROM member_wish_list_tb WHERE mwl_member_id = ?)), " + 
+				                    "(SELECT re_bucket_id, COUNT(*) reply_cnt FROM bucket_reply_tb GROUP BY re_bucket_id) " + 
+				     "WHERE bucket_id = re_bucket_id";
 		
 		try {
 			bucketInfoList = new ArrayList<HashMap<String, String>>();
@@ -280,6 +289,7 @@ public class BucketDao {
 				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
 				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
 				bucket.put("likeYN", "Y");
+				bucket.put("replyCnt", Integer.toString(rs.getInt("REPLY_CNT")));
 				
 				bucketInfoList.add(bucket);
 			}
@@ -351,7 +361,10 @@ public class BucketDao {
 		
 		String likeYN = getLikeYN(bucketId, userId);
 		int replyCnt = getReplyCnt(bucketId);
-		String sql = "SELECT bi.*, li.like_cnt FROM bucket_info_tb bi, (SELECT mwl_bucket_id, count(*) AS like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) li WHERE bucket_id = mwl_bucket_id AND bucket_id = ?";
+		String sql = "SELECT * FROM (SELECT * FROM bucket_info_tb WHERE bucket_id = ?) " + 
+								    "LEFT OUTER JOIN " + 
+								    "(SELECT mwl_bucket_id, COUNT(*) like_cnt FROM member_wish_list_tb GROUP BY mwl_bucket_id) " + 
+								    "ON bucket_id = mwl_bucket_id";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -402,6 +415,26 @@ public class BucketDao {
 		}
 		
 		return replyCnt;
+	}
+
+	public String getImagePathbucketId(String bucketId) {
+		// TODO Auto-generated method stub
+		String imagePath=null;
+		String sql ="SELECT bucket_image_path FROM bucket_info_tb WHERE bucket_id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, bucketId);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				imagePath = rs.getString("bucket_image_path");
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+		}finally {
+			close();
+		}
+		return imagePath;
 	}
 
 

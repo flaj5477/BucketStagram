@@ -31,7 +31,7 @@ public class DetailMyBucket implements Command {
 		ReplyDao replyDao = new ReplyDao();
 		BucketDto bucket = bucketDao.getBucketInfo(userId, bucketId);
 		ArrayList<ReplyDto> replyList = replyDao.getReplyInfo(bucketId);
-		System.out.println(bucket.getBucketImagePath());
+		System.out.println("DetailMyBucket.java | bucket.getBucketImagePath() = " + bucket.getBucketImagePath());
 		session.setAttribute("ownerId", userId);
 		request.setAttribute("bucket", bucket);
 		request.setAttribute("replyList", replyList);

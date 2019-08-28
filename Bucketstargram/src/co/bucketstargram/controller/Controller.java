@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.bucketstargram.command.index.Index;
+import co.bucketstargram.command.library.LibraryAdd;
 import co.bucketstargram.command.library.DetailLibFrm;
 import co.bucketstargram.command.library.LibraryForm;
 import co.bucketstargram.command.member.IdCheck;
@@ -27,7 +28,7 @@ import co.bucketstargram.command.myBucket.BucketPostForm;
 import co.bucketstargram.command.myBucket.CompletionAction;
 import co.bucketstargram.command.myBucket.DeleteAction;
 import co.bucketstargram.command.myBucket.DetailMyBucket;
-import co.bucketstargram.command.myBucket.GetBucketInfo;
+import co.bucketstargram.command.myBucket.MyBucketListAction;
 import co.bucketstargram.command.myBucket.WishListAction;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
@@ -72,7 +73,7 @@ public class Controller extends HttpServlet {
         map.put("/DetailMyBucket.do", new DetailMyBucket());
         map.put("/BucketPostForm.do", new BucketPostForm());
         map.put("/BucketPostAction.do", new BucketPostAction());
-        map.put("/GetBucketInfo.do", new GetBucketInfo());
+        map.put("/MyBucketListAction.do", new MyBucketListAction());
         map.put("/AppendReplyAction.do", new AppendReplyAction());
         map.put("/LikeAction.do", new LikeAction());
         map.put("/WishListAction.do", new WishListAction());
@@ -85,6 +86,7 @@ public class Controller extends HttpServlet {
         //화정
         map.put("/LibraryForm.do", new LibraryForm());
         map.put("/DetailLibFrm.do", new DetailLibFrm());
+        map.put("/LibraryAdd.do", new LibraryAdd());
 
         //동규
         map.put("/GetSearch.do", new GetSearch());

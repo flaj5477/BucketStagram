@@ -26,11 +26,11 @@ public class MyBucket implements Command {
 		String userid = (String)session.getAttribute("userid");
 		ArrayList<BucketDto> bucketList = bucketDao.select(userid);
 		//ArrayList<HashMap<String, String>> myBucketList = bucketDao.getMyBucketInfo(userid);
-		for(BucketDto dto : bucketList) {
-			System.out.println("dto.getBucketId() = " + dto.getBucketId());
-			System.out.println("dto.getBucketImagePath() = " + dto.getBucketImagePath());
-			System.out.println("dto.getBucketLikeCnt() = " + dto.getBucketLike());
-		}
+//		for(BucketDto dto : bucketList) {
+//			System.out.println("dto.getBucketId() = " + dto.getBucketId());
+//			System.out.println("dto.getBucketImagePath() = " + dto.getBucketImagePath());
+//			System.out.println("dto.getBucketLikeCnt() = " + dto.getBucketLike());
+//		}
 		
 //		ArrayList<BucketDto> div1 = new ArrayList<BucketDto>();
 //		ArrayList<BucketDto> div2 = new ArrayList<BucketDto>();
