@@ -14,7 +14,7 @@
 	String userId = (String)session.getAttribute("userid");
 %>
 </head>
-<body>
+<body><!-- 주석   -->
 	<div class="photo">
 		<img src="${library.libImagePath }" align="left" width="600"
 			, height="800">

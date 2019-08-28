@@ -23,16 +23,40 @@
 		<div class="slide1">
 			<h2>Library</h2>
 		  	<div class="libSlider" align ="center">
-				<c:forEach items="${getLibrarySearch}" var="dto">
-					<div class="gallery">
+		  		<c:forEach items="${getLibrarySearch}" var="dto">
+			  		<div class="gallery">
 						<a target="_blank" href="DetailLibFrm.do?libId=${dto.libId}"
 						   data-poptrox="iframe,1200x800">
 							<img id="${dto.libId}" src="${dto.libImagePath}"/>
+						<span class="type">
+							<c:if test="${dto.libType == '여행'}">
+								<p style="color:#00C5BC">TRAVEL</p>
+							</c:if>
+							<c:if test="${dto.libType == '운동'}">
+								<p style="color:#231815">SPORTS</p>
+							</c:if>
+							<c:if test="${dto.libType == '음식'}">
+								<p style="color:#FD8B42">FOOD</p>
+							</c:if>
+							<c:if test="${dto.libType == '배움'}">
+								<p style="color:#C78646">STUDY</p>
+							</c:if>
+							<c:if test="${dto.libType == '문화'}">
+								<p style="color:#9F7ED7">CULTURE</p>
+							</c:if>
+							<c:if test="${dto.libType == '야외'}">
+								<p style="color:#6FC073">OUTDOOR</p>
+							</c:if>
+							<c:if test="${dto.libType == '쇼핑'}">
+								<p style="color:#EFC648">SHOPPING</p>
+							</c:if>
+							<c:if test="${dto.libType == '생활'}">
+								<p style="color:#87ADF8">LIFESTYLE</p>
+							</c:if>
+						</span>
+						<span class="title">${dto.libTitle}</span>
 						</a>
-						<div class="type">${dto.libType}</div>
-						<div class="title">${dto.libTitle}</div>
 						<div class="contents">${dto.libLike}</div>
-						<div>${dto.libId}</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -47,11 +71,35 @@
 						<a target="_blank" href="DetailMyBucket.do?bucketId=${dto.bucketId}"
 						   data-poptrox="iframe,1200x800">
 							<img id="${dto.bucketId}" src="${dto.bucketImagePath}"/>
+						<span class="type">
+							<c:if test="${dto.bucketType == '여행'}">
+								<p style="color:#00C5BC">TRAVEL</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '운동'}">
+								<p style="color:#231815">SPORTS</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '음식'}">
+								<p style="color:#FD8B42">FOOD</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '배움'}">
+								<p style="color:#C78646">STUDY</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '문화'}">
+								<p style="color:#9F7ED7">CULTURE</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '야외'}">
+								<p style="color:#6FC073">OUTDOOR</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '쇼핑'}">
+								<p style="color:#EFC648">SHOPPING</p>
+							</c:if>
+							<c:if test="${dto.bucketType == '생활'}">
+								<p style="color:#87ADF8">LIFESTYLE</p>
+							</c:if>
+						</span>	
+						<span class="title">${dto.bucketTitle}</span>
 						</a>
-						<div class="type">${dto.bucketType}</div>
-						<div class="title">${dto.bucketTitle}</div>
 						<div class="contents">${dto.bucketLike}</div>
-						<div>${dto.bucketId}</div>
 					</div>
 				</c:forEach>
 			</div>
