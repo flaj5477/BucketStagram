@@ -13,7 +13,7 @@
 	String bucketContent = (String)request.getAttribute("bucketContent");
 	String bucketMemberId = (String)request.getAttribute("bucketMemberId");
 	
-	
+	System.out.println("이미지 경로: " + imagePath);
 	//자바스크립트가 백슬러시 하나 일경우 인식 못하고 깨지는 현상 때문에 치환함
 	String replaceImagePath = imagePath.replace("\\", "\\\\");
 %>

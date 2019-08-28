@@ -38,7 +38,7 @@
 				</span>
 			</div>
 
-			<form name="addFrm" action="BucketAddForm.do">
+			<form name="addFrm" action="LibraryAddForm.do">
 				<input type="hidden" name="imagePath" value="${library.libImagePath }">
 				<input type="hidden" name="bucketTitle" value="${library.libTitle }"> 
 				<input type="hidden" name="bucketContent" value="${library.libContents }">
