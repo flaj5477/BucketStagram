@@ -85,7 +85,6 @@ public class LibraryDao {
 			while(rs.next()) {
 				library = new LibraryDto();
 				library.setLibId(rs.getString("LIB_ID"));
-				System.out.println(rs.getString("LIB_ID"));
 				//library.setLibTitle(rs.getString("LIB_TITLE"));
 				//library.setLibContents(rs.getString("LIB_CONTENTS"));
 				library.setLibType(rs.getString("LIB_TYPE"));

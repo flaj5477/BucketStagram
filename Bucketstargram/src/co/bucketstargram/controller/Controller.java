@@ -111,7 +111,6 @@ public class Controller extends HttpServlet {
         String contextPath = request.getContextPath();
         String path = uri.substring(contextPath.length()); //최종path
         
-        System.out.println("uri = " + uri);
 //        System.out.println("contextPath = " + contextPath);
 //        System.out.println("path = " + path);
 //        System.out.println("map.size() = " + map.size());
