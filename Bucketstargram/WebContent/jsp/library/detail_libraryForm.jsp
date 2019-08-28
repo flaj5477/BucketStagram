@@ -39,7 +39,7 @@
 
 			<form name="addFrm" action="BucketAddForm.do">
 				<input type="hidden" name="imagePath" value="${library.libImagePath }">
-				${library.libTitle } 
+				 
 				<input type="hidden" name="bucketTitle" value="${library.libTitle }"> 
 				<input type="hidden" name="bucketContent" value="${library.libContents }">
 				<input type="hidden" name="bucketMemberId" value="">
