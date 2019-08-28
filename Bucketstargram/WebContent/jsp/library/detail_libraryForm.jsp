@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/styles.css">
@@ -31,10 +32,9 @@
 			</div>
 
 			<div class="photo__actions">
-				<span class="photo__action"> <i class="fa fa-heart-o fa-lg"></i>
-				</span> <span class="photo__action"> <i
-					class="fa fa-comment-o fa-lg"></i>
-				</span> <span class="addBucket"> <a href="javascript:addBucket()">버킷으로 추가(ADD)</a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
+				<span class="photo__action"> <i class="fa fa-heart-o fa-lg"></i> </span> 
+				<span class="addBucketphoto__action"> 
+					<a href="javascript:addBucket()" id="add"><i class="fa fa-plus" aria-hidden="true"></i></a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
 				</span>
 			</div>
 
@@ -58,7 +58,17 @@
 	<script>
 		function addBucket() {
 			document.addFrm.submit();
-		}
+		};
+		
+		$( document ).ready(function(){		//로그인 해야 add(+)버튼 보이게 하는 함수	
+			console.log("로그인 아이디 = " + "<%= userId%>");
+		
+			$("#add").css("display", "none");//add태그 숨기기
+			
+			if("<%= userId%>" != "null" ){
+				$("#add").css("display", "contents")//add태그 보이기
+			}
+		});
 	</script>
 	
 	<!-- Scripts -->
