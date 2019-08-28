@@ -61,12 +61,13 @@ div.gallery img {
 	height: 60%;
 }
 
-div.type {
+span.type p {
+	font-weight: bold;
 	padding: 10px;
 	text-align: center;
 }
 
-div.title {
+span.title {
 	padding: 5px;
 	text-align: center;
 }
@@ -96,4 +97,4 @@ div.slide1 .bx-prev,div.slide2 .bx-prev {
 }	
 div.slide1 .bx-next,div.slide2 .bx-next {
 	left: calc(100% + 20px);	
-}	
+}
