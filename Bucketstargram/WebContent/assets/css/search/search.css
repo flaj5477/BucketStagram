@@ -45,7 +45,7 @@ div.border {
 }
 
 div.gallery {
-	margin: 5px;
+	margin: 0 5px 0 0;
 	border: 1px solid #ccc;
 	float: left;
 	width: 600px;
@@ -71,7 +71,7 @@ div.title {
 	text-align: center;
 }
 
-div.like {
+div.contents {
 	padding: 10px;
 	text-align: center;
 }
