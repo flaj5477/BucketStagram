@@ -346,6 +346,7 @@ a {
 				tag = "<i class='fa fa-check-circle-o' aria-hidden='true' style='color:black;' onclick='completeAction();'></i>"
 				document.getElementById("complete").innerHTML = tag;
 			}
+			
 			//버킷의 소유자와 사용자 아이디가 동일할 경우 좋아요 클릭 방지
 			//동일할 경우 수정, 삭제, 도전중 유무 클릭 가능
 			if(bucketJson.bucket.bucketMemberId == "<%= userid%>"){
@@ -640,12 +641,12 @@ $(window).on('load', function() {
 				</div>
 				<div id = "add-view">
 					<span class = "add-view-child">
-						<span id="like"><i class="fa fa-heart-o" aria-hidden="true" onclick="likeAction();"></i></span>
-						<span id="complete"><i class="fa fa-check-circle-o" aria-hidden="true" onclick="completeAction();"></i></span>
-						<span id="delete"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteAction();"></i></span>
-						<span id="update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-						<span id="add"><i class="fa fa-plus" aria-hidden="true" onclick="addAction();"></i></span>
-						<span id="chat"><i class="fa fa-commenting-o" aria-hidden="true" onclick="$('#reply-textArea').focus();"></i></span>
+						<span id="like" style="cursor:pointer;" ><i class="fa fa-heart-o" aria-hidden="true" ></i></span>
+						<span id="complete" style="cursor:pointer;" ><i class="fa fa-check-circle-o" aria-hidden="true" onclick="completeAction();"></i></span>
+						<span id="delete" style="cursor:pointer;" ><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteAction();"></i></span>
+						<span id="update" style="cursor:pointer;" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+						<span id="add" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true" onclick="addAction();"></i></span>
+						<span id="chat" style="cursor:pointer;" ><i class="fa fa-commenting-o" aria-hidden="true" onclick="$('#reply-textArea').focus();"></i></span>
 					</span>
 					<span class = "cnts" id="total-reply-view">
 					</span>

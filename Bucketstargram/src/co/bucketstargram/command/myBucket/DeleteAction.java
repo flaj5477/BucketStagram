@@ -15,9 +15,10 @@ public class DeleteAction implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("DeleteAction.java");
+		System.out.println("--- DeleteAction.java ---");
 		BucketDao dao = new BucketDao();
 		String bucketId = request.getParameter("bucketId");
+		System.out.println("bucketId = " + bucketId);
 		
 		String deleteResult = dao.delete(bucketId); 
 		System.out.println("deleteResult = " + deleteResult);
