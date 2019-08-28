@@ -12,6 +12,7 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.js"></script>
 <script type="text/javascript" src="assets/js/searchSlide.js"></script>
+<script type="text/javascript" src="assets/js/search.js"></script>
 <script src="assets/js/all.js"></script>
 </head>
 <body>
@@ -19,21 +20,22 @@
 	<jsp:include page = "../category/nav.jsp"/>
 	<jsp:include page = "../category/header.jsp"/>
 	<div class="border">
-		<h2><strong style="color:#1A99EE">'<%=word%>'</strong>에 대한 검색 결과입니다.</h2>
+		<h2><strong style="color:#FD8AB1">'<%=word%>'</strong>에 대한 검색 결과입니다.</h2>
 		<div class="slide1">
 			<h2>Library</h2>
 		  	<div class="libSlider" align ="center">
 		  		<c:forEach items="${getLibrarySearch}" var="dto">
-			  		<div class="gallery">
+			  		<div class="gallery" id="${dto.libId}">
 						<a target="_blank" href="DetailLibFrm.do?libId=${dto.libId}"
-						   data-poptrox="iframe,1200x800">
-							<img id="${dto.libId}" src="${dto.libImagePath}"/>
+						   data-poptrox="iframe,1200x800"
+						   >
+							<img src="${dto.libImagePath}"/>
 						<span class="type">
 							<c:if test="${dto.libType == '여행'}">
 								<p style="color:#00C5BC">TRAVEL</p>
 							</c:if>
 							<c:if test="${dto.libType == '운동'}">
-								<p style="color:#231815">SPORTS</p>
+								<p style="color:#FD8AB1">SPORTS</p>
 							</c:if>
 							<c:if test="${dto.libType == '음식'}">
 								<p style="color:#FD8B42">FOOD</p>
