@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 <%	
-	
 	String userId = (String)session.getAttribute("userid");
 	String ownerId = (String)session.getAttribute("ownerId");
 %>
@@ -47,10 +46,10 @@ var request = new XMLHttpRequest();
 	
 $( document ).ready(function(){
 	if(likeYN == "Y"){
-		tag = "<i class='fa fa-heart' style='color:red;' aria-hidden='true' onclick='likeAction();'></i>";
+		tag = "<i class='fa fa-heart' style='color:red;' aria-hidden='true'></i>";
 		document.getElementById("like").innerHTML = tag; 
 	}else{
-		tag = "<i class='fa fa-heart-o' aria-hidden='true' onclick='likeAction();'></i>";
+		tag = "<i class='fa fa-heart-o' aria-hidden='true'></i>";
 		document.getElementById("like").innerHTML = tag;
 	}
 	
@@ -77,6 +76,8 @@ $( document ).ready(function(){
 		tag = "<i class='fa fa-check-circle-o' aria-hidden='true' style='color:black;' onclick='completeAction();'></i>"
 		document.getElementById("completion").innerHTML = tag;
 	}
+	
+	autoScrollDown();
 });
 </script>
 <script>
@@ -99,7 +100,7 @@ function likeProcess() {
 		//DB작업이 완료되고 좋아요를 하는 상태일 경우 사랑표 빨간색으로 변경 및 좋아요 갯수 추가
 		if(likeStatus == "insertSuccess"){
 			//좋아요를 할 경우 
-			tag = "<i class='fa fa-heart' style='color:red;' aria-hidden='true' onclick='likeAction();'></i>";
+			tag = "<i class='fa fa-heart' style='color:red;' aria-hidden='true'></i>";
 			document.getElementById("like").innerHTML = tag;
 			//좋아요 한 상태 이므로 Y로 변경
 			likeYN="Y";
@@ -108,7 +109,7 @@ function likeProcess() {
 			document.getElementById("total-like-view").innerHTML = "좋아요 " + likeCnt + "개";
 			//wishList();
 		}else if(likeStatus == "deleteSuccess"){
-			tag = "<i class='fa fa-heart-o' aria-hidden='true' onclick='likeAction();'></i>";
+			tag = "<i class='fa fa-heart-o' style='color:black;' aria-hidden='true'></i>";
 			document.getElementById("like").innerHTML = tag;
 			likeYN="N";
 			//좋아요 한 개 감소
@@ -188,6 +189,7 @@ function appendProcess() {
 			console.log("DB작업 실패");
 		}
 		$('#bucket_repl').append(tag);
+		autoScrollDown();
 	}
 }
 
@@ -239,6 +241,11 @@ function addAction(){
 		return false;
 	}
 }
+
+function autoScrollDown(){
+	$("#chat_scrol_div").scrollTop($("#chat_scrol_div")[0].scrollHeight);				
+}
+
 </script>
 <style>
 div::-webkit-scrollbar { 
@@ -256,7 +263,7 @@ function test(){
 		<div  style="display:inline-block;">
 			<img src="${bucket.bucketImagePath }" align="left" width="600" height="800">
 		</div>
-		<div style="margin-left:10px;height:780px;width:550px;display:inline-block;font-size: 30px;overflow-y: scroll;">
+		<div id="chat_scrol_div" style="margin-left:10px;height:780px;width:550px;display:inline-block;font-size: 30px;overflow-y: scroll;">
 			<div class="photo__header">
 				<img src="images/avatar.jpg" class="photo__avatar">
 				<div class="photo__user-info">

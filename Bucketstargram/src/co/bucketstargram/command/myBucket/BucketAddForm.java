@@ -24,9 +24,7 @@ public class BucketAddForm implements Command {
 		String bucketContent = request.getParameter("bucketContent");
 		String bucketMemberId = request.getParameter("bucketMemberId");
 		
-
-		System.out.println("imagePath = " + bucketId);
-
+		System.out.println("bucketId = " + bucketId);
 		System.out.println("bucketTitle = " + bucketTitle);
 		System.out.println("bucketContent = " + bucketContent);
 		System.out.println("bucketMemberId = " + bucketMemberId);

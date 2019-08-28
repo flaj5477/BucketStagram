@@ -436,6 +436,4 @@ public class BucketDao {
 		}
 		return imagePath;
 	}
-
-
 }

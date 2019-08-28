@@ -24,19 +24,28 @@
 <body>
 <form action="" id="buckt_add_form" method="post" enctype="multipart/form-data" onsubmit="bucketAdd();">
 	<br>
-	제목: <input type="text" id="bucketTitle" name="bucketTitle" value="<%=bucketTitle %>">
+	버킷	제목: <input type="text" id="bucketTitle" name="bucketTitle" placeholder="<%=bucketTitle %>">
 	<br>
 	<c:choose>
 		<c:when test="${bucketContent eq null}">
-			내용: <input type="text" id="bucketContent" name="bucketContent" value="">
+		버킷 내용: <input type="text" id="bucketContent" name="bucketContent" placeholder="">
 			<br>	
 		</c:when>
 		<c:otherwise>
-			내용: <input type="text" id="bucketContent" name="bucketContent" value="<%=bucketContent %>">
+		버킷	내용: <input type="text" id="bucketContent" name="bucketContent" placeholder="<%=bucketContent %>">
 			<br>			
 		</c:otherwise>	
 	</c:choose>
-	사진: <input type="file" id="getfile" accept="image/*">
+	버킷 타입 : <select id="bucketType" name="bucketType">
+					<option value ="여행">여행</option>
+					<option value ="운동">운동</option>
+					<option value ="음식">음식</option>
+					<option value ="배움">배움</option>
+					<option value ="문화">문화</option>
+					<option value ="쇼핑">쇼핑</option>
+					<option value ="생활">생활</option>
+			 	</select>
+	버킷 사진: <input type="file" id="getfile" accept="image/*">
 	<br>
 	<input type="submit" value="전송">
 	<h4 id="image_owner_alarm"  style="color:red;"><%=bucketMemberId %>님 사진을 그대로 사용중입니다.</h4>
@@ -47,9 +56,11 @@
 <script>
 	let oriImagePath = "<%=replaceImagePath%>";
 	function bucketAdd(){
-		let bucketTitle = $('#bucketTitle').attr("value");
-		let bucketContent = $('#bucketContent').attr("value");
+		$('#bucketTitle').val();
+		let bucketTitle = $('#bucketTitle').val();
+		let bucketContent = $('#bucketContent').val();
 		let thumImagePath = $('#thumbnail').attr("src");
+		let bucketType = $("#bucketType option:selected").val();
 		let frmActionValue;
 		
 		console.log("bucketTitle = " + bucketContent);
@@ -61,7 +72,10 @@
 			$("#buckt_add_form").attr("action", frmActionValue);
 		}else{
 			//이미지를 바꿨을 경우 멀티 리퀘스트폼이 아닌 서버에서 해당 이미지 경로의 이미지를 복사하여 나의 버킷에 추가 되도록 구현
-			frmActionValue = document.location.href = "BucketAddAction.do?imagePath=" + encodeURIComponent(thumImagePath, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" + bucketContent + "&ownerId=" + "<%=bucketMemberId%>";
+			frmActionValue = document.location.href = "BucketAddAction.do?imagePath=" + 
+					encodeURIComponent(thumImagePath, true) + "&bucketTitle=" + bucketTitle + 
+					"&bucketContent=" + bucketContent + "&ownerId=" + "<%=bucketMemberId%>" +
+					"&bucketType=" + bucketType;
 			$("#buckt_add_form").attr("action", frmActionValue);
 		}
 	};
