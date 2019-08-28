@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
-
 <style>
 .gallery {
 	display: inline;
@@ -17,24 +16,20 @@
 	width: 450px;
 	height: 450px;
 }
-
 .navigation__column input {
 	border: 1px solid #e6e6e6;
 	border-radius: 3px;
 	font-size: 10px;
 }
-
 form[name="frm_Search"] {
 	text-align: center;
 	margin: 0 auto;
 }
-
 input[name="wordSearch"] {
 	height: 2em;
 	text-align: left
 }
 </style>
-
 </head>
 <body>
 	<nav class=navigation>
@@ -140,9 +135,7 @@ input[name="wordSearch"] {
 				</div>
 			</c:forEach>
 		</section>
-
 	</div>
-
 	<%-- 			<!-- Thumbnails -->
 			<div class="thumbnails">
 				<!-- 4*5 배열 -->
