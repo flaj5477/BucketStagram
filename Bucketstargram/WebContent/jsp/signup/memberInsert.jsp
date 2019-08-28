@@ -3,45 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>회원가입 </title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css"> 
-    <style>
- #c { 
-  margin-left: 10px;
-  border: 0;
-  color: white;
-  font-weight: 600;
-  border-radius: 3px;
-  background-color: var(--fd-blue);
-  font-size: 14px;
-  padding: 7px 25px;
-    }
- #s {  
- margin-left: 235px;
-  border: 0;
-  color: white;
-  font-weight: 600;
-  border-radius: 3px;
-  background-color: var(--fd-blue);
-  font-size: 14px;
-  padding: 7px 25px;
- } 
- #b {  
-  margin-left: 10px;
-  border: 0;
-  color: white;
-  font-weight: 600;
-  border-radius: 3px;
-  background-color: var(--fd-blue);
-  font-size: 14px;
-  padding: 7px 25px;
- } 
-    
-    </style>
+<meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회원가입</title>
+<!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+    <!-- Custom style -->
+    <link rel="stylesheet" href="assets/css/signup.css" media="screen" title="no title" charset="utf-8">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <script>
 	function formCheck(){
 		var id = document.frm.id;
@@ -80,12 +59,12 @@
 		
 		
 		
- 	  	var email = document.frm.email;
+  	  	var email = document.frm.email;
 		if(email.value =='') {
 			alert("이메일을 입력하세요.");
 			email.focus();
 			return false;
-		}  
+		}   
 		
 	 	var phone = document.frm.phone;
 		if(phone.value =='') {
@@ -107,49 +86,69 @@
 		open(url, "checkForm","location=no, width=500, height=300, resizable=no, scrollvars=no");
 	} 
 	</script> 
-	
-</head>
+  </head>
 <body>
- <main id="edit-profile">
-        <div class="edit-profile__container">
-            <header class="edit-profile__header">
-                <div class="edit-profile__avatar-container">
-                </div>
-                <h4 class="edit-profile__username">회 원 가 입 </h4>
-            </header>
-            <form id="frm" name ="frm" action="MemberInsert.do" method="post" class="edit-profile__form" >
-                <div class="form__row">
-                    <label for="id" class="form__label">아이디 :</label>	
-                    <input name="id" type="text" class="form__input"/>
-                    <input id = "b" type="button" value="중복확인" onclick="openIdChk();">
-					<input type="hidden" id="chk" name="chk" value="idUnChk">
-                </div>
-                <div class="form__row">
-                    <label for="password" class="form__label">비밀번호 :</label>
-                    <input name="password" type="password" class="form__input" />
-                </div>
-                <div class="form__row">
-                <label for="pw2" class="form__label">비밀번호 확인:</label>
-                <input name="pw2" type="password" class="form__input" />
-           		</div>
-                <div class="form__row">
-                    <label for="name" class="form__label">이름 :</label>
-                    <input name="name" type="text" class="form__input"  />
-                </div>
-                <div class="form__row">
-                    <label for="email" class="form__label">이메일 :</label>
-                    <input name="email" type="email" class="form__input"  />
-                </div>
-                <div class="form__row">
-                    <label for="phone" class="form__label">전화번호 :</label>
-                    <input name="phone" type="tel" class="form__input"  />
-                </div>
-              
-			<input id= "s" type="button" value="회원가입" onclick="formCheck();" > 
-			<!-- <input id= "s" type="button" value="회원가입" > -->
-			<input id= "c" type="button" value="가입취소" onclick="location.href='Index.do'"  >
-            </form>
+	
+<article class="container">
+        <div class="page-header">
+          <h1>회원가입 <small>을 환영합니다.</small></h1>
         </div>
-    </main>
+        <div class="col-md-6 col-md-offset-3">
+          <form id="frm" name ="frm" action="MemberInsert.do" method="post"><!-- enctype="multipart/form-data" -->
+            <div class="form-group"><i class="fa fa-user"></i>
+              <label for="username">아이디</label>
+              <div class="input-group">
+                <input name = "id" type="text" class="form-control"  placeholder="4자리 이상 입력하세요">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-success" onclick="openIdChk();">아이디 중복확인
+                  <i class="fa fa-mail-forward	 spaceLeft"></i></button>
+                  <input type="hidden" id="chk" name="chk" value="idUnChk">
+                </span>
+              </div>
+            </div>
+       
+            <div class="form-group"><i class="fa fa-unlock-alt"></i>
+              <label for="InputPassword1">비밀번호</label>
+              <input name ="password" type="password" class="form-control"  placeholder="비밀번호">
+            </div>
+            <div class="form-group"><i class="fa fa-unlock-alt"></i>
+              <label for="InputPassword2">비밀번호 확인</label>
+              <input name="pw2" type="password" class="form-control"  placeholder="비밀번호 확인">
+              <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
+            </div>
+            <div class="form-group"><i class="fa fa-address-book-o"></i>
+              <label for="username">이름</label>
+              <input name="name"type="text" class="form-control" placeholder="이름을 입력해 주세요">
+            </div>
+            <div class="form-group"><i class="fa fa-envelope"></i>
+            <label for="InputEmail">이메일</label>
+              <input name = "email" type="email" class="form-control"  placeholder="이메일 주소">
+            </div>
+     		<div class="form-group"><i class="fa fa-phone"></i>	
+              <label for="username">전화번호</label>
+              <input name ="phone" type="tel" class="form-control"   placeholder="번호를 입력해 주세요">
+            </div>
+<!--             <div class="form-group"><i class="fa fa-camera-retro"></i>
+              <label for="username">프로필사진</label>
+              <input name ="img" type="file" class="form-control">
+            </div> -->
+          <form id="frm1" name ="frm1" action="MemberInsert.do" method="post" enctype="multipart/form-data">
+            <div class="form-group"><i class="fa fa-camera-retro"></i>
+              <label for="username">프로필사진</label>
+              <input name ="img" type="file" class="form-control">
+            </div>
+            </form> 
+                        <div class="form-group text-center">
+             <button type="button" class="btn btn-info"  onclick="formCheck();">회원가입<i class="fa fa-check spaceLeft"></i> </button>
+              <button type="button" class="btn btn-warning" onclick="location.href='Index.do'" >가입취소<i class="fa fa-times spaceLeft"></i></button>
+            </div>
+          </form>
+        </div>
+	</article>
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
