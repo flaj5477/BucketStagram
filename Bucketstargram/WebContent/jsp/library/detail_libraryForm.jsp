@@ -17,7 +17,7 @@
 		<img src="${library.libImagePath }" align="left" width="600"
 			, height="800">
 		<header class="photo__header">
-			<img src="../images/avatar.jpg" class="photo__avatar">
+			<img src="images/avatar.jpg" class="photo__avatar">
 			<div class="photo__user-info">
 				<span class="photo__author">라이브러리 아이디</span> <span
 					class="photo__location">${library.libId}</span>
@@ -38,10 +38,10 @@
 			</div>
 
 			<form name="addFrm" action="BucketAddForm.do">
-				<input type="hidden" name="imagePath"
-					value="${library.libImagePath }"> <input type="hidden"
-					name="bucketTitle" value="${library.libTitle }"> <input
-					type="hidden" name="bucketContent" value="${library.libContents }">
+				<input type="hidden" name="imagePath" value="${library.libImagePath }">
+				${library.libTitle } 
+				<input type="hidden" name="bucketTitle" value="${library.libTitle }"> 
+				<input type="hidden" name="bucketContent" value="${library.libContents }">
 				<input type="hidden" name="bucketMemberId" value="">
 			</form>
 
@@ -55,13 +55,17 @@
 		</div>
 	</div>
 
-
 	<script>
 		function addBucket() {
 			document.addFrm.submit();
 		}
 	</script>
+	
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.poptrox.min.js"></script>
+
+	
 
 </body>
 </html>
