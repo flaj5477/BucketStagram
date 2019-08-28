@@ -20,7 +20,7 @@ public class CompletionAction implements Command {
 		String completionYN = request.getParameter("completionYN");
 		String bucketId = request.getParameter("imageId");
 		System.out.println("completionYN = " + completionYN);
-		System.out.println("imageId = " + bucketId);
+		System.out.println("bucketId = " + bucketId);
 		
 		//completion, challenging, deleteFail
 		completionYN = dao.completionUpdate(bucketId, completionYN);

@@ -44,7 +44,7 @@ public class BucketPostAction implements Command {
 		// 파일 크기 15MB로 제한
 		int sizeLimit = 1024 * 1024 * 15;
 		String savePath = serverPath + "\\" + bucketMemberId + "\\" + bucketId;
-		System.out.println("savePath = " + savePath);
+		//System.out.println("savePath = " + savePath);
 		/*
 		 * String bucketImagePath 저장될 서버 경로
 		 * int maxPostSize 파일 최대 크기
@@ -67,8 +67,10 @@ public class BucketPostAction implements Command {
 			
 			bucketTitle = multi.getParameter("bucketTitle");
 			bucketContents = multi.getParameter("bucketContent");
-			bucketType = "여행";
+			bucketType = multi.getParameter("bucketType");
 			bucketImagePath = "images" + "\\" + bucketMemberId + "\\" + bucketId + "\\" + upFileName;
+			System.out.println("bucketImagePath = " + bucketImagePath);
+			System.out.println("bucketType = " + bucketType);
 			
 			bucket.setBucketId(bucketId);
 			bucket.setBucketMemberId(bucketMemberId);

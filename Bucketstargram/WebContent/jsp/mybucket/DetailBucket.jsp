@@ -10,11 +10,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/styles.css">
-<%
+<%	
+	
 	String userId = (String)session.getAttribute("userid");
 	String ownerId = (String)session.getAttribute("ownerId");
 %>
 <script>
+var userId = "<%=userId%>";
 //클릭한 버킷의 id값 
 var bucketId = "${bucket.bucketId}";
 //리플 개수 저장 변수
@@ -50,6 +52,30 @@ $( document ).ready(function(){
 	}else{
 		tag = "<i class='fa fa-heart-o' aria-hidden='true' onclick='likeAction();'></i>";
 		document.getElementById("like").innerHTML = tag;
+	}
+	
+	//버킷의 소유자와 사용자 아이디가 동일할 경우 좋아요 클릭 방지
+	//동일할 경우 수정, 삭제, 도전중 유무 클릭 가능
+	console.log("bucketMemberId = " + bucketMemberId)
+	console.log("userId = " + "<%= userId%>");
+	if(bucketMemberId == "<%= userId%>"){
+		$("#like").css("display", "none");
+		$("#completion").css("display", "inline-block");
+		$("#update").css("display", "inline-block");
+		$("#delete").css("display", "inline-block");
+	}else{
+		$("#like").css("display", "inline-block");
+		$("#completion").css("display", "none");
+		$("#update").css("display", "none");
+		$("#delete").css("display", "none");
+	}
+	
+	if(completionYN == "completion"){
+		tag = "<i class='fa fa-check-circle' aria-hidden='true' style='color:blue;' onclick='completeAction();'></i>";
+		document.getElementById("completion").innerHTML = tag;
+	}else if(completionYN == "challenging"){
+		tag = "<i class='fa fa-check-circle-o' aria-hidden='true' style='color:black;' onclick='completeAction();'></i>"
+		document.getElementById("completion").innerHTML = tag;
 	}
 });
 </script>
@@ -163,13 +189,67 @@ function appendProcess() {
 		}
 		$('#bucket_repl').append(tag);
 	}
-}	
+}
+
+function deleteAction(){
+	if(confirm("삭제하시겠습니까?")){
+		parent.location.href = "DeleteAction.do?bucketId="+bucketId;
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function completeAction(){
+	console.log("--- CompleteAction() 호출 ---")
+	request.open("Post", "CompletionAction.do?bucketId="+encodeURIComponent(bucketId, true)+"&completionYN="+completionYN);
+	//서버와의 통신 status가 변경될 때마다 likeProcess가 호출 된다.
+	request.onreadystatechange = completionProcess;
+	request.send(null);
+}
+
+function completionProcess() {
+	////completion, challenging, deleteFail
+	
+	if (request.readyState == 4 && request.status == 200) {
+		console.log("--- CompleteAction Ajax 통신 성공 ---")
+		completionResult = request.responseText;
+		console.log("CompletionResult = " + completionResult);
+		//DB작업이 완료되고 버킷 수행 완료를 한 경우 색깔 변경
+		completionYN = completionResult;
+		if(completionYN == "completion"){
+			tag = "<i class='fa fa-check-circle' aria-hidden='true' style='color:blue;' onclick='completeAction();'></i>";
+			document.getElementById("completion").innerHTML = tag;
+			console.log("--- Completion 표시 완료 ---")
+		}else if(completionYN == "challenging"){
+			tag = "<i class='fa fa-check-circle-o' aria-hidden='true' style='color:black;' onclick='completeAction();'></i>"
+			document.getElementById("completion").innerHTML = tag;
+			console.log("--- Challenging... 표시 완료 ---")
+		}else{
+			console.log(completionResult);
+		}
+	}
+}
+
+function addAction(){
+	if(confirm("버킷리스트에 추가하시겠습니까?")){
+		parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+		return true;
+	} else {
+		return false;
+	}
+}
 </script>
 <style>
 div::-webkit-scrollbar { 
     display: none !important;
 }
 </style>
+<script>
+function test(){
+	window.self.close();	
+}
+</script>
 </head>
 <body>
 	<div class="photo" >
@@ -186,23 +266,37 @@ div::-webkit-scrollbar {
 			</div>
 			<div>
 				<div id="bucket_repl" class="bucket_repl">
+					<c:set var="userId" value="<%=userId %>" />
 					<c:forEach items="${replyList}" var="reply">
-						<div class="repl">
-							<a href="OtherBucket.do?ownerId=${reply.reMemberId }"><h3 class = "repl-id" style="display:inline-block">${reply.reMemberId }</h3></a>
-							<span class="repl-content">${reply.reReplyContents }</span>
-							<div>${reply.reWriteDate }</div><br>
-						</div>
+						<c:choose>
+							<c:when test="${reply.reMemberId eq userId}">
+								<div class="repl">
+									<a href="MyBucket.do"><h3 class = "repl-id" style="display:inline-block">${reply.reMemberId }</h3></a>
+									<span class="repl-content">${reply.reReplyContents }</span>
+									<div>${reply.reWriteDate }</div><br>
+								</div>							
+							</c:when>
+							<c:otherwise>
+								<div class="repl">
+									<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${reply.reMemberId}';"><h3 class = "repl-id" style="display:inline-block">${reply.reMemberId }</h3></a>
+									<span class="repl-content">${reply.reReplyContents }</span>
+									<div>${reply.reWriteDate }</div><br>
+								</div>	
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</div>
 			</div>
 		</div>
+		<hr style="margin:0px">
 		<div>
 			<div class="photo__actions">
-				<span id="like" onclick="likeAction()"><i class="fa fa-heart-o fa-lg"></i></span> 
-				<span id="complete"><i class="fa fa-check-circle-o" aria-hidden="true" onclick="completeAction();"></i></span>
-				<span id="delete"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteAction();"></i></span>
-				<span id="update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-				<span id="chat"><i class="fa fa-comment-o fa-lg" onclick="$('#reply-textArea').focus();"></i></span>
+				<span id="like" onclick="likeAction()" style="cursor:pointer;"><i class="fa fa-heart-o fa-lg" ></i></span> 
+				<span id="add"  onclick="addAction();" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
+				<span id="completion" onclick="completeAction();" style="cursor:pointer;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+				<span id="delete" onclick="deleteAction();" style="cursor:pointer;"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+				<span id="update" style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+				<span id="chat" onclick="$('#reply-textArea').focus();" style="cursor:pointer;"><i class="fa fa-comment-o fa-lg"></i></span>
 				<br>
 				<span id="total-like-view">좋아요 ${bucket.bucketLike}개</span>
 				<br> 
