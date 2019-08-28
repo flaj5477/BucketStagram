@@ -14,8 +14,8 @@
 <script type="text/javascript" src="assets/js/searchSlide.js"></script>
 <script src="assets/js/all.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="assets/js/jquery.poptrox.min.js"></script>
 <script src="assets/js/skel.min.js"></script>
+<script src="assets/js/jquery.poptrox.min.js"></script>
 </head>
 <body>
 	<% String word = request.getParameter("word"); %>
@@ -35,6 +35,7 @@
 						<div class="type">${dto.libType}</div>
 						<div class="title">${dto.libTitle}</div>
 						<div class="contents">${dto.libLike}</div>
+						<div>${dto.libId}</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -53,6 +54,7 @@
 						<div class="type">${dto.bucketType}</div>
 						<div class="title">${dto.bucketTitle}</div>
 						<div class="contents">${dto.bucketLike}</div>
+						<div>${dto.bucketId}</div>
 					</div>
 				</c:forEach>
 			</div>
