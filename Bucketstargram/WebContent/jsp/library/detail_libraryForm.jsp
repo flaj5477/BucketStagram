@@ -33,7 +33,7 @@
 				</span> <span class="photo__action"> <i
 					class="fa fa-comment-o fa-lg"></i>
 				</span> <span class="addBucket"> <a href="javascript:addBucket()"
-					data-poptrox="iframe,600x800">버킷으로 추가(ADD)</a>
+					data-poptrox="iframe,600x800">버킷으로 추가(ADD)</a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
 				</span>
 			</div>
 
