@@ -9,13 +9,10 @@
 <link rel="stylesheet" href="assets/css/search/search-main.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="assets/css/search/search.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.js"></script>
 <script type="text/javascript" src="assets/js/searchSlide.js"></script>
 <script src="assets/js/all.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/skel.min.js"></script>
-<script src="assets/js/jquery.poptrox.min.js"></script>
 </head>
 <body>
 	<% String word = request.getParameter("word"); %>
@@ -49,7 +46,7 @@
 					<div class="gallery">
 						<a target="_blank" href="DetailMyBucket.do?bucketId=${dto.bucketId}"
 						   data-poptrox="iframe,1200x800">
-							<img src="${dto.bucketImagePath}">
+							<img id="${dto.bucketId}" src="${dto.bucketImagePath}"/>
 						</a>
 						<div class="type">${dto.bucketType}</div>
 						<div class="title">${dto.bucketTitle}</div>
@@ -60,5 +57,9 @@
 			</div>
 		</div>
 	</div>
+<!-- script -->
+<script src="assets/js/jquery.poptrox.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

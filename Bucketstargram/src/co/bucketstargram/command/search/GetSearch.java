@@ -21,12 +21,12 @@ public class GetSearch implements Command {
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
 		String word = request.getParameter("word");
 		System.out.println(word+" (을)를 검색합니다.");
-		bucketResult = dao.bucketSearch(word);
 		libResult = dao.librarySearch(word);
+		bucketResult = dao.bucketSearch(word);
 		dao.close();
 		request.setAttribute("word",word);
-		request.setAttribute("getBucketSearch",bucketResult);
 		request.setAttribute("getLibrarySearch",libResult);
+		request.setAttribute("getBucketSearch",bucketResult);
 		String viewPage = "jsp/search/GetSearch.jsp";
 		HttpRes.forward(request, response, viewPage);
 	}
