@@ -16,6 +16,7 @@
 </head>
 <body>
 	<% String word = request.getParameter("word"); %>
+	<jsp:include page = "../category/nav.jsp"/>
 	<jsp:include page = "../category/header.jsp"/>
 	<div class="border">
 		<h2><strong style="color:#1A99EE">'<%=word%>'</strong>에 대한 검색 결과입니다.</h2>

@@ -16,6 +16,7 @@
 <script src="assets/js/all.js"></script>
 </head>
 <body>
+	<jsp:include page="jsp/category/nav.jsp"/>
 	<jsp:include page="jsp/category/header.jsp"/>
 		<!-- Main -->
 		<div>
