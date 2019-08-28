@@ -12,7 +12,7 @@
 	%>
 	
 	<script type="text/javascript">
-		alert("<%=userid %>님 환영합니다. 회원가입에 성공했습니다.");
+		alert("<%=userid %>님 환영합니다.");
 		document.location.href = "Index.do";
 	</script>
 </body>
