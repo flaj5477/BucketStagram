@@ -94,7 +94,7 @@
           <h1>회원가입 <small>을 환영합니다.</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form id="frm" name ="frm" action="MemberInsert.do" method="post"><!-- enctype="multipart/form-data" -->
+          <form id="frm" name ="frm" action="MemberInsert.do" method="post" enctype="multipart/form-data"><!-- enctype="multipart/form-data" -->
             <div class="form-group"><i class="fa fa-user"></i>
               <label for="username">아이디</label>
               <div class="input-group">
@@ -128,16 +128,11 @@
               <label for="username">전화번호</label>
               <input name ="phone" type="tel" class="form-control"   placeholder="번호를 입력해 주세요">
             </div>
-<!--             <div class="form-group"><i class="fa fa-camera-retro"></i>
-              <label for="username">프로필사진</label>
-              <input name ="img" type="file" class="form-control">
-            </div> -->
-          <form id="frm1" name ="frm1" action="MemberInsert.do" method="post" enctype="multipart/form-data">
             <div class="form-group"><i class="fa fa-camera-retro"></i>
               <label for="username">프로필사진</label>
               <input name ="img" type="file" class="form-control">
-            </div>
-            </form> 
+            </div> 
+  
                         <div class="form-group text-center">
              <button type="button" class="btn btn-info"  onclick="formCheck();">회원가입<i class="fa fa-check spaceLeft"></i> </button>
               <button type="button" class="btn btn-warning" onclick="location.href='Index.do'" >가입취소<i class="fa fa-times spaceLeft"></i></button>
