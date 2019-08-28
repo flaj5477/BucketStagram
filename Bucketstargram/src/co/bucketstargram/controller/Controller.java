@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.bucketstargram.command.index.Index;
+import co.bucketstargram.command.library.LibraryAdd;
 import co.bucketstargram.command.library.DetailLibFrm;
 import co.bucketstargram.command.library.LibraryForm;
 import co.bucketstargram.command.member.IdCheck;
@@ -85,6 +86,7 @@ public class Controller extends HttpServlet {
         //화정
         map.put("/LibraryForm.do", new LibraryForm());
         map.put("/DetailLibFrm.do", new DetailLibFrm());
+        map.put("/LibraryAdd.do", new LibraryAdd());
 
         //동규
         map.put("/GetSearch.do", new GetSearch());
