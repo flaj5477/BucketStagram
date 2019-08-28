@@ -12,7 +12,10 @@
 		<!-- Header -->
 		<header id="header">
 
-			<span class="logo"><img src="images/logo2.png" alt="" /></span>
+			<span class="logo">
+				<a href="Index.do">
+				<img src="images/logo2.png"/></a>
+			</span>
 
 			<ul class="topMenu">
 				<li><a class="menuLink" href="LibraryForm.do">Library</a></li>

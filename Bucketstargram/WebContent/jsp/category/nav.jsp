@@ -14,7 +14,7 @@
 			</form>
 
 		</div>
-		<div class="navigation__column">검색</div>
+		<div class="navigation__column"></div>
 		<div class="navigation__column">
 			<ul class="navigations__links">
 				<li class="navigation__list-item" id="sign-in"
