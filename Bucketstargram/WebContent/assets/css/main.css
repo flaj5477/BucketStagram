@@ -3,7 +3,6 @@
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
-
 /* Reset */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
@@ -1142,9 +1141,9 @@ body {
 
 body {
 	background-color: white;
-	
 	background-size: cover;
 	background-position: top center;
+	height: 100%;
 }
 
 body.is-loading *, body.is-loading *:before, body.is-loading *:after {
@@ -1403,7 +1402,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 }
 
 .select-wrapper:before {
-	content: "";
+	content: "�겦";
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	font-family: FontAwesome;
@@ -2152,7 +2151,7 @@ input[type="submit"].disabled, input[type="submit"]:disabled, input[type="reset"
 }
 
 .poptrox-popup .closer:before {
-	content: "";
+	content: "��";
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	font-family: FontAwesome;

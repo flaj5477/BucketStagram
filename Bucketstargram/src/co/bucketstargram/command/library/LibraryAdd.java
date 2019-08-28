@@ -1,4 +1,4 @@
-package co.bucketstargram.command.myBucket;
+package co.bucketstargram.command.library;
 
 import java.io.IOException;
 
@@ -8,37 +8,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.HttpRes;
-import co.bucketstargram.dao.BucketDao;
-import co.bucketstargram.dto.BucketDto;
 
-public class BucketAddForm implements Command {
+public class LibraryAdd implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("\n--- BucketAddForm.java ---");
-		BucketDao bucket = new BucketDao();
+		System.out.println("\n--- LibraryAddForm.java ---");
 		
-		String bucketId = request.getParameter("bucketId");
+		String imagePath = request.getParameter("imagePath");
 		String bucketTitle = request.getParameter("bucketTitle");
 		String bucketContent = request.getParameter("bucketContent");
 		String bucketMemberId = request.getParameter("bucketMemberId");
 		
-
-		System.out.println("imagePath = " + bucketId);
-
+		System.out.println("imagePath = " + imagePath);
 		System.out.println("bucketTitle = " + bucketTitle);
 		System.out.println("bucketContent = " + bucketContent);
 		System.out.println("bucketMemberId = " + bucketMemberId);
 		
-		String imagePath = bucket.getImagePathbucketId(bucketId);
 		request.setAttribute("imagePath", imagePath);
 		request.setAttribute("bucketTitle", bucketTitle);
 		request.setAttribute("bucketContent", bucketContent);
 		request.setAttribute("bucketMemberId", bucketMemberId);
 		
-		String viewPage = "jsp/mybucket/BucketAddForm.jsp";
-		HttpRes.forward(request, response, viewPage);
+		String viewPage = "jsp/library/libraryForm.jsp";
+		//HttpRes.forward(request, response, viewPage);
+		response.getWriter().append("<script>")
+		.append("opener.location='"+viewPage+"';")
+		.append("</script>");
 	}
 
 }

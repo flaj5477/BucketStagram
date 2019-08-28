@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
-
 <style>
 .gallery {
 	display: inline;
@@ -18,120 +17,33 @@
 	height: 450px;
 }
 
-.navigation__column input {
-	border: 1px solid #e6e6e6;
-	border-radius: 3px;
-	font-size: 10px;
-}
-
 form[name="frm_Search"] {
 	text-align: center;
 	margin: 0 auto;
 }
-
 input[name="wordSearch"] {
 	height: 2em;
 	text-align: left
 }
 </style>
-
 </head>
 <body>
-	<nav class=navigation>
-		<div class="navigation__column">
-			<form name="frm_Search" action="GetSearch.do" method="get">
-				<input type="text" name="word" placeholder="Search">
-			</form>
+	<jsp:include page="../category/nav.jsp"/>
+	<jsp:include page="../category/header.jsp"/>
 
-		</div>
-		<div class="navigation__column">검색</div>
-		<div class="navigation__column">
-			<ul class="navigations__links">
-				<li class="navigation__list-item" id="sign-in"
-					style="display: block;"><a href="LoginForm.do"
-					class="navigation__link"> <i class="fa fa-sign-in"
-						aria-hidden="true"></i>Login
-				</a></li>
-				<li class="navigation__list-item" id="sign-up"
-					style="display: block;"><a href="#" class="navigation__link">
-						<i class="fa fa-user-plus" aria-hidden="true"></i>SignUp
-				</a></li>
-				<li class="navigation__list-item" id="sign-out"
-					style="display: none;"><a href="#" class="navigation__link"
-					onclick="logOut()"> <i class="fa fa-sign-out"
-						aria-hidden="true"></i>Logout
-				</a></li>
-			</ul>
-
-			<%
-				String userid = (String) session.getAttribute("userid");
-			%>
-			<%
-				if (userid != null) {
-			%>
-			<script>
-				document.getElementById("sign-in").style.display = 'none';
-				document.getElementById("sign-up").style.display = 'none';
-				document.getElementById("sign-out").style.display = 'block';
-			</script>
-			<%
-				} else {
-			%>
-			<script>
-				document.getElementById("sign-in").style.display = 'block';
-				document.getElementById("sign-up").style.display = 'block';
-				document.getElementById("sign-out").style.display = 'none';
-			</script>
-			<%
-				}
-			%>
-			<script>
-				function logOut() {
-					window.alert("로그아웃 하시겠습니까?");
-					document.location.href = "LogOut.do";
-				}
-			</script>
-		</div>
-	</nav>
-	<!-- Wrapper -->
-	<div id="wrapper">
-		<!-- Header -->
-		<header id="header">
-
-			<span class="logo"><img src="images/logo2.png" alt="" /></span>
-
-			<ul class="topMenu">
-				<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
-				<li><a class="menuLink" href="#">Popular</a></li>
-				<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
-			</ul>
-			<hr>
-
-			<ul class="icons">
-				<li><a href="LibraryForm.do" class="icon style2 fa-twitter"><span
-						class="label">전체</span></a></li>
-				<li><a href="LibraryForm.do?type=여행"
-					class="icon style2 fa-facebook"><span class="label">여행</span></a></li>
-				<li><a href="LibraryForm.do?type=운동"
-					class="icon style2 fa-instagram"><span class="label">운동</span></a></li>
-				<li><a href="LibraryForm.do?type=음식"
-					class="icon style2 fa-500px"><span class="label">음식</span></a></li>
-				<li><a href="LibraryForm.do?type=배움"
-					class="icon style2 fa-envelope-o"><span class="label">배움</span></a></li>
-				<li><a href="LibraryForm.do?type=문화"
-					class="icon style2 fa-envelope-o"><span class="label">문화</span></a></li>
-				<li><a href="LibraryForm.do?type=야외"
-					class="icon style2 fa-envelope-o"><span class="label">야외</span></a></li>
-				<li><a href="LibraryForm.do?type=쇼핑"
-					class="icon style2 fa-envelope-o"><span class="label">쇼핑</span></a></li>
-				<li><a href="LibraryForm.do?type=생활"
-					class="icon style2 fa-envelope-o"><span class="label">생활</span></a></li>
-			</ul>
-		</header>
-
-		<%-- <!-- Main -->
-		<div>
-			<!-- Thumbnails -->
+		<section>
+			<c:forEach items="${libraryList}" var="library">
+				<div class="gallery" align="center">
+					<a target="_blank" href="DetailLibFrm.do?libId=${library.libId }"
+						data-poptrox="iframe,1200x800"> <img id="${library.libId }"
+						src="${library.libImagePath }"
+						style="width: 100%; max-width: 300px" />
+					</a>
+				</div>
+			</c:forEach>
+		</section>
+	</div>
+	<%-- 			<!-- Thumbnails -->
 			<div class="thumbnails">
 				<!-- 4*5 배열 -->
 				<div>
@@ -180,44 +92,33 @@ input[name="wordSearch"] {
 					</c:forEach>
 				</div>
 			</div>
-		</div>
-	</div> --%>
-
-		<!-- <div class="thumbnails"> -->
-			<c:forEach items="${libraryList}" var="library">
-				<div class="gallery" align="center">
-					<a href="DetailLibFrm.do?libId=${library.libId }" data-poptrox="iframe,1200x800"> 
-					<img 
-						src="${library.libImagePath}" style="width: 350px; height: 328px;" />
-					</a>
-				</div>
-			</c:forEach>
-		<!-- </div> -->
+		</div> --%>
 
 
 
-		<footer>
-			<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
-			<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
-			<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
-		</footer>
 
-		<form name="pagefrm" action="LibraryForm.do" method="post">
-			<input type="hidden" name="page" value="1"> <input
-				type="hidden" name="type" value="${param.type}">
-		</form>
+	<footer style="height: 100px">
+		<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
+		<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
+		<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
+	</footer>
 
-		<script>
-			function goList(p) {
-				document.pagefrm.page.value = p;
-				document.pagefrm.submit();
-			}
-		</script>
+	<form name="pagefrm" action="LibraryForm.do">
+		<input type="hidden" name="page" value="1"> <input
+			type="hidden" name="type" value="${param.type}">
+	</form>
 
-		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.poptrox.min.js"></script>
-		<script src="assets/js/skel.min.js"></script>
-		<script src="assets/js/main.js"></script>
+	<script>
+		function goList(p) {
+			document.pagefrm.page.value = p;
+			document.pagefrm.submit();
+		}
+	</script>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.poptrox.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/main.js"></script>
 </body>
 </html>

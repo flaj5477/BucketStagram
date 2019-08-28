@@ -45,7 +45,7 @@ public class SearchDao {
 		}
 	}
 	public ArrayList<BucketDto> bucketSearch(String word){
-		String sql = "SELECT bucket_member_id, bucket_title, bucket_type, "
+		String sql = "SELECT bucket_id, bucket_member_id, bucket_title, bucket_type, "
 					+"bucket_compliation, bucket_like, bucket_image_path "
 					+"FROM bucket_info_tb "
 					+"WHERE bucket_title LIKE '%'||UPPER(?)||'%' "
@@ -61,12 +61,13 @@ public class SearchDao {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				BucketDto dto = new BucketDto();
-				dto.setBucketMemberId(rs.getString(1));
-				dto.setBucketTitle(rs.getString(2));
-				dto.setBucketType(rs.getString(3));
-				dto.setBucketCompliation(rs.getString(4));
-				dto.setBucketLike(rs.getInt(5));
-				dto.setBucketImagePath(rs.getString(6));
+				dto.setBucketId(rs.getString(1));
+				dto.setBucketMemberId(rs.getString(2));
+				dto.setBucketTitle(rs.getString(3));
+				dto.setBucketType(rs.getString(4));
+				dto.setBucketCompliation(rs.getString(5));
+				dto.setBucketLike(rs.getInt(6));
+				dto.setBucketImagePath(rs.getString(7));
 				bucketResult.add(dto);
 			}
 		} catch (SQLException e) {
@@ -76,7 +77,7 @@ public class SearchDao {
 	}
 	
 	public ArrayList<LibraryDto> librarySearch(String word){
-		String sql = "SELECT lib_title, lib_type, lib_like, lib_image_path "
+		String sql = "SELECT lib_id, lib_title, lib_type, lib_like, lib_image_path "
 					+"FROM library_info_tb " 
 					+"WHERE UPPER(lib_title) LIKE '%'||UPPER(?)||'%' "
 					+"OR UPPER(lib_contents) LIKE '%'||UPPER(?)||'%' "
@@ -92,10 +93,11 @@ public class SearchDao {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				LibraryDto dto = new LibraryDto();
-				dto.setLibTitle(rs.getString(1));
-				dto.setLibType(rs.getString(2));
-				dto.setLibLike(rs.getInt(3));
-				dto.setLibImagePath(rs.getString(4));
+				dto.setLibId(rs.getString(1));
+				dto.setLibTitle(rs.getString(2));
+				dto.setLibType(rs.getString(3));
+				dto.setLibLike(rs.getInt(4));
+				dto.setLibImagePath(rs.getString(5));
 				libResult.add(dto);
 			}
 		} catch (SQLException e) {

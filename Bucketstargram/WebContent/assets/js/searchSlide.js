@@ -13,6 +13,7 @@ $(document).ready(function() {
 	    autoHover: true,// 마우스 호버, 정지여부(슬라이드에 마우스가 들어오면 슬라이드정지)
 	    nextText :'<i class="fas fa-chevron-right"></i>',
 	    prevText :'<i class="fas fa-chevron-left"></i>',
+	    touchEnabled : false, // 터치 이벤트 disabled
 	    onSlideBefore: function() { // 전환 직전에 호출
 		    $(".bx-prev").hide(); // 연속클릭으로 인한 슬라이드 넘어가는 것 방지
 		    $(".bx-next").hide();
@@ -23,7 +24,7 @@ $(document).ready(function() {
 	    	libSlider.stopAuto();
 	    	libSlider.startAuto();
 	    	console.log(libSlider.getCurrentSlide());
-	    }
+	    },
 	})
 	var bucketSlider = $('.bucketSlider').bxSlider({
 	    mode: 'horizontal', //가로 방향 수평 슬라이드
@@ -37,6 +38,7 @@ $(document).ready(function() {
 	    slideMargin: 5,// 슬라이드 간격
 	    auto: true,// 자동 실행
 	    autoHover: true,// 마우스 호버, 정지여부
+	    touchEnabled : false, // 터치 이벤트 disabled
 	    nextText :'<i class="fas fa-chevron-right"></i>',
 	    prevText :'<i class="fas fa-chevron-left"></i>',
 	    onSlideBefore: function() {

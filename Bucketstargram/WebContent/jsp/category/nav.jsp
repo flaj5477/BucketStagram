@@ -4,18 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>css Test</title>
-<link rel="stylesheet" href="../../assets/css/library/library.css" />
+<title>Insert title here</title>
 </head>
 <body>
-	<nav class=navigation>
-		<div class="navigation__column">&nbsp;&nbsp;&nbsp;</div>
+<nav class=navigation>
 		<div class="navigation__column">
 			<form name="frm_Search" action="GetSearch.do" method="get">
 				<input type="text" name="word" placeholder="Search">
 			</form>
 
 		</div>
+		<div class="navigation__column"></div>
 		<div class="navigation__column">
 			<ul class="navigations__links">
 				<li class="navigation__list-item" id="sign-in"
@@ -64,11 +63,5 @@
 			</script>
 		</div>
 	</nav>
-	
-	<div>
-		<a>a태그</a>
-		<a>a태그</a>
-		<a>a태그</a>
-	</div>
 </body>
 </html>
