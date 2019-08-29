@@ -110,21 +110,28 @@ p{
 				${library.libContents }</div>
 
 			<div class="photo__actions">
-				<a style="font-size: 22px"> <span class="photo__action"> <i
-						class="fa fa-heart-o fa-lg"></i>
+				<span class="photo__action"> <!-- 좋아요  -->
+					<i class="fa fa-heart-o fa-lg"></i>
+				</span> 
+				
+				<span class="photo__action"> <!-- 버킷으로 추가 -->
+					<a href="javascript:addBucket()" id="add" > 
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</a> 
+				</span> 
+				<span class="photo__action"> <!-- 라이브러리 수정 -->
+					<a href="javascript:updateLibrary()" id="update" > 
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					</a> 
 				</span>
-				</a> <span class="photo__action"> <a
-					href="javascript:addBucket()" id="add" > <i class="fa fa-plus"
-						aria-hidden="true"></i>
-				</a> <!-- 로그인 해야 보이도록 -->
-				</span> <span class="photo__action"> <a
-					href="javascript:removeLibrary()" id="remove"> <i
-						class="fa fa-trash" aria-hidden="true"></i>
-				</a> <!-- 관리자로 로그인 해야 보이도록 바꿔야함 -->
+				<span class="photo__action"> <!-- 라이브러리 삭제 -->
+					<a href="javascript:removeLibrary()" id="remove"> 
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a> 
 				</span>
 			</div>
 
-			<form name="addFrm" action="LibraryAddForm.do">
+			<form name="addFrm">
 				<input type="hidden" name="imagePath"
 					value="${library.libImagePath }"> <input type="hidden"
 					name="bucketTitle" value="${library.libTitle }"> <input
@@ -143,12 +150,14 @@ p{
 	</div>
 
 	<script>
+		var form = document.addFrm;
 		function addBucket() {
 			//document.addFrm.submit();
 			if(confirm("버킷리스트에 추가하시겠습니까?")){
 				
 				$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
-				document.addFrm.submit();
+				form.action = "LibraryAddForm.do";	//경로 설정
+				form.submit();
 
 				return true;
 			} else {
@@ -163,16 +172,35 @@ p{
 			
 		};
 		
-		$( document ).ready(function(){		//로그인 해야 add(+)버튼 보이게 하는 함수	
-			console.log("로그인 아이디 = " + "<%=userId%>");
+		function updateLibrary() {
+			if (confirm("라이브러리를 수정하겠습니까?")) {
+
+				$(top.document).find(".poptrox-popup").css({
+					"width" : "400px",
+					"height" : "400px"
+				});	//팝업창 사이즈 바꾸기
+				form.action = "LibraryUpdateForm.do" // 수정 화면으로 이동
+				form.submit();
+
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		$(document).ready(function() { //로그인 해야 add(+)버튼 보이게 하는 함수	
+			console.log("로그인 아이디 = " + "
+	<%=userId%>");
 		
 			$("#add").hide();//add태그 숨기기
 			$("#remove").hide();//trash태그 숨기기
+			$("#update").hide();
 			if("<%=userId%>" != "null") {
 				$("#add").show();//add태그 보이기
 				if("<%=userId%>" == "owner") {		//관리자로 로그인 해야 삭제 버튼 보임
 					$("#remove").show();//trash태그 보이기
-				}
+					$("#update").show();
+				}	
 			}
 		});
 	</script>

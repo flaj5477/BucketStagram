@@ -199,6 +199,20 @@ public class LibraryDao {
 		}
 		return success;
 	}
-	
-	
+
+	//아직 미완성!!!!!!!!!!!!psmt.setString해야함!!!!!!!!!!!!!
+	public boolean update(LibraryDto library) {
+		boolean success = false;
+		String sql = "update LIBRARY_INFO_TB \r\n" + 
+				"set(lib_title,lib_contents,lib_type,lib_image_path) = (select '테스트','테스트','여행',' 몰라' from dual) where LIBRARY_INFO_TB.LIB_ID = '20190830021321226'";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }
