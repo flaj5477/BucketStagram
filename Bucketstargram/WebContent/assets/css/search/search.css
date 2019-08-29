@@ -5,34 +5,32 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 1em 0;
 }
 
-h1 {
-	font-size: 2.75em;
-}
-
-h2 {
-	font-size: 1.35em;
-}
-
-h3 {
-	font-size: 1em;
-}
-
-h4 {
-	font-size: 1em;
-}
-
-h5 {
-	font-size: 0.9em;
-}
-
-h6 {
-	font-size: 0.7em;
-}
-
 hr {
 	border: 0;
 	border-bottom: solid 1px rgba(0, 106, 213, 0.25);
 	margin: 1.5em 0;
+}
+
+div.search_Name {
+	color: #000000;
+	font-size: 1.2em;
+}
+div.search_Name span {
+	font-weight: bold;
+	color: #FD8AB1;
+}
+
+div.search_Title {
+	display: block;
+	font-size: 1em;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0 0 20px 0;
+}
+
+div.search_Title span {
+	color: #00C5BC;
 }
 
 div.border {
@@ -72,19 +70,26 @@ span.type p {
 
 span.title {
 	display: inline-block;
+	word-break: keep-all;
+	width: 250px;
     height: 50px;
+    line-height: 25px;
 	font-size: 12pt;
 	padding: 5px;
 	text-align: center;
 }
 
-div.contents {
+span.contents {
+	display: block;
 	height: 40px;
 	padding: 5px;
 	text-align: center;
 }
-div.slide1,div.slide2 {
-	margin:2em auto;
+div.slide1 {
+	position: relative;
+}
+div.slide2 {
+	margin: 60px auto;
 	position: relative;
 }
 div.slide1 .bx-prev,div.slide1 .bx-next {

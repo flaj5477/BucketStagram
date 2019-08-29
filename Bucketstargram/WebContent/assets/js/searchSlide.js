@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var libSlider = $('.libSlider').bxSlider({
 	    mode: 'horizontal', //가로 방향 수평 슬라이드
+	    infiniteLoop: true,
 	    pause: 10000,
 	    speed: 500, // 이동속도
 	    pager: false, //현재위치 페이징 표시여부
@@ -28,6 +29,7 @@ $(document).ready(function() {
 	})
 	var bucketSlider = $('.bucketSlider').bxSlider({
 	    mode: 'horizontal', //가로 방향 수평 슬라이드
+	    infiniteLoop: true,
 	    pause: 10000,
 	    speed: 500, // 이동속도
 	    pager: false, //현재위치 페이징 표시여부

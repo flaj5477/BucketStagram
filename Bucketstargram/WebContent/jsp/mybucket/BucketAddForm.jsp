@@ -60,7 +60,7 @@
 					<option value ="음식">음식</option>
 					<option value ="배움">배움</option>
 					<option value ="문화">문화</option>
-					<option value ="문화">문화</option>
+					<option value ="야외">야외</option>
 					<option value ="쇼핑">쇼핑</option>
 					<option value ="생활">생활</option>
 			 	</select>
