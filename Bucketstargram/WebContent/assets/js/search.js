@@ -1,11 +1,19 @@
 $(document).ready(function() {
 	title = $('.title');
-	$('.gallery').on('mouseover',function() {
-		console.log(this);
-		console.log($(this));
-		title.css("text-decoration","underline");
-	})
-	$('.gallery').on('mouseout',function() {
-		title.css("text-decoration","none");
-	})
+	$('.gallery').bind({
+		'mouseover': function() {
+			$(this).find(title).css("text-decoration","underline");
+		},
+		'mouseout': function() {
+			$(this).find(title).css("text-decoration","none");
+		}
+	});
 });
+/* on-type
+$('.gallery').on('mouseover',function() {
+	$(this).find(title).css("text-decoration","underline");
+})
+$('.gallery').on('mouseout',function() {
+	$(this).find(title).css("text-decoration","none");
+})
+*/

@@ -9,6 +9,7 @@ public class LibraryDto {
 	private String libType = null;
 	private String libImagePath = null;
 	private int libLike = 0;
+	private int libRowCnt = 0;
 	private ArrayList<String> libLikeMembList = null;
 	private String libWriteDate = null;
 	
@@ -16,17 +17,6 @@ public class LibraryDto {
 		super();
 		libLikeMembList = new ArrayList<String>();
 	}
-	
-	
-	public ArrayList<String> getLibLikeMembList() {
-		return libLikeMembList;
-	}
-
-
-	public void addLibLikeMembList(String likeMemb) {
-		this.libLikeMembList.add(likeMemb);
-	}
-	
 	public String getLibId() {
 		return libId;
 	}
@@ -62,6 +52,20 @@ public class LibraryDto {
 	}
 	public void setLibLike(int libLike) {
 		this.libLike = libLike;
+	}
+	public int getLibRowCnt() {
+		return libRowCnt;
+	}
+
+	public void setLibRowCnt(int libRowCnt) {
+		this.libRowCnt = libRowCnt;
+	}
+
+	public ArrayList<String> getLibLikeMembList() {
+		return libLikeMembList;
+	}
+	public void addLibLikeMembList(String likeMemb) {
+		this.libLikeMembList.add(likeMemb);
 	}
 	public String getLibWriteDate() {
 		return libWriteDate;
