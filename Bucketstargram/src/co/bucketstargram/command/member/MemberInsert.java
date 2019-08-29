@@ -19,8 +19,10 @@ import co.bucketstargram.dto.MemberDto;
 
 public class MemberInsert implements Command {
 
-	private File directory = null;
-	private File[] deleteFolderList = null;
+	
+	  private File directory = null; 
+	  private File[] deleteFolderList = null;
+	 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -37,11 +39,11 @@ public class MemberInsert implements Command {
 		 int sizeLimit = 1024*1024*15;
 		 
 		 
-		 String savePath = serverPath + "\\profile"; 
-		 makeDrectory(savePath);
+		 String savePath = serverPath + "/profile"; 
+		 makeDrectory(savePath); 
 		 MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit,
 				  "utf-8", new DefaultFileRenamePolicy());
-		 String id = multi.getParameter("id");
+//		 String id = multi.getParameter("id");
 		Enumeration files = multi.getFileNames();
 		
 		while(files.hasMoreElements() ) {
@@ -49,7 +51,7 @@ public class MemberInsert implements Command {
 		 String upFileName = multi.getFilesystemName(file);
 	//	 mImagePath = "images" + "\\profile"  + "\\" +id+ "\\" + upFileName;
 		
-		 mImagePath = "images" + "\\profile" +"\\"  + upFileName;
+		 mImagePath = "images" + "/profile" +"/"  + upFileName;
 		 System.out.println("ImagePath = " + mImagePath);
 			/*
 			 * String savePath2 = serverPath + "\\profile" + "\\" + id;
@@ -64,7 +66,7 @@ public class MemberInsert implements Command {
 		dto.setmName(multi.getParameter("name"));
 		dto.setmEmail(multi.getParameter("email"));
 		dto.setmPhone(multi.getParameter("phone"));
-		//dto.setmImagePath(request.getParameter("imagePath"));
+	//	dto.setmImagePath(request.getParameter("imagePath"));
 		dto.setmImagePath(mImagePath);
 		int n = dao.insert(dto);
 		request.setAttribute("n", n);
@@ -77,16 +79,17 @@ public class MemberInsert implements Command {
 	
  
 	 
-private void makeDrectory(String mImagePath) {
-	// TODO Auto-generated method stub
-	directory = new File(mImagePath);
-	deleteFolderList = directory.listFiles();
-	if (directory.mkdirs()) {
-		System.out.println("Bucket Id Folder 생성");
-	} else {
-		System.out.println("Bucket Id Folder 생성 실패");
-	}
+	private void makeDrectory(String mImagePath) {
+		// TODO Auto-generated method stub
+		directory = new File(mImagePath);
+		deleteFolderList = directory.listFiles();
+		if (directory.mkdirs()) {
+			System.out.println("Bucket Id Folder 생성");
+		} else {
+			System.out.println("Bucket Id Folder 생성 실패");
+		}
 }
+	
 }
 
 
