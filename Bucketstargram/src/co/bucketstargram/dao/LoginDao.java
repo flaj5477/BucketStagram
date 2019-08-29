@@ -138,13 +138,12 @@ public class LoginDao {
 	
 	
 	//----------------------------회원가입 --------------------------------
-	
 	public int insert(MemberDto dto) {   //회원 등록
 		int n = 0;
+	//	String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
+	//			+ "	member_phone) values(?,?,?,?,?)";
 		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
-				+ "	member_phone) values(?,?,?,?,?)";
-//		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
-//				+ "	member_phone,member_image_path) values(?,?,?,?,?,?)";
+				+ "	member_phone,member_image_path) values(?,?,?,?,?,?)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getmId());
@@ -152,7 +151,7 @@ public class LoginDao {
 			psmt.setString(3, dto.getmName());
 			psmt.setString(4, dto.getmEmail());
 			psmt.setString(5, dto.getmPhone());
-//			psmt.setString(6, dto.getmImagePath());
+ 			psmt.setString(6, dto.getmImagePath());
 			n = psmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();

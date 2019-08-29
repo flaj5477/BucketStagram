@@ -8,6 +8,7 @@
 <title>버킷스타그램 라이브러리 탭</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 .gallery {
 	display: inline;
@@ -39,17 +40,50 @@ div.libList{
 	text-align: center;
 }
 </style>
+<%
+	String userId = (String)session.getAttribute("userid");
+%>
 </head>
 <body>
 	<jsp:include page="../category/nav.jsp"/>
 	<jsp:include page="../category/header.jsp"/>
 	
 	<!-- 라이브러리 추가하는 버튼 -->
-	<div id="libInsert">
-		<a href="LibInsertForm.do">
+	<div id="libInsert" onclick="modal()">
+		<a href="LibInsertForm.do" data-poptrox="iframe,400x400">
 			<i class="fa fa-plus-square-o" aria-hidden="true"></i>
 		</a>
 	</div>
+	
+	<script>
+	$( document ).ready(function(){		//관리자로 로그인 해야 +버튼 보이게 하는 함수	
+		console.log("로그인 아이디 = " + "<%= userId%>");
+	
+		$("#libInsert").hide(); //+버튼 숨기기
+		
+		if("<%= userId%>" == "owner" ){
+			$("#libInsert").show(); //태그 보이기
+		}
+	});
+	
+	function modal(){
+		$body = $('body');
+		
+		$('#libInsert').poptrox({
+			onPopupClose: function() { $body.removeClass('is-covered'); },
+			onPopupOpen: function() { $body.addClass('is-covered'); },
+			baseZIndex: 10001,
+			useBodyOverflow: false,
+			usePopupEasyClose: true,
+			overlayColor: '#000000',
+			overlayOpacity: 0.75,
+			popupLoaderText: '',
+			fadeSpeed: 500,
+			usePopupDefaultStyling: false,
+			windowMargin: (skel.breakpoint('small').active ? 5 : 50)
+		});
+	}
+	</script>
 	
 	
 	<!-- 라이브러리리스트 사진 출력하는 부분 -->

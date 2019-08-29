@@ -22,8 +22,6 @@
  	float : left;
  	width:450px;
  	height:450px;
-	
-
 } 
 .navigation__column input {
 	border: 1px solid #e6e6e6;

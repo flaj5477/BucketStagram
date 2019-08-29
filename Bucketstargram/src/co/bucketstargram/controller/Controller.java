@@ -14,6 +14,7 @@ import co.bucketstargram.command.index.Index;
 import co.bucketstargram.command.library.LibraryAdd;
 import co.bucketstargram.command.library.LibraryAddForm;
 import co.bucketstargram.command.library.DetailLibFrm;
+import co.bucketstargram.command.library.LibInsert;
 import co.bucketstargram.command.library.LibInsertForm;
 import co.bucketstargram.command.library.LibraryForm;
 import co.bucketstargram.command.member.IdCheck;
@@ -90,6 +91,7 @@ public class Controller extends HttpServlet {
         map.put("/DetailLibFrm.do", new DetailLibFrm());
         map.put("/LibraryAddForm.do", new LibraryAddForm());
         map.put("/LibInsertForm.do", new LibInsertForm()); //라이브러리 입력 폼 요청
+        map.put("/LibInsert.do", new LibInsert()); //라이브러리 입력(dao)
 
         //동규
         map.put("/GetSearch.do", new GetSearch());

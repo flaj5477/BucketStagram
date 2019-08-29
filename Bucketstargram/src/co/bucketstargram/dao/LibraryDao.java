@@ -46,9 +46,44 @@ public class LibraryDao {
 		}
 	}
 	
+	//라이브러리 insert
+	public boolean libInsert(LibraryDto library) {
+		boolean success = false; 
+		
+		String sql = "insert into LIBRARY_INFO_TB(LIB_ID, LIB_TITLE, LIB_CONTENTS, LIB_TYPE, LIB_IMAGE_PATH) "
+				+ "values(?,?,?,?,?)";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, library.getLibId());
+			psmt.setString(2, library.getLibTitle());
+			psmt.setString(3, library.getLibContents());
+			psmt.setString(4, library.getLibType());
+			psmt.setString(5, library.getLibImagePath());
+			
+			int result = psmt.executeUpdate();
+			if(result > 0) {
+				System.out.println("------LibraryDao.java | DB입력 성공----------");
+				success = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return success;
+	}
+	
+	//라이브러리 리스트 전체 select
 	public ArrayList<LibraryDto> getLibPhotoList(String libType, int page) {
 		// TODO Auto-generated method stub
+		System.out.println("라이브러리 타입: " + libType + " 페이지: " + page);
+		
 		ArrayList<LibraryDto> libraryList = null;
+		LibraryDto library = null;
 		String where = "";
 		
 		//가져올 게시글 번호
@@ -59,7 +94,7 @@ public class LibraryDao {
 
 			where = "where lib_type= ?";
 		}
-		LibraryDto library = null;
+		
 		//20부터 30까지 출력
 		String sql = "SELECT X.rn, X.*\r\n" + 
 				"FROM\r\n" + 
@@ -103,6 +138,7 @@ public class LibraryDao {
 		return libraryList;
 	}
 	
+	//라이브러리 상세정보 select
 	public LibraryDto getdetailLib(String libId) {	
 		LibraryDto library = new LibraryDto();
 		String sql = "SELECT lib_title, lib_contents, lib_type, lib_image_path, lib_write_date " + 

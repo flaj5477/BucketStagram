@@ -7,13 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.bucketstargram.common.Command;
+import co.bucketstargram.common.HttpRes;
 
 public class LibInsertForm implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		String viewPage = "jsp/library/libraryInsertForm.jsp";
+		HttpRes.forward(request, response, viewPage);
 	}
 
 }
