@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>버킷스타그램 좋아요 순위</title>
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 
 
@@ -30,7 +31,10 @@ input[name="wordSearch"] {
 	height: 2em;
 	text-align: left;
 
-
+}
+div.asd{
+	display: flow-root;
+}
 
 </style>
 
@@ -84,42 +88,10 @@ input[name="wordSearch"] {
 		 </c:forEach>
 	</div>  
  
-
-
-<%-- <div align="center">
-	<div><p></div>
-	<div align="center">
-		<div>
-		<form name="frm_list"  method="post">
-			<input type="hidden" name="id">  <!-- 레코드에 pk값을 전달할 변수 -->
-		<table border = "1">
-			 
-			<c:if test="${isList == true}">
-				<tr><td align="center" colspan="6">등록된 글이 없습니다.</td></tr>
-			</c:if>
-			<c:forEach items="${list }" var="dto">			
-			<tr>
-					<td align="center">${dto.bucketId }</td>
-					</tr><tr>
-					 <td align="center">${dto.bucketMemberId }</td> </tr>
-					<tr> 
-					<td align="center">제목${dto.bucketTitle }</td></tr>
-					<tr>
-					<td align="center">카테고리 ${dto.bucketType }</td></tr>
-					<tr>
-					<td align="center">좋아요  ${dto.bucketLike}</td></tr>
-					
-			</c:forEach>	 --%>				
-			 	
-		<!-- </table></form></div>
-		<div> <p></div>
-
-
-</div>
-</div> -->
 	 
 
-		 
+		 	<!-- footer자리 -->
+	<jsp:include page="../category/popFooter.jsp"/>
 	 
 
     <script src="assets/js/jquery.min.js"></script>

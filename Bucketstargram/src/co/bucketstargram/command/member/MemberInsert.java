@@ -51,6 +51,8 @@ public class MemberInsert implements Command {
 		 String upFileName = multi.getFilesystemName(file);
 	//	 mImagePath = "images" + "\\profile"  + "\\" +id+ "\\" + upFileName;
 		
+		 
+		 if(upFileName != null) {
 		 mImagePath = "images" + "\\profile" +"\\"  + upFileName;
 		 System.out.println("ImagePath = " + mImagePath);
 			/*
@@ -72,7 +74,25 @@ public class MemberInsert implements Command {
 		request.setAttribute("n", n);
 		String viewPage="jsp/signup/memberinsertok.jsp";
 		HttpRes.forward(request, response, viewPage);
-
+		 }else {
+			 mImagePath = "images" + "\\profile" +"\\"  + "temp.jpg";
+			 System.out.println("ImagePath = " + mImagePath);
+			 
+		 
+				
+			 
+			dto.setmId(multi.getParameter("id"));
+			dto.setmPw(multi.getParameter("password"));
+			dto.setmName(multi.getParameter("name"));
+			dto.setmEmail(multi.getParameter("email"));
+			dto.setmPhone(multi.getParameter("phone"));
+		//	dto.setmImagePath(request.getParameter("imagePath"));
+			dto.setmImagePath(mImagePath);
+			int n = dao.insert(dto);
+			request.setAttribute("n", n);
+			String viewPage="jsp/signup/memberinsertok.jsp";
+			HttpRes.forward(request, response, viewPage);
+		 }
 	}
 	
 	}

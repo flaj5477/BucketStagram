@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/main.css" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
 <!-- Wrapper -->
@@ -23,23 +26,25 @@
 				<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
 			</ul>
 			<hr>
-				<ul class="icons">
+			<ul class="icons">
 				<li><a href="PopMain.do" class="icon style2 fa-twitter"><span
 						class="label">전체</span></a></li>
-				<li><a href="Travel.do" class="icon style2 fa-facebook"><span
-						class="label">여행</span></a></li>
-				<li><a href="Sport.do" class="icon style2 fa-instagram"><span
-						class="label">운동</span></a></li>
-				<li><a href="Food.do" class="icon style2 fa-500px"><span
-						class="label">음식</span></a></li>
-				<li><a href="NewSkill.do" class="icon style2 fa-envelope-o"><span
-						class="label">배움</span></a></li>
-				<li><a href="Culture.do" class="icon style2 fa-envelope-o"><span
-						class="label">문화</span></a></li>
-				<li><a href="Shopping.do" class="icon style2 fa-envelope-o"><span
-						class="label">쇼핑</span></a></li>
-				<li><a href="LifeStyle.do" class="icon style2 fa-envelope-o"><span
-						class="label">생활</span></a></li>
+				<li><a href="PopMain.do?type=여행"
+					class="icon style2 fa-facebook"><span class="label">여행</span></a></li>
+				<li><a href="PopMain.do?type=운동"
+					class="icon style2 fa-instagram"><span class="label">운동</span></a></li>
+				<li><a href="PopMain.do?type=음식"
+					class="icon style2 fa-500px"><span class="label">음식</span></a></li>
+				<li><a href="PopMain.do?type=배움"
+					class="icon style2 fa-envelope-o"><span class="label">배움</span></a></li>
+				<li><a href="PopMain.do?type=문화"
+					class="icon style2 fa-envelope-o"><span class="label">문화</span></a></li>
+				<li><a href="PopMain.do?type=야외"
+					class="icon style2 fa-envelope-o"><span class="label">야외</span></a></li>
+				<li><a href="PopMain.do?type=쇼핑"
+					class="icon style2 fa-envelope-o"><span class="label">쇼핑</span></a></li>
+				<li><a href="PopMain.do?type=생활"
+					class="icon style2 fa-envelope-o"><span class="label">생활</span></a></li>
 			</ul>
 		</header>
 	</div>
