@@ -12,8 +12,15 @@
 .gallery {
 	display: inline;
 	float: left;
-	width: 450px;
-	height: 450px;
+	width: 20%;
+	height: 400px;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	margin: 10px;
+	padding: 10px;
 }
 
 form[name="frm_Search"] {
@@ -24,24 +31,26 @@ input[name="wordSearch"] {
 	height: 2em;
 	text-align: left
 }
+div.libList{
+	display: flow-root;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../category/nav.jsp"/>
 	<jsp:include page="../category/header.jsp"/>
 
-		<section>
+		<div class="libList">
 			<c:forEach items="${libraryList}" var="library">
 				<div class="gallery" align="center">
 					<a target="_blank" href="DetailLibFrm.do?libId=${library.libId }"
 						data-poptrox="iframe,1200x800"> <img id="${library.libId }"
-						src="${library.libImagePath }"
-						style="width: 100%; max-width: 300px" />
+						src="${library.libImagePath }" />
 					</a>
 				</div>
 			</c:forEach>
-		</section>
-	</div>
+		</div>
+
 	<%-- 			<!-- Thumbnails -->
 			<div class="thumbnails">
 				<!-- 4*5 배열 -->
@@ -92,8 +101,6 @@ input[name="wordSearch"] {
 				</div>
 			</div>
 		</div> --%>
-
-
 
 
 	<!-- footer자리 -->

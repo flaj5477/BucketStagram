@@ -5,10 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	footer {
+		text-align: center;
+		margin: 50px 0 50px 0;
+		font-size: xx-large;
+	}
+</style>
 </head>
 <body>
 
-	<footer style="height: 100px">
+	<footer>
 		<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
 		<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
 		<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
