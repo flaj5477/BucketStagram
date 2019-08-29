@@ -270,8 +270,18 @@ function modal(){
 	<div id="wrapper">
 		<!-- Header -->
 		<header id="header">
-			<span class="logo" style="margin:0px;"><a href="Index.do">
-				<img id="logo_image" src="${userImagePath }" alt="사용자 프로필 사진" style="width: 15em; height: 15em;"/></a>
+			<span class="logo" style="margin:0px;">
+			<c:set var="userImagePath" value="${userImagePath }" />
+				<c:choose>
+					<c:when test="${empty userImagePath }">
+						<img id="logo_image" src="images/profile/temp.jpg" alt="사용자 프로필 사진" style="width: 15em; height: 15em;"/>
+					</c:when>
+					<c:otherwise>
+						<a href="Index.do">
+							<img id="logo_image" src="${userImagePath }" alt="사용자 프로필 사진" style="width: 15em; height: 15em;"/>
+						</a>
+					</c:otherwise>
+				</c:choose>
 			</span>
 
 			<ul class="topMenu">
