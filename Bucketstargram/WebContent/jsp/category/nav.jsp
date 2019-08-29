@@ -23,7 +23,7 @@
 						aria-hidden="true"></i>Login
 				</a></li>
 				<li class="navigation__list-item" id="sign-up"
-					style="display: block;"><a href="#" class="navigation__link">
+					style="display: block;"><a href="SignUp.do" class="navigation__link">
 						<i class="fa fa-user-plus" aria-hidden="true"></i>SignUp
 				</a></li>
 				<li class="navigation__list-item" id="sign-out"

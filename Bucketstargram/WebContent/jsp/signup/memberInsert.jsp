@@ -88,7 +88,16 @@
 	</script> 
   </head>
 <body>
-	
+	<div id="wrapper" style = 'text-align: center; margin-top :25px;' >
+		<header id="header">
+
+			<span class="logo">
+				<a href="Index.do">
+				<img style= ' width :30%; height:auto;'  src="images/logo2.png" 
+			 /></a>
+			</span>			
+	 </header>
+	</div>  
 <article class="container">
         <div class="page-header">
           <h1>회원가입 <small>을 환영합니다.</small></h1>
