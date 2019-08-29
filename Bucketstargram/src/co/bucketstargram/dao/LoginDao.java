@@ -138,13 +138,12 @@ public class LoginDao {
 	
 	
 	//----------------------------회원가입 --------------------------------
-	
 	public int insert(MemberDto dto) {   //회원 등록
 		int n = 0;
+	//	String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
+	//			+ "	member_phone) values(?,?,?,?,?)";
 		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
-				+ "	member_phone) values(?,?,?,?,?)";
-//		String sql="insert into MEMBER_INFO_TB(member_id,member_pw,member_name,member_email,"
-//				+ "	member_phone,member_image_path) values(?,?,?,?,?,?)";
+				+ "	member_phone,member_image_path) values(?,?,?,?,?,?)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getmId());
@@ -152,7 +151,7 @@ public class LoginDao {
 			psmt.setString(3, dto.getmName());
 			psmt.setString(4, dto.getmEmail());
 			psmt.setString(5, dto.getmPhone());
-//			psmt.setString(6, dto.getmImagePath());
+ 			psmt.setString(6, dto.getmImagePath());
 			n = psmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -188,6 +187,29 @@ public class LoginDao {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+
+	public String getUserImagePath(String userId) {
+		// TODO Auto-generated method stub
+		String userImagePath = null;
+		String sql = "SELECT member_image_path FROM member_info_tb WHERE member_id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				userImagePath = rs.getString("member_image_path");
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return userImagePath;
 	}
 }
 	

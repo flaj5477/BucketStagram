@@ -32,7 +32,7 @@
 		
 		var password = document.frm.password;
 		if(password.value == '' || password.value.length < 4) {
-			alert("패스워드를 4자 이상 입력하세요");
+			alert("비밀번호를 4자 이상 입력하세요.");
 			password.focus();
 			return false;
 		}
@@ -73,7 +73,7 @@
 			return false;
 		}   
 		
-	 	document.frm.submit();
+	 	document.frm.submit();   
 	}
 	function openIdChk(){
 		var cid = document.frm.id;
@@ -83,7 +83,7 @@
 			return false;
 		}
 		url = "IdCheck.do?id="+cid.value;
-		open(url, "checkForm","location=no, width=500, height=300, resizable=no, scrollvars=no");
+		open(url, "checkForm","location=no, width=400, height=300, left= 700, top=400,resizable=no, scrollvars=no");
 	} 
 	</script> 
   </head>
@@ -107,7 +107,7 @@
             <div class="form-group"><i class="fa fa-user"></i>
               <label for="username">아이디</label>
               <div class="input-group">
-                <input name = "id" type="text" class="form-control"  placeholder="4자리 이상 입력하세요">
+                <input name = "id" type="text" class="form-control"  placeholder="아이디를 4자리 이상 입력해 주세요">
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-success" onclick="openIdChk();">아이디 중복확인
                   <i class="fa fa-mail-forward	 spaceLeft"></i></button>
@@ -118,12 +118,12 @@
        
             <div class="form-group"><i class="fa fa-unlock-alt"></i>
               <label for="InputPassword1">비밀번호</label>
-              <input name ="password" type="password" class="form-control"  placeholder="비밀번호">
+              <input name ="password" type="password" class="form-control"  placeholder="비밀번호를 4자리 이상 입력해 주세요">
             </div>
             <div class="form-group"><i class="fa fa-unlock-alt"></i>
               <label for="InputPassword2">비밀번호 확인</label>
-              <input name="pw2" type="password" class="form-control"  placeholder="비밀번호 확인">
-              <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
+              <input name="pw2" type="password" class="form-control"  placeholder="비밀번호를 확인해 주세요">
+               
             </div>
             <div class="form-group"><i class="fa fa-address-book-o"></i>
               <label for="username">이름</label>
@@ -131,7 +131,7 @@
             </div>
             <div class="form-group"><i class="fa fa-envelope"></i>
             <label for="InputEmail">이메일</label>
-              <input name = "email" type="email" class="form-control"  placeholder="이메일 주소">
+              <input name = "email" type="email" class="form-control"  placeholder="이메일 주소를 입력해 주세요">
             </div>
      		<div class="form-group"><i class="fa fa-phone"></i>	
               <label for="username">전화번호</label>
@@ -143,7 +143,7 @@
             </div> 
   
                         <div class="form-group text-center">
-             <button type="button" class="btn btn-info"  onclick="formCheck();">회원가입<i class="fa fa-check spaceLeft"></i> </button>
+             <button type="button" class="btn btn-info"  onclick="formCheck();">가입하기<i class="fa fa-check spaceLeft"></i> </button>
               <button type="button" class="btn btn-warning" onclick="location.href='Index.do'" >가입취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>

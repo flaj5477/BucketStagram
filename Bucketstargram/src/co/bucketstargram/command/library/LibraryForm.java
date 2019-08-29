@@ -33,5 +33,6 @@ public class LibraryForm implements Command {
 		
 		String viewPage = "jsp/library/libraryForm.jsp";
 		HttpRes.forward(request, response, viewPage);
+		
 	}
 }

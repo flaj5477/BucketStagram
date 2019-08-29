@@ -268,13 +268,12 @@ function test(){
 <body>
 	<div class="photo" >
 		<div  style="display:inline-block;">
-			<img src="${bucket.bucketImagePath }" align="left" width="600" height="800">
+			<img src="${bucket.bucketImagePath }" align="left" width="700" height="800">
 		</div>
-		<div id="chat_scrol_div" style="margin-left:10px;height:780px;width:550px;display:inline-block;font-size: 30px;overflow-y: scroll;">
-			<div class="photo__header">
-				<img src="images/avatar.jpg" class="photo__avatar">
+		<div id="chat_scrol_div" style="margin-left:10px;height:800px;width:450px;display:inline-block;font-size: 30px;">
+			<div class="photo__header" style="border-bottom: 1px solid #e6e6e6; margin-bottom: 10px;">
+				<img src="${userImagePath} " class="photo__avatar" style="width: 70px;">
 				<div class="photo__user-info">
-					<span class="photo__author">사용자 아이디</span> 
 					<c:set var="userId" value="<%=userId %>" />
 					<c:choose>
 	 					<c:when test="${bucket.bucketMemberId eq userId}">
@@ -286,55 +285,67 @@ function test(){
 							</a>
 						</c:otherwise>
 					</c:choose>
+					<span class="photo__author" style="display:inline-block">${bucket.bucketContents}</span>
 				</div>
 			</div>
-			<div>
-				<div id="bucket_repl" class="bucket_repl">
+			<div style="height:300px;min-height:450px;overflow-y: scroll;">
+				<div id="bucket_repl" class="bucket_repl" >
 					<c:set var="userId" value="<%=userId %>" />
 					<c:forEach items="${replyList}" var="reply">
 						<c:choose>
 							<c:when test="${reply.reMemberId eq userId}">
+							<div>
+							<!-- style="border: 1px solid; padding-bottom: 8px; padding-left: 14px; padding-top: 5px; border-radius: 14px; height: 71px; margin-bottom: 5px;" -->
 								<div class="repl">
-									<a href="MyBucket.do"><h3 class = "repl-id" style="display:inline-block">${reply.reMemberId }</h3></a>
-									<span class="repl-content">${reply.reReplyContents }</span>
-									<div>${reply.reWriteDate }</div><br>
+									<div class="photo__header" style="margin-top: 10px; padding: 0px;">
+										<img src="images/profile/ironman.jpg" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">
+										<a href="#" onclick="parent.location='MyBucket.do'"><h3 class = "repl-id" style="font-size: 20px;display:inline-block">${reply.reMemberId }</h3></a>
+										<span class="repl-content" style="font-size: 20px;margin-left: 10px;margin-top: 10px;">${reply.reReplyContents }</span>
+									</div>
+									<span style="font-size: medium; margin-left: 60px;">${reply.reWriteDate }</span>
+								</div>
 								</div>							
 							</c:when>
 							<c:otherwise>
+							<div>
 								<div class="repl">
-									<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${reply.reMemberId}';"><h3 class = "repl-id" style="display:inline-block">${reply.reMemberId }</h3></a>
-									<span class="repl-content">${reply.reReplyContents }</span>
-									<div>${reply.reWriteDate }</div><br>
-								</div>	
+									<div class="photo__header" style="margin-top: 10px; padding: 0px;" >
+										<img src="images/profile/ironman.jpg" class="photo__avatar" style="width: 2em; height: 2em;;margin-top: 15px;">
+										<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${reply.reMemberId}';">
+										<h3 class = "repl-id" style="font-size: 20px;display:inline-block;">${reply.reMemberId }</h3></a>
+										<span class="repl-content" style="font-size: 20px;margin-left: 10px;margin-top: 10px;">${reply.reReplyContents }</span>
+									</div>
+									<span style="font-size: medium; margin-left: 60px;">${reply.reWriteDate }</span>
+								</div>
+							</div>	
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 				</div>
 			</div>
-		</div>
-		<hr style="margin:0px">
-		<div>
-			<div class="photo__actions">
-				<span id="like" onclick="likeAction()" style="cursor:pointer;"><i class="fa fa-heart-o fa-lg" ></i></span> 
-				<span id="add"  onclick="addAction();" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
-				<span id="completion" onclick="completeAction();" style="cursor:pointer;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
-				<span id="delete" onclick="deleteAction();" style="cursor:pointer;"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-				<span id="update" style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-				<span id="chat" onclick="$('#reply-textArea').focus();" style="cursor:pointer;"><i class="fa fa-comment-o fa-lg"></i></span>
-				<br>
-				<span id="total-like-view">좋아요 ${bucket.bucketLike}개</span>
-				<br> 
-				<span id="total-reply-view">댓글 ${bucket.bucketReplyCnt }개</span>
-				<br>
-				<span id="bucket-wDate">${bucket.bucketWriteDate } 작성...</span>
+			<div>
+				<div class="photo__actions" style="border-top: 1px solid #e6e6e6; padding: 13px 0px; margin: 0px;">
+					<span id="like" onclick="likeAction()" style="cursor:pointer;"><i class="fa fa-heart-o fa-lg" ></i></span> 
+					<span id="add"  onclick="addAction();" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
+					<span id="completion" onclick="completeAction();" style="cursor:pointer;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+					<span id="delete" onclick="deleteAction();" style="cursor:pointer;"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+					<span id="update" style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+					<span id="chat" onclick="$('#reply-textArea').focus();" style="cursor:pointer;"><i class="fa fa-comment-o fa-lg"></i></span>
+					<br>
+					<span id="total-like-view">좋아요 ${bucket.bucketLike}개</span>
+					<br> 
+					<span id="total-reply-view">댓글 ${bucket.bucketReplyCnt }개</span>
+					<br>
+					<span id="bucket-wDate">${bucket.bucketWriteDate } 작성...</span>
+				</div>
 			</div>
-		</div>
-		<div>
-			<div class="photo__add-comment-container">
-				<textarea id="reply-textArea" name="comment" placeholder="Add a comment..."></textarea>
-				<i class="fa fa-ellipsis-h"></i>
+			<div>
+				<div class="photo__add-comment-container" style = "margin-top:35px;">
+					<textarea id="reply-textArea" name="comment" placeholder="Add a comment..."></textarea>
+					<i class="fa fa-ellipsis-h"></i>
+				</div>
 			</div>
-		</div>
 	</div>
+</div>
 </body>
 </html>

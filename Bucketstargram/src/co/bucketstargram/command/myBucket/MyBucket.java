@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.HttpRes;
 import co.bucketstargram.dao.BucketDao;
+import co.bucketstargram.dao.LoginDao;
 import co.bucketstargram.dto.BucketDto;
 
 public class MyBucket implements Command {
@@ -20,11 +21,13 @@ public class MyBucket implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		BucketDao bucketDao = new BucketDao();
+		LoginDao loginDao = new LoginDao();
 		//ReplyDao replyDao = new ReplyDao();
 		
 		HttpSession session = request.getSession(true);
-		String userid = (String)session.getAttribute("userid");
-		ArrayList<BucketDto> bucketList = bucketDao.select(userid);
+		String userId = (String)session.getAttribute("userid");
+		ArrayList<BucketDto> bucketList = bucketDao.select(userId);
+		String userImagePath = loginDao.getUserImagePath(userId);
 		//ArrayList<HashMap<String, String>> myBucketList = bucketDao.getMyBucketInfo(userid);
 //		for(BucketDto dto : bucketList) {
 //			System.out.println("dto.getBucketId() = " + dto.getBucketId());
@@ -60,8 +63,9 @@ public class MyBucket implements Command {
 		
 		
 		
-		session.setAttribute("ownerId", userid);
+		session.setAttribute("ownerId", userId);
 		request.setAttribute("bucketList", bucketList);
+		request.setAttribute("userImagePath", userImagePath);
 //		request.setAttribute("div1", div1);
 //		request.setAttribute("div2", div2);
 //		request.setAttribute("div3", div3);

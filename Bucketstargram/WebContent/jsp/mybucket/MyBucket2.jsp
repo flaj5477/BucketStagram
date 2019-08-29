@@ -22,8 +22,6 @@
  	float : left;
  	width:450px;
  	height:450px;
-	
-
 } 
 .navigation__column input {
 	border: 1px solid #e6e6e6;
@@ -193,10 +191,24 @@ function modal(){
 	});
 }
 </script>
+<style>
+.navigation{
+	border-bottom: solid 1px;
+    border-color: rgba(0, 106, 213, 0.1);
+}
+#logo_image{
+	border-radius: 100%;
+    border: 0.5px solid;
+    border-color: #a9a9a9;
+}
+</style>
 </head>
 <body>
 	<nav class=navigation>
 		<div class="navigation__column">
+			<span class="logo" style="margin:0px;">
+				<a href="Index.do"><img src="images/logo2.png" alt="" /></a>
+			</span>
 			&nbsp;&nbsp;&nbsp;
 		</div>
 		<div class="navigation__column">
@@ -258,7 +270,19 @@ function modal(){
 	<div id="wrapper">
 		<!-- Header -->
 		<header id="header">
-			<span class="logo" style="margin:0px;"><a href="Index.do"><img src="images/logo2.png" alt="" /></a></span>
+			<span class="logo" style="margin:0px;">
+			<c:set var="userImagePath" value="${userImagePath }" />
+				<c:choose>
+					<c:when test="${empty userImagePath }">
+						<img id="logo_image" src="images/profile/temp.jpg" alt="사용자 프로필 사진" style="width: 15em; height: 15em;"/>
+					</c:when>
+					<c:otherwise>
+						<a href="Index.do">
+							<img id="logo_image" src="${userImagePath }" alt="사용자 프로필 사진" style="width: 15em; height: 15em;"/>
+						</a>
+					</c:otherwise>
+				</c:choose>
+			</span>
 
 			<ul class="topMenu">
 				<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
@@ -286,6 +310,8 @@ function modal(){
 						class="label">배움</span></a></li>
 				<li onclick="categoryAction('문화')"><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">문화</span></a></li>
+				<li onclick="categoryAction('야외')"><a href="#" class="icon style2 fa-envelope-o"><span
+						class="label">야외</span></a></li>
 				<li onclick="categoryAction('쇼핑')"><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">쇼핑</span></a></li>
 				<li onclick="categoryAction('생활')"><a href="#" class="icon style2 fa-envelope-o"><span
@@ -295,7 +321,7 @@ function modal(){
 		<div id="bucket_list_container">
 			<c:forEach items="${bucketList}" var="bucket">
 				 <div class="gallery" align="center">
-					<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805">
+					<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }&bucketMemberId=${bucket.bucketMemberId}" data-poptrox="iframe,1200x803">
 						<img src="${bucket.bucketImagePath }" style="width: 350px; height:328px;" />  
 					</a>
 					<div>${bucket.bucketTitle }</div>

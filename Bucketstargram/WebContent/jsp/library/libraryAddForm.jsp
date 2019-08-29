@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>libraryAddForm.jsp</title>
 <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/styles.css"> 
 <%
 	String imagePath = (String)request.getAttribute("imagePath");
 	String bucketTitle = (String)request.getAttribute("bucketTitle");
