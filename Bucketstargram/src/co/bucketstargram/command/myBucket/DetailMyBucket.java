@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.HttpRes;
 import co.bucketstargram.dao.BucketDao;
+import co.bucketstargram.dao.LoginDao;
 import co.bucketstargram.dao.ReplyDao;
 import co.bucketstargram.dto.BucketDto;
 import co.bucketstargram.dto.ReplyDto;
@@ -24,17 +25,25 @@ public class DetailMyBucket implements Command {
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("userid");
 		String bucketId = request.getParameter("bucketId");
-		System.out.println("DetailMyBucket.java | usersId = " + userId);
-		System.out.println("DetailMyBucket.java | bucketId = " + bucketId);
+		String bucketMemberId = request.getParameter("bucketMemberId");
+		System.out.println("usersId = " + userId);
+		System.out.println("bucketId = " + bucketId);
+		System.out.println("bucketMemberId = " + bucketMemberId);
 		
 		BucketDao bucketDao = new BucketDao();
 		ReplyDao replyDao = new ReplyDao();
+		LoginDao loginDao = new LoginDao();
+		
 		BucketDto bucket = bucketDao.getBucketInfo(userId, bucketId);
 		ArrayList<ReplyDto> replyList = replyDao.getReplyInfo(bucketId);
+		String userImagePath = loginDao.getUserImagePath(bucketMemberId);
+		//ArrayList reUserImagePath = loginDao.getReUserImagePath()
 		System.out.println("DetailMyBucket.java | bucket.getBucketImagePath() = " + bucket.getBucketImagePath());
+		
 		session.setAttribute("ownerId", userId);
 		request.setAttribute("bucket", bucket);
 		request.setAttribute("replyList", replyList);
+		request.setAttribute("userImagePath", userImagePath);
 		
 		String viewPage = "jsp/mybucket/DetailBucket.jsp";
 		HttpRes.forward(request, response, viewPage);

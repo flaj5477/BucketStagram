@@ -189,5 +189,28 @@ public class LoginDao {
 			e.printStackTrace();
 		}
 	}
+
+	public String getUserImagePath(String userId) {
+		// TODO Auto-generated method stub
+		String userImagePath = null;
+		String sql = "SELECT member_image_path FROM member_info_tb WHERE member_id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				userImagePath = rs.getString("member_image_path");
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return userImagePath;
+	}
 }
 	
