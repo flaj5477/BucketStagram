@@ -39,15 +39,7 @@ import co.bucketstargram.command.myBucket.WishListAction;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
 import co.bucketstargram.command.myBucket.OtherBucket;
-import co.bucketstargram.command.popular.Culture;
-import co.bucketstargram.command.popular.Food;
-import co.bucketstargram.command.popular.LifeStyle;
-import co.bucketstargram.command.popular.NewSkill;
-import co.bucketstargram.command.popular.Outdoor;
 import co.bucketstargram.command.popular.PopMain;
-import co.bucketstargram.command.popular.Shopping;
-import co.bucketstargram.command.popular.Sport;
-import co.bucketstargram.command.popular.Travel;
 import co.bucketstargram.command.search.GetSearch;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.Trace;
@@ -105,14 +97,7 @@ public class Controller extends HttpServlet {
 
         //지민
         map.put("/PopMain.do", new PopMain());
-        map.put("/Travel.do", new Travel());
-        map.put("/Sport.do", new Sport());
-        map.put("/Food.do", new Food());
-        map.put("/NewSkill.do", new NewSkill());
-        map.put("/Culture.do", new Culture());
-        map.put("/Outdoor.do", new Outdoor());
-        map.put("/Shopping.do", new Shopping());
-        map.put("/LifeStyle.do", new LifeStyle());
+       
      }
 
      protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
