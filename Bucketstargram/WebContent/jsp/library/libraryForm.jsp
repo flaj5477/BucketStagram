@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>버킷스타그램 라이브러리 탭</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="assets/css/main.css" />
-<link rel="stylesheet" href="assets/css/styles.css" />
+
 <style>
 .gallery {
 	display: inline;
@@ -97,23 +96,9 @@ input[name="wordSearch"] {
 
 
 
-	<footer style="height: 100px">
-		<a href="javascript:goList(1)">1</a> <a href="javascript:goList(2)">2</a>
-		<a href="javascript:goList(3)">3</a> <a href="javascript:goList(4)">4</a>
-		<a href="javascript:goList(5)">5</a> <a href="javascript:goList(6)">6</a>
-	</footer>
+	<!-- footer자리 -->
+	<jsp:include page="../category/libFooter.jsp"/>
 
-	<form name="pagefrm" action="LibraryForm.do">
-		<input type="hidden" name="page" value="1"> <input
-			type="hidden" name="type" value="${param.type}">
-	</form>
-
-	<script>
-		function goList(p) {
-			document.pagefrm.page.value = p;
-			document.pagefrm.submit();
-		}
-	</script>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
