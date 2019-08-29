@@ -1,3 +1,4 @@
+<%@page import="com.sun.xml.internal.bind.v2.schemagen.xmlschema.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -176,6 +177,20 @@ function modal(){
 		usePopupDefaultStyling: false,
 		windowMargin: (skel.breakpoint('small').active ? 5 : 50)
 	});
+	
+	$('#post').poptrox({
+		onPopupClose: function() { $body.removeClass('is-covered'); },
+		onPopupOpen: function() { $body.addClass('is-covered'); },
+		baseZIndex: 10001,
+		useBodyOverflow: false,
+		usePopupEasyClose: true,
+		overlayColor: '#000000',
+		overlayOpacity: 0.75,
+		popupLoaderText: '',
+		fadeSpeed: 500,
+		usePopupDefaultStyling: false,
+		windowMargin: (skel.breakpoint('small').active ? 5 : 50)
+	});
 }
 </script>
 </head>
@@ -253,7 +268,9 @@ function modal(){
 			<ul class="topMenu" style="margin:15px;">
 				<li id = "myBucket" onclick="bucketList()" style="cursor:pointer;" >버킷리스트</li>
 				<li id ="wishBucket" onclick="wishList()" style="cursor:pointer;" >위시리스트</li>
-				<li id ="post" onclick = "bucketPost()" style="cursor:pointer;" >등록</li>
+				<li id ="post" style="cursor:pointer;" onclick="modal()">
+				<a href="BucketPostForm.do" data-poptrox="iframe,400x400" >등록</a>
+				</li>
 			</ul>
 			<br>
 			<ul class="icons">

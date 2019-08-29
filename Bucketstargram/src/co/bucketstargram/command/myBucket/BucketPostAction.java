@@ -26,6 +26,7 @@ public class BucketPostAction implements Command {
 	private File[] deleteFolderList = null;
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("\n--- BucketPostAction.java ---");
 		boolean insertSuccess = false;
 		
 		BucketDto bucket = new BucketDto();
@@ -58,7 +59,7 @@ public class BucketPostAction implements Command {
 		System.out.println("Image File 생성");
 //		//업로드된 파일의 이름을 반환한다
 		Enumeration files = multi.getFileNames();
-		while( files.hasMoreElements() ) {
+		//while( files.hasMoreElements() ) {
 			
 
 			String file = (String)files.nextElement();
@@ -109,7 +110,7 @@ public class BucketPostAction implements Command {
 				String viewPage = "BucketPostForm.do";
 				HttpRes.forward(request, response, viewPage);
 			}
-		}
+	//	}
 	}
 	
 	private void makeDrectory(String bucketImagePath) {

@@ -4,10 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/styles.css">
 <title>Insert title here</title>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
+<div style="margin: 50px 10px 15px 50px;">
 	<form action="BucketPostAction.do" method="post" enctype="multipart/form-data">
 		<br>
 		버킷 제목 : <input type="text" name="bucketTitle">
@@ -30,6 +35,7 @@
     		<img id="thumbnail" src="" width="100" alt="썸네일영역 (클릭하면 다운로드 가능)">
 		</a> 
 	</form>
+</div>
 	
 <script type="text/javascript">
 var file = document.querySelector('#getfile');
