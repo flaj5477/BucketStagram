@@ -13,13 +13,8 @@ public class BucketDto {
 	private String bucketWriteDate = null;
 	private String bucketLiketYN = null;
 	private int bucketReplyCnt = 0;
+	private int bucketRowCnt = 0;
 	
-	public int getBucketReplyCnt() {
-		return bucketReplyCnt;
-	}
-	public void setBucketReplyCnt(int bucketReplyCnt) {
-		this.bucketReplyCnt = bucketReplyCnt;
-	}
 	public BucketDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -96,5 +91,17 @@ public class BucketDto {
 	public void setBucketWriteDate(String bucketWriteDate) {
 		this.bucketWriteDate = bucketWriteDate;
 	}
+	public int getBucketReplyCnt() {
+		return bucketReplyCnt;
+	}
+	public void setBucketReplyCnt(int bucketReplyCnt) {
+		this.bucketReplyCnt = bucketReplyCnt;
+	}
 	
+	public int getBucketRowCnt() {
+		return bucketRowCnt;
+	}
+	public void setBucketRowCnt(int bucketRowCnt) {
+		this.bucketRowCnt = bucketRowCnt;
+	}
 }

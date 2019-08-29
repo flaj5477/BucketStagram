@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">	
-<title>검색 값 반환</title>
 <link rel="stylesheet" href="assets/css/search/search-main.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="assets/css/search/search.css">
@@ -14,21 +13,21 @@
 <script type="text/javascript" src="assets/js/searchSlide.js"></script>
 <script type="text/javascript" src="assets/js/search.js"></script>
 <script src="assets/js/all.js"></script>
+<title>${word}</title>
 </head>
 <body>
-	<% String word = request.getParameter("word"); %>
 	<jsp:include page = "../category/nav.jsp"/>
 	<jsp:include page = "../category/header.jsp"/>
 	<div class="border">
-		<h2><strong style="color:#FD8AB1">'<%=word%>'</strong>에 대한 검색 결과입니다.</h2>
+		<div class="search_Name">'<span>${word}</span>'에 대한 검색 결과입니다.</div>
+		<hr>
 		<div class="slide1">
-			<h2>Library</h2>
+			<div class="search_Title">LIBRARY<span>&nbsp;${requestScope.libCount}</span></div>
 		  	<div class="libSlider" align ="center">
 		  		<c:forEach items="${getLibrarySearch}" var="dto">
 			  		<div class="gallery" id="${dto.libId}">
 						<a target="_blank" href="DetailLibFrm.do?libId=${dto.libId}"
-						   data-poptrox="iframe,1200x800"
-						   >
+						   data-poptrox="iframe,1200x800">
 							<img src="${dto.libImagePath}"/>
 						<span class="type">
 							<c:if test="${dto.libType == '여행'}">
@@ -58,7 +57,9 @@
 						</span>
 						<span class="title">${dto.libTitle}</span>
 						</a>
-						<div class="contents">${dto.libLike}</div>
+						<a>
+							<span class="contents">${dto.libId}</span>
+						</a>
 					</div>
 				</c:forEach>
 			</div>
@@ -66,7 +67,7 @@
 		<div class="slide2">
 			<div style="clear:both"></div> <!-- css, float속성 clear -->
 			<hr>
-			<h2>Bucket</h2>
+			<div class="search_Title">BUCKET<span>&nbsp;${requestScope.bucketCount}</span></div>
 			<div class="bucketSlider" align ="center">
 				<c:forEach items="${getBucketSearch}" var="dto">
 					<div class="gallery">
@@ -101,7 +102,10 @@
 						</span>	
 						<span class="title">${dto.bucketTitle}</span>
 						</a>
-						<div class="contents">${dto.bucketLike}</div>
+						<br>
+						<a>
+							<span class="contents">${dto.bucketLike}</span>
+						</a>
 					</div>
 				</c:forEach>
 			</div>

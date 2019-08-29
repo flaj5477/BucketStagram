@@ -19,14 +19,18 @@ public class GetSearch implements Command {
 		SearchDao dao = new SearchDao();
 		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
-		
 		String word = request.getParameter("word");
+		int libCount = 0;
+		int bucketCount = 0;
 		System.out.println(word+"(을)를 검색합니다.");
 		libResult = dao.librarySearch(word);
 		bucketResult = dao.bucketSearch(word);
-		
+		libCount = dao.libCount(word);
+		bucketCount = dao.bucketCount(word);
 		dao.close();
 		request.setAttribute("word",word);
+		request.setAttribute("libCount",libCount);
+		request.setAttribute("bucketCount",bucketCount);
 		request.setAttribute("getLibrarySearch",libResult);
 		request.setAttribute("getBucketSearch",bucketResult);
 		String viewPage = "jsp/search/GetSearch.jsp";
