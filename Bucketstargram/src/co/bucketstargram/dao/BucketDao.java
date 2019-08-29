@@ -228,6 +228,8 @@ public class BucketDao {
 			result = "deleteFail";
 			e.printStackTrace();
 			return result;
+		}finally {
+			close();
 		}		
 				
 		return result;
@@ -253,7 +255,9 @@ public class BucketDao {
 			result = "insertFail";
 			e.printStackTrace();
 			return result;
-		}		
+		}finally {
+			close();
+		}
 				
 		return result;
 	}
@@ -319,8 +323,11 @@ public class BucketDao {
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			result="deleteFail";
 			return result;					
+		}finally {
+			close();
 		}
 		
 		return result;
