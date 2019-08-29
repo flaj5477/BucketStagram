@@ -23,9 +23,11 @@
 		<hr>
 		<div class="slide1">
 			<div class="search_Title">LIBRARY<span>&nbsp;${requestScope.libCount}</span></div>
+			<c:if test="${requestScope.exist_Lib != false}">
 		  	<div class="libSlider" align ="center">
 		  		<c:forEach items="${getLibrarySearch}" var="dto">
 			  		<div class="gallery" id="${dto.libId}">
+			  		<c:if test="${dto.libId != null}">
 						<a target="_blank" href="DetailLibFrm.do?libId=${dto.libId}"
 						   data-poptrox="iframe,1200x800">
 							<img src="${dto.libImagePath}"/>
@@ -60,17 +62,21 @@
 						<a>
 							<span class="contents">${dto.libId}</span>
 						</a>
+					</c:if>
 					</div>
 				</c:forEach>
 			</div>
+			</c:if>
 		</div>
 		<div class="slide2">
 			<div style="clear:both"></div> <!-- css, float속성 clear -->
 			<hr>
 			<div class="search_Title">BUCKET<span>&nbsp;${requestScope.bucketCount}</span></div>
+			<c:if test="${requestScope.exist_Bucket != false}">
 			<div class="bucketSlider" align ="center">
 				<c:forEach items="${getBucketSearch}" var="dto">
 					<div class="gallery">
+					<c:if test="${dto.bucketId != null}">
 						<a target="_blank" href="DetailMyBucket.do?bucketId=${dto.bucketId}"
 						   data-poptrox="iframe,1200x800">
 							<img id="${dto.bucketId}" src="${dto.bucketImagePath}"/>
@@ -106,9 +112,11 @@
 						<a>
 							<span class="contents">${dto.bucketLike}</span>
 						</a>
+					</c:if>	
 					</div>
 				</c:forEach>
 			</div>
+			</c:if>
 		</div>
 	</div>
 <!-- script -->
