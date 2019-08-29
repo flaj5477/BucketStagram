@@ -46,12 +46,14 @@ public class SearchDao {
 	}
 	
 	public ArrayList<LibraryDto> librarySearch(String word){
+		LibraryDto dto = null;
+		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
 		String sql = "SELECT lib_id, lib_title, lib_type, lib_like, lib_image_path "
 					+"FROM library_info_tb " 
 					+"WHERE UPPER(lib_title) LIKE '%'||UPPER(?)||'%' "
 					+"OR UPPER(lib_contents) LIKE '%'||UPPER(?)||'%' "
-					+"OR UPPER(lib_type) LIKE '%'||UPPER(?)||'%'";
-		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
+					+"OR UPPER(lib_type) LIKE '%'||UPPER(?)||'%'"
+					+"ORDER BY lib_id";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,word); 
@@ -59,28 +61,29 @@ public class SearchDao {
 			psmt.setString(3,word);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				LibraryDto dto = new LibraryDto();
+				dto = new LibraryDto();
 				dto.setLibId(rs.getString(1));
 				dto.setLibTitle(rs.getString(2));
 				dto.setLibType(rs.getString(3));
 				dto.setLibLike(rs.getInt(4));
 				dto.setLibImagePath(rs.getString(5));
-				libResult.add(dto);
-			}
+				libResult.add(dto);		
+			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return libResult;
 	}
-	
 	public ArrayList<BucketDto> bucketSearch(String word){
+		BucketDto dto = null;
+		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
 		String sql = "SELECT bucket_id, bucket_member_id, bucket_title, bucket_type, "
 					+"bucket_compliation, bucket_like, bucket_image_path "
 					+"FROM bucket_info_tb "
 					+"WHERE bucket_title LIKE '%'||UPPER(?)||'%' "
 					+"OR bucket_contents LIKE '%'||UPPER(?)||'%' "
-					+"OR bucket_type LIKE '%'||UPPER(?)||'%'";
-		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
+					+"OR bucket_type LIKE '%'||UPPER(?)||'%'"
+					+"ORDER BY bucket_id";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,word); 
@@ -88,7 +91,7 @@ public class SearchDao {
 			psmt.setString(3,word);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				BucketDto dto = new BucketDto();
+				dto = new BucketDto();
 				dto.setBucketId(rs.getString(1));
 				dto.setBucketMemberId(rs.getString(2));
 				dto.setBucketTitle(rs.getString(3));

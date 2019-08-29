@@ -58,7 +58,7 @@
 						<span class="title">${dto.libTitle}</span>
 						</a>
 						<a>
-							<span class="contents">${dto.libLike}</span>
+							<span class="contents">${dto.libId}</span>
 						</a>
 					</div>
 				</c:forEach>
