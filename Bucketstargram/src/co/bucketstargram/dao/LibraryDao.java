@@ -178,6 +178,27 @@ public class LibraryDao {
 		}
 		return library;
 	}
+
+	//라이브러리 삭제
+	public boolean delete(String libId) {	
+		boolean success = false;
+		String sql = "delete LIBRARY_INFO_TB where LIB_ID = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, libId);
+			int result = psmt.executeUpdate();
+			if(result > 0) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return success;
+	}
 	
 	
 }

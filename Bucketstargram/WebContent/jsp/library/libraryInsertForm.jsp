@@ -19,7 +19,7 @@
 	<!-- 라이브러리 아이디 생성해서 넣는 작업해야함 -->
 	<!-- 등록후 부모창 리로드 하는 거 하기(form태그에 적으면 됨) -->
 	<div id="wrapper">
-		<form action="LibInsert.do" id="libInsertFrm" method="post"
+		<form action="LibInsert.do" id="libInsertFrm" method="post" target="_parent"
 			enctype="multipart/form-data">
 			<span>제목</span> <span> <input type="text" id="libraryTitle"
 				name="libraryTitle">
