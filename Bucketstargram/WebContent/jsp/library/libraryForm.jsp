@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>버킷스타그램 라이브러리 탭</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .gallery {
 	display: inline;
@@ -34,12 +34,25 @@ input[name="wordSearch"] {
 div.libList{
 	display: flow-root;
 }
+#libInsert{
+	font-size: 30px;
+	text-align: center;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../category/nav.jsp"/>
 	<jsp:include page="../category/header.jsp"/>
-
+	
+	<!-- 라이브러리 추가하는 버튼 -->
+	<div id="libInsert">
+		<a href="LibInsertForm.do">
+			<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+		</a>
+	</div>
+	
+	
+	<!-- 라이브러리리스트 사진 출력하는 부분 -->
 		<div class="libList">
 			<c:forEach items="${libraryList}" var="library">
 				<div class="gallery" align="center">
