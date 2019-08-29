@@ -21,7 +21,7 @@ public class MyBucketListAction implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("--- MyBucketListAction.java ---");
+		System.out.println("\n--- MyBucketListAction.java ---");
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("ownerId");
 		System.out.println("MyBucketListAction.java | usersId = " + userId);

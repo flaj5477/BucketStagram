@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>libraryAddForm.jsp</title>
 <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <%
 	String imagePath = (String)request.getAttribute("imagePath");
@@ -13,26 +13,24 @@
 	String bucketContent = (String)request.getAttribute("bucketContent");
 	String bucketMemberId = (String)request.getAttribute("bucketMemberId");
 	
-	System.out.println("이미지 경로: " + imagePath);
+	System.out.println(imagePath);
+	
 	//자바스크립트가 백슬러시 하나 일경우 인식 못하고 깨지는 현상 때문에 치환함
 	String replaceImagePath = imagePath.replace("\\", "\\\\");
 %>
-
-
-
 </head>
 <body>
 <form action="" id="buckt_add_form" method="post" enctype="multipart/form-data" onsubmit="bucketAdd();">
 	<br>
-	버킷	제목: <input type="text" id="bucketTitle" name="bucketTitle" placeholder="<%=bucketTitle %>">
+	버킷	제목: <input type="text" id="bucketTitle" name="bucketTitle" value="<%=bucketTitle %>">
 	<br>
 	<c:choose>
 		<c:when test="${bucketContent eq null}">
-		버킷 내용: <input type="text" id="bucketContent" name="bucketContent" placeholder="">
+		버킷 내용: <input type="text" id="bucketContent" name="bucketContent" value="">
 			<br>	
 		</c:when>
 		<c:otherwise>
-		버킷	내용: <input type="text" id="bucketContent" name="bucketContent" placeholder="<%=bucketContent %>">
+		버킷	내용: <input type="text" id="bucketContent" name="bucketContent" value="<%=bucketContent %>">
 			<br>			
 		</c:otherwise>	
 	</c:choose>
@@ -63,7 +61,7 @@
 		let bucketType = $("#bucketType option:selected").val();
 		let frmActionValue;
 		
-		console.log("bucketTitle = " + bucketContent);
+		console.log("bucketTitle = " + $('#bucketTitle').val());
 		console.log("bucketContent = " + bucketContent);
 		console.log("thumImagePath = " + thumImagePath);
 		

@@ -9,7 +9,7 @@
 <body>
 <nav class=navigation>
 		<div class="navigation__column">
-			<form name="frm_Search" action="GetSearch.do" method="get">
+			<form name="frm_Search" action="GetSearch.do" onsubmit="return searchCond()" method="get">
 				<input type="text" name="word" placeholder="Search">
 			</form>
 
@@ -32,7 +32,6 @@
 						aria-hidden="true"></i>Logout
 				</a></li>
 			</ul>
-
 			<%
 				String userid = (String) session.getAttribute("userid");
 			%>
@@ -56,6 +55,14 @@
 				}
 			%>
 			<script>
+				function searchCond() {
+					var word = document.frm_Search.word;
+					if(word.value == '') {
+						window.alert("검색어를 넣으세요.");
+						return false;
+					}
+					return document.frm_Search.submit();
+				}
 				function logOut() {
 					window.alert("로그아웃 하시겠습니까?");
 					document.location.href = "LogOut.do";

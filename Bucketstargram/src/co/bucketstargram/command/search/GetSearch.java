@@ -21,7 +21,7 @@ public class GetSearch implements Command {
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
 		
 		String word = request.getParameter("word");
-		System.out.println(word+" (을)를 검색합니다.");
+		System.out.println(word+"(을)를 검색합니다.");
 		libResult = dao.librarySearch(word);
 		bucketResult = dao.bucketSearch(word);
 		

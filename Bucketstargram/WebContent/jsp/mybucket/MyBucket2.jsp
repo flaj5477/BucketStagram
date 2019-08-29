@@ -1,97 +1,3 @@
-<%-- <%@page import="co.bucketstargram.dto.BucketDto"%>
-<%@page import="java.util.ArrayList"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>버킷스타그램 라이브러리 탭</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="assets/css/main.css" />
-<link rel="stylesheet" href="assets/css/styles.css" />
-<style>
-.bucket_view_column{
-	width: 450px;
-	height: 450px;
-}
-
-form[name="frm_Search"] {
-	text-align: center;
-	margin: 0 auto;
-}
-
-input[name="wordSearch"] {
-	height: 2em;
-	text-align: left
-}
-</style>
-</head>
-<body>
-	<div id="wrapper">
-		<!-- Header -->
-		<jsp:include page="../../jsp/category/MybucketHeader.jsp"/>
-
-		<!-- Main -->
-		<div>
-			<!-- Thumbnails -->
-			<div class="thumbnails">
-				<div class = "bucket_view_column">
-					<c:forEach items="${div1}" var="bucket">
-						<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805"> 
-							<img id="${bucket.bucketId }" src="${bucket.bucketImagePath }"	style="width: 100%; max-width: 300px" />
-						</a>
-					</c:forEach>
-				</div>
-				<div class = "bucket_view_column">
-					<c:forEach items="${div2}" var="bucket">
-						<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805"> 
-							<img id="${bucket.bucketId }" src="${bucket.bucketImagePath }"	style="width: 100%; max-width: 300px" />
-						</a>
-					</c:forEach>
-				</div>
-				<div class = "bucket_view_column">
-					<c:forEach items="${div3}" var="bucket">
-						<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805"> 
-							<img id="${bucket.bucketId }" src="${bucket.bucketImagePath }"	style="width: 100%; max-width: 300px" />
-						</a>
-					</c:forEach>
-				</div>
-				<div class = "bucket_view_column">
-					<c:forEach items="${div4}" var="bucket">
-						<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805"> 
-							<img id="${bucket.bucketId }" src="${bucket.bucketImagePath }"	style="width: 100%; max-width: 300px" />
-						</a>
-					</c:forEach>				
-				</div>
-				<div class = "bucket_view_column">
-					<c:forEach items="${div5}" var="bucket">
-						<a href="DetailMyBucket.do?bucketId=${bucket.bucketId }" data-poptrox="iframe,1200x805"> 
-							<img id="${bucket.bucketId }" src="${bucket.bucketImagePath }"	style="width: 100%; max-width: 300px" />
-						</a>
-					</c:forEach>				
-				</div>
-			</div>
-
-
-		</div>
-
-	</div>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.poptrox.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/main.js"></script>
-</body>
-</html> --%>
-
-
-
-
-
-<%@page import="com.sun.xml.internal.bind.v2.schemagen.xmlschema.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -179,7 +85,7 @@ function getWishListProcess() {
 			'<a href="DetailMyBucket.do?bucketId=' + wishBucketJson.bucket[key].bucketId +'" data-poptrox="iframe,1200x805">' +
 			'<img src="' + wishBucketJson.bucket[key].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
 			'<div>' + wishBucketJson.bucket[key].bucket_title + '</div>' +
-			'<div>' + wishBucketJson.bucket[key].bucket_type + '</div>' +
+			'<div class="'+ wishBucketJson.bucket[key].bucket_type +'">' + wishBucketJson.bucket[key].bucket_type + '</div>' +
 			'<div>' + wishBucketJson.bucket[key].bucket_like + '</div>' + 
 			'</div>';
 		}
@@ -191,25 +97,11 @@ function getWishListProcess() {
 	}
 }
 
-//위시리스트 리스트 출력 해주는 태그들 복사 저장 변수
-//let wishCloneTag;
-
-let bucketJson;
-
-//$("#wish").on("click", bucketList());
-		
 function bucketList(){
-/* 	console.log("--- bucketList() 호출 ---");
-	//위시리스트 출력 태그들 복사
-	//wishCloneTag = $('#bucket-list').html();
-	console.log(myBucketCloneTag);
-	//myBucketCloneTag => 위시리스트 이벤트 function시작 시점에 저장됨
-	document.getElementById("bucket_list_container-list").innerHTML = myBucketCloneTag; */
-	
 	console.log("--- bucketList() 호출 ---");
+	let bucketJson;
 	//document.getElementById("loading").style.display = "block";\
 	request.open("Post", "MyBucketListAction.do");
-	//성공적으로 요청이 끝났으면 getWishListProcess 실행
 	request.onreadystatechange = getBucketListProcess;
 	request.send(null);
 }
@@ -235,7 +127,7 @@ function getBucketListProcess() {
 			'<a href="DetailMyBucket.do?bucketId=' + bucketJson[i].bucketId +'" data-poptrox="iframe,1200x805">' +
 			'<img src="' + bucketJson[i].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
 			'<div>' + bucketJson[i].bucket_title + '</div>' +
-			'<div>' + bucketJson[i].bucket_type + '</div>' +
+			'<div class="'+ bucketJson[i].bucket_type +'">' + bucketJson[i].bucket_type + '</div>' +
 			'<div>' + bucketJson[i].bucket_like + '</div>' + 
 			'</div>';
 		}
@@ -244,6 +136,18 @@ function getBucketListProcess() {
 		
 		document.getElementById("bucket_list_container").innerHTML = tag;
 		modal();
+	}
+}
+
+//카테고리별 출력 함수
+function categoryAction(category){
+	console.log(category);
+	if(category == "전체"){
+		$('.gallery').css('display', 'inline-block');
+	}else{
+		$('.gallery').css('display', 'none');
+		//클래스가 카테고리 값인 모든 div의 부모 div중 class이름이 galley인 태그의 스타일을 변경
+		$("div[class='"+ category + "']").parent("div.gallery").css("display", "inline-block");		
 	}
 }
 
@@ -353,21 +257,21 @@ function modal(){
 			</ul>
 			<br>
 			<ul class="icons">
-				<li><a href="#" class="icon style2 fa-twitter"><span
+				<li onclick="categoryAction('전체')"><a href="#" class="icon style2 fa-twitter"><span
 						class="label">전체</span></a></li>
-				<li><a href="#" class="icon style2 fa-facebook"><span
+				<li onclick="categoryAction('여행')"><a href="#" class="icon style2 fa-facebook"><span
 						class="label">여행</span></a></li>
-				<li><a href="#" class="icon style2 fa-instagram"><span
+				<li onclick="categoryAction('운동')"><a href="#" class="icon style2 fa-instagram"><span
 						class="label">운동</span></a></li>
-				<li><a href="#" class="icon style2 fa-500px"><span
+				<li onclick="categoryAction('음식')"><a href="#" class="icon style2 fa-500px"><span
 						class="label">음식</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
+				<li onclick="categoryAction('배움')"><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">배움</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
+				<li onclick="categoryAction('문화')"><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">문화</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
+				<li onclick="categoryAction('쇼핑')"><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">쇼핑</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
+				<li onclick="categoryAction('생활')"><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">생활</span></a></li>
 			</ul>
 		</header>
@@ -378,7 +282,7 @@ function modal(){
 						<img src="${bucket.bucketImagePath }" style="width: 350px; height:328px;" />  
 					</a>
 					<div>${bucket.bucketTitle }</div>
-					<div>${bucket.bucketType}</div>
+					<div class="${bucket.bucketType}">${bucket.bucketType}</div>
 					<div>${bucket.bucketLike}</div> 
 				</div>
 			 </c:forEach>

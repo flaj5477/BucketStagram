@@ -45,8 +45,12 @@ public class BucketAddAction implements Command {
 		String bucketTitle = request.getParameter("bucketTitle");
 		String bucketContents = request.getParameter("bucketContent");
 		// 나중에 selection form 추가 되면 수정해야될 부분
-		String bucketType = "여행";
+		String bucketType = request.getParameter("bucketType");
 		String bucketImagePath = null;
+		
+		System.out.println("bucketTitle = " + bucketTitle);
+		System.out.println("bucketContents = " + bucketContents);
+		System.out.println("bucketType = " + bucketType);
 		
 		//새로운 이미지가 들어갈 디렉토리 파일생성
 		//C:\Users\이재문\Desktop\자바\jsp\Bucketstargram\WebContent\images\버킷ID\사용자아이디\

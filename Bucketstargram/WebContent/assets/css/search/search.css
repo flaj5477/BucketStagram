@@ -45,6 +45,7 @@ div.border {
 }
 
 div.gallery {
+	display: inline-block;
 	margin: 0 5px 0 0;
 	border: 1px solid #ccc;
 	float: left;
@@ -62,18 +63,24 @@ div.gallery img {
 }
 
 span.type p {
+	height: 30px;
+	padding: 5px;
+	font-size: 10pt;
 	font-weight: bold;
-	padding: 10px;
 	text-align: center;
 }
 
 span.title {
+	display: inline-block;
+    height: 50px;
+	font-size: 12pt;
 	padding: 5px;
 	text-align: center;
 }
 
 div.contents {
-	padding: 10px;
+	height: 40px;
+	padding: 5px;
 	text-align: center;
 }
 div.slide1,div.slide2 {
