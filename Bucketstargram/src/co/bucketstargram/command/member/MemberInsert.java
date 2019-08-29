@@ -39,7 +39,7 @@ public class MemberInsert implements Command {
 		 int sizeLimit = 1024*1024*15;
 		 
 		 
-		 String savePath = serverPath + "/profile"; 
+		 String savePath = serverPath + "\\profile"; 
 		 makeDrectory(savePath); 
 		 MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit,
 				  "utf-8", new DefaultFileRenamePolicy());
@@ -51,7 +51,7 @@ public class MemberInsert implements Command {
 		 String upFileName = multi.getFilesystemName(file);
 	//	 mImagePath = "images" + "\\profile"  + "\\" +id+ "\\" + upFileName;
 		
-		 mImagePath = "images" + "/profile" +"/"  + upFileName;
+		 mImagePath = "images" + "\\profile" +"\\"  + upFileName;
 		 System.out.println("ImagePath = " + mImagePath);
 			/*
 			 * String savePath2 = serverPath + "\\profile" + "\\" + id;
