@@ -18,7 +18,7 @@ public class OtherBucket implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("--- OtherBucket.java ---");
+		System.out.println("\n--- OtherBucket.java ---");
 		String ownerId = request.getParameter("ownerId");
 		System.out.println("ownerId = " + ownerId);
 		

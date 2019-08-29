@@ -20,7 +20,7 @@ public class DetailMyBucket implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("--- DetailMyBucket.java ---");
+		System.out.println("\n--- DetailMyBucket.java ---");
 		HttpSession session = request.getSession(true);
 		String userId = (String) session.getAttribute("userid");
 		String bucketId = request.getParameter("bucketId");

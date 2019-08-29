@@ -57,12 +57,14 @@ $( document ).ready(function(){
 	//동일할 경우 수정, 삭제, 도전중 유무 클릭 가능
 	console.log("bucketMemberId = " + bucketMemberId)
 	console.log("userId = " + "<%= userId%>");
-	if(bucketMemberId == "<%= userId%>"){
+	if(bucketMemberId == '<%= userId%>'){
+		console.log("사용자가 등록한 버킷입니다.")	
 		$("#like").css("display", "none");
 		$("#completion").css("display", "inline-block");
 		$("#update").css("display", "inline-block");
 		$("#delete").css("display", "inline-block");
 	}else{
+		console.log("사용자가 등록한 버킷이 아닙니다.")
 		$("#like").css("display", "inline-block");
 		$("#completion").css("display", "none");
 		$("#update").css("display", "none");
@@ -76,9 +78,12 @@ $( document ).ready(function(){
 		tag = "<i class='fa fa-check-circle-o' aria-hidden='true' style='color:black;' onclick='completeAction();'></i>"
 		document.getElementById("completion").innerHTML = tag;
 	}
-	
 	autoScrollDown();
-});
+});	
+//댓글 달거나 게시글 눌렀을 때 최신 댓글이 보이도록 하는 함수
+function autoScrollDown(){
+	$("#chat_scrol_div").scrollTop($("#chat_scrol_div")[0].scrollHeight);				
+}
 </script>
 <script>
 function likeAction(){
@@ -235,16 +240,17 @@ function completionProcess() {
 
 function addAction(){
 	if(confirm("버킷리스트에 추가하시겠습니까?")){
-		parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+		//parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+		//버킷 추가시 iframe창 크기 감소 - 부모 태그로 접근해서 줄임
+		$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
+		document.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+
 		return true;
 	} else {
 		return false;
 	}
 }
 
-function autoScrollDown(){
-	$("#chat_scrol_div").scrollTop($("#chat_scrol_div")[0].scrollHeight);				
-}
 
 </script>
 <style>
@@ -252,11 +258,12 @@ div::-webkit-scrollbar {
     display: none !important;
 }
 </style>
+<!-- 
 <script>
 function test(){
 	window.self.close();	
 }
-</script>
+</script> -->
 </head>
 <body>
 	<div class="photo" >
@@ -268,7 +275,17 @@ function test(){
 				<img src="images/avatar.jpg" class="photo__avatar">
 				<div class="photo__user-info">
 					<span class="photo__author">사용자 아이디</span> 
-					<span class="photo__location">${bucket.bucketMemberId}</span>
+					<c:set var="userId" value="<%=userId %>" />
+					<c:choose>
+	 					<c:when test="${bucket.bucketMemberId eq userId}">
+							<a href="MyBucket.do"><span class="photo__location">${bucket.bucketMemberId}</span></a>
+						</c:when>
+						<c:otherwise>
+							<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${bucket.bucketMemberId}';">
+								${bucket.bucketMemberId}
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<div>
