@@ -33,8 +33,10 @@
 
 			<div class="photo__actions">
 				<span class="photo__action"> <i class="fa fa-heart-o fa-lg"></i> </span> 
-				<span class="addBucketphoto__action"> 
-					<a href="javascript:addBucket()" id="add"><i class="fa fa-plus" aria-hidden="true"></i></a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
+				<span class="photo__action"> 
+					<a href="javascript:addBucket()" id="add">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</a>		<!-- 로그인 해야 보이도록 바꿔야함 -->
 				</span>
 			</div>
 
