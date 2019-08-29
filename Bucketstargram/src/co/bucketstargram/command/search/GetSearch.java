@@ -38,13 +38,14 @@ public class GetSearch implements Command {
 			for(int i=0;i<remainder;i++) {	
 				libResult.add(new LibraryDto());
 			}
-		}
+		}//s
 		if(bucketCount%5!=0) { 
 			int remainder = 5-bucketCount%5;
 			for(int i=0;i<remainder;i++) {	
 				bucketResult.add(new BucketDto());
 			}
 		}
+		dao.close();
 		// library 검색 유틸리티
 		if(libCount != 0) {
 			request.setAttribute("libCount",libCount);
@@ -65,7 +66,6 @@ public class GetSearch implements Command {
 			request.setAttribute("bucketCount",noSearch);
 			request.setAttribute("exist_Bucket",exist);
 		}
-		dao.close();
 		request.setAttribute("word",word);
 		request.setAttribute("getLibrarySearch",libResult);
 		request.setAttribute("getBucketSearch",bucketResult);
