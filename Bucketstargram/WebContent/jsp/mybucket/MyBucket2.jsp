@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <%
 	String userId = (String)session.getAttribute("userid");
 	String ownerId = (String)session.getAttribute("ownerId");
@@ -115,6 +116,7 @@ function getBucketListProcess() {
 		
 		//서버로 부터 받은 string 형태의 json 데이터를 json객체로 파싱
 		var bucketJson = JSON.parse(result);
+		console.log(bucketJson);
 		//버킷 갯수 저장
 		var bucketCtn = bucketJson.length;
 		//태그 초기화
@@ -123,7 +125,7 @@ function getBucketListProcess() {
 		for (i=0 ; i<bucketCtn ; i++){
 			//댓글 정보 태크 생성 작업 부분
 			tag += '<div class="gallery" align="center">' +
-			'<a href="DetailMyBucket.do?bucketId=' + bucketJson[i].bucketId +'&bucketMemberId=' + wishBucketJson.bucket[key].bucketMemberId +'" data-poptrox="iframe,1200x805">' +
+			'<a href="DetailMyBucket.do?bucketId=' + bucketJson[i].bucketId +'&bucketMemberId=' + bucketJson[i].bucketMemberId +'" data-poptrox="iframe,1200x805">' +
 			'<img src="' + bucketJson[i].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
 			'<div>' + bucketJson[i].bucket_title + '</div>' +
 			'<div class="'+ bucketJson[i].bucket_type +'">' + bucketJson[i].bucket_type + '</div>' +
@@ -200,6 +202,20 @@ function modal(){
 	border-radius: 100%;
     border: 0.5px solid;
     border-color: #a9a9a9;
+}
+.icons .fa {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: #00b8ff9c;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    line-height: 50px;
+}
+.label{
+	display: block;
+	margin: 10px;
 }
 </style>
 </head>
@@ -297,25 +313,37 @@ function modal(){
 				</li>
 			</ul>
 			<br>
+			<!-- <ul class="icons">
+				<li><a href="LibraryForm.do" class="category"><i class="fa fa-slack active" aria-hidden="true"></i><span class="label">전체</span></a></li>
+				<li><a href="LibraryForm.do?type=여행" class="category"><i class="fa fa-plane" aria-hidden="true"></i><span class="label">여행</span></a></li>
+				<li><a href="LibraryForm.do?type=운동" class="category"><i class="fa fa-child" aria-hidden="true"></i><span class="label">운동</span></a></li>
+				<li><a href="LibraryForm.do?type=음식" class="category"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="label">음식</span></a></li>
+				<li><a href="LibraryForm.do?type=배움" class="category"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span class="label">배움</span></a></li>
+				<li><a href="LibraryForm.do?type=문화" class="category"><i class="fa fa-paint-brush" aria-hidden="true"></i><span class="label">문화</span></a></li>
+				<li><a href="LibraryForm.do?type=야외" class="category"><i class="fa fa-envira" aria-hidden="true"></i><span class="label">야외</span></a></li>
+				<li><a href="LibraryForm.do?type=쇼핑" class="category"><i class="fa fa-shopping-bag" aria-hidden="true"></i><span class="label">쇼핑</span></a></li>
+				<li><a href="LibraryForm.do?type=생활" class="category"><i class="fa fa-home" aria-hidden="true"></i><span class="label">생활</span></a></li>
+			</ul> -->
+			
 			<ul class="icons">
-				<li onclick="categoryAction('전체')"><a href="#" class="icon style2 fa-twitter"><span
-						class="label">전체</span></a></li>
-				<li onclick="categoryAction('여행')"><a href="#" class="icon style2 fa-facebook"><span
-						class="label">여행</span></a></li>
-				<li onclick="categoryAction('운동')"><a href="#" class="icon style2 fa-instagram"><span
-						class="label">운동</span></a></li>
-				<li onclick="categoryAction('음식')"><a href="#" class="icon style2 fa-500px"><span
-						class="label">음식</span></a></li>
-				<li onclick="categoryAction('배움')"><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">배움</span></a></li>
-				<li onclick="categoryAction('문화')"><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">문화</span></a></li>
-				<li onclick="categoryAction('야외')"><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">야외</span></a></li>
-				<li onclick="categoryAction('쇼핑')"><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">쇼핑</span></a></li>
-				<li onclick="categoryAction('생활')"><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">생활</span></a></li>
+				<li onclick="categoryAction('전체')"><i class="fa fa-slack active" aria-hidden="true"></i>
+				<span class="label">전체</span></a></li>
+				<li onclick="categoryAction('여행')"><i class="fa fa-plane" aria-hidden="true"></i>
+				<span class="label">여행</span></a></li>
+				<li onclick="categoryAction('운동')"><i class="fa fa-child" aria-hidden="true"></i>
+				<span class="label">운동</span></a></li>
+				<li onclick="categoryAction('음식')"><i class="fa fa-cutlery" aria-hidden="true"></i>
+				<span class="label">음식</span></a></li>
+				<li onclick="categoryAction('배움')"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+				<span class="label">배움</span></a></li>
+				<li onclick="categoryAction('문화')"><i class="fa fa-paint-brush" aria-hidden="true"></i>
+				<span class="label">문화</span></a></li>
+				<li onclick="categoryAction('야외')"><i class="fa fa-envira" aria-hidden="true"></i>
+				<span class="label">야외</span></a></li>
+				<li onclick="categoryAction('쇼핑')"><i class="fa fa-shopping-bag" aria-hidden="true"></i>
+				<span class="label">쇼핑</span></a></li>
+				<li onclick="categoryAction('생활')"><i class="fa fa-home" aria-hidden="true"></i>
+				<span class="label">생활</span></a></li>
 			</ul>
 		</header>
 		<div id="bucket_list_container">

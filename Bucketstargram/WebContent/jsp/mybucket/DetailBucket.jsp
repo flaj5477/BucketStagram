@@ -216,8 +216,9 @@ function appendProcess() {
 			 tag = '<div>' +
 						'<div class="repl">' +
 							'<div class="photo__header" style="margin-top: 10px; padding: 0px;">' +		
-								'<img src="' + reUserImageId  + '" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">' +			
-									'<a href="#" onclick="parent.location=MyBucket.do">' +
+								'<img src="' + reUserImageId  + '" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">' +	
+										//작은 따옴표 읽어들이려면 역슬러쉬 이용
+									'<a href="#" onclick="parent.location=\'MyBucket.do\'">' +
 										'<h3 class="repl-id" style="font-size: 20px;display:inline-block">' + '<%=userId%>' + '</h3>' +
 									'</a>' +
 								'<span class="repl-content" style="margin-left: 10px;margin-top: 10px;">' + $('#reply-textArea').val() + '</span>' +
