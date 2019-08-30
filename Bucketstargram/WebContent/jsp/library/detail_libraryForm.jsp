@@ -95,8 +95,7 @@ p{
 <body>
 	<!-- 주석   -->
 	<div class="photo">
-		<img src="${library.libImagePath }" align="left" width="600"
-			, height="800">
+		<img src="${library.libImagePath }" align="left" width="600" height="800">
 		<header class="photo__header">
 			<img src="images/avatar.jpg" class="photo__avatar">
 			<div class="photo__user-info">
@@ -189,8 +188,7 @@ p{
 		}
 
 		$(document).ready(function() { //로그인 해야 add(+)버튼 보이게 하는 함수	
-			console.log("로그인 아이디 = " + "
-	<%=userId%>");
+			console.log("로그인 아이디 = " + "<%=userId%>");
 		
 			$("#add").hide();//add태그 숨기기
 			$("#remove").hide();//trash태그 숨기기
