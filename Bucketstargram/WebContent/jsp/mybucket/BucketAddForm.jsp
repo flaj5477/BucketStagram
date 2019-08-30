@@ -36,6 +36,12 @@ $( document ).ready(function(){
 	}
 });
 </script>
+<style>
+img{
+    margin: 14px 30px;
+    width: 200px;
+}
+</style>
 </head>
 <body>
 <div style="margin: 50px 10px 15px 50px;">
@@ -58,7 +64,7 @@ $( document ).ready(function(){
 					<br>	
 				</c:when>
 				<c:otherwise>
-					<span>버킷	내용: </span>
+					<span>버킷 내용: </span>
 					<span>
 						<input type="text" id="bucketContent" name="bucketContent" placeholder="<%=bucketContent %>">
 					</span>
@@ -96,7 +102,7 @@ $( document ).ready(function(){
 		</div>
 		<div>
 			<a id="download" download="thumbnail.jpg" target="_blank">
-		   		<img id="thumbnail" src="<%=imagePath %>" width="100" alt="썸네일영역 (클릭하면 다운로드 가능)">
+		   		<img id="thumbnail" src="<%=imagePath %>" alt="썸네일영역 (클릭하면 다운로드 가능)">
 			</a>
 		</div>
 	</form>
