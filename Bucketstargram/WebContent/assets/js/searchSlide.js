@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	prev = $(".bx-prev");
+    next = $(".bx-next");
 	var libSlider = $('.libSlider').bxSlider({
 	    mode: 'horizontal', //가로 방향 수평 슬라이드
 	    infiniteLoop: true,
@@ -44,8 +46,8 @@ $(document).ready(function() {
 	    nextText :'<i class="fas fa-chevron-right"></i>',
 	    prevText :'<i class="fas fa-chevron-left"></i>',
 	    onSlideBefore: function() {
-		    $(".bx-prev").hide(); // 연속클릭으로 인한 슬라이드 넘어가는 것 방지
-		    $(".bx-next").hide();
+	    	$(".bx-prev").hide(); // 연속클릭으로 인한 슬라이드 넘어가는 것 방지
+	    	$(".bx-next").hide();
 	    },
 	    onSlideAfter: function() { //slide auto:true일 경우 화면 전환을 계속했을 때 멈춤현상 제거
 		    $(".bx-prev").show();

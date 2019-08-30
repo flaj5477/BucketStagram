@@ -45,20 +45,24 @@ public class SearchDao {
 		}
 	}
 	
-	public ArrayList<LibraryDto> librarySearch(String word){
+	public ArrayList<LibraryDto> librarySearch(String userid, String word){
 		LibraryDto dto = null;
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
-		String sql = "SELECT lib_id, lib_title, lib_type, lib_like, lib_image_path "
-					+"FROM library_info_tb " 
+		String sql = "SELECT lib_id, lib_title, lib_type, lib_like, lib_image_path, "
+					+"NVL((SELECT 'Y' "
+						 +"FROM library_wish_list_tb "
+						 +"WHERE lwl_member_id = ? AND lwl_lib_id = lib.lib_id),'N') likeJudg "
+					+"FROM library_info_tb lib " 
 					+"WHERE UPPER(lib_title) LIKE '%'||UPPER(?)||'%' "
 					+"OR UPPER(lib_contents) LIKE '%'||UPPER(?)||'%' "
 					+"OR UPPER(lib_type) LIKE '%'||UPPER(?)||'%'"
 					+"ORDER BY lib_id";
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,word); 
-			psmt.setString(2,word);
+			psmt.setString(1,userid);
+			psmt.setString(2,word); 
 			psmt.setString(3,word);
+			psmt.setString(4,word);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				dto = new LibraryDto();
@@ -67,6 +71,7 @@ public class SearchDao {
 				dto.setLibType(rs.getString(3));
 				dto.setLibLike(rs.getInt(4));
 				dto.setLibImagePath(rs.getString(5));
+				dto.setLibLikeYN(rs.getString(6));
 				libResult.add(dto);		
 			}	
 		} catch (SQLException e) {
@@ -74,21 +79,26 @@ public class SearchDao {
 		}
 		return libResult;
 	}
-	public ArrayList<BucketDto> bucketSearch(String word){
+	public ArrayList<BucketDto> bucketSearch(String userid, String word){
 		BucketDto dto = null;
 		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
 		String sql = "SELECT bucket_id, bucket_member_id, bucket_title, bucket_type, "
-					+"bucket_compliation, bucket_like, bucket_image_path "
-					+"FROM bucket_info_tb "
-					+"WHERE bucket_title LIKE '%'||UPPER(?)||'%' "
-					+"OR bucket_contents LIKE '%'||UPPER(?)||'%' "
-					+"OR bucket_type LIKE '%'||UPPER(?)||'%'"
+					+"bucket_compliation, bucket_like, bucket_image_path, "
+					+"NVL((SELECT 'Y' "
+						 +"FROM member_wish_list_tb "
+						 +"WHERE mwl_member_id = ? AND mwl_bucket_id = bucket.bucket_id AND rownum=1),'N') likeJudg "
+					+"FROM bucket_info_tb bucket "
+					+"WHERE UPPER(bucket_title) LIKE '%'||UPPER(?)||'%' "
+					+"OR UPPER(bucket_contents) LIKE '%'||UPPER(?)||'%' "
+					+"OR UPPER(bucket_type) LIKE '%'||UPPER(?)||'%' "
 					+"ORDER BY bucket_id";
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,word); 
-			psmt.setString(2,word);
+			System.out.println(word);
+			psmt.setString(1,userid);
+			psmt.setString(2,word); 
 			psmt.setString(3,word);
+			psmt.setString(4,word);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				dto = new BucketDto();
@@ -99,6 +109,7 @@ public class SearchDao {
 				dto.setBucketCompliation(rs.getString(5));
 				dto.setBucketLike(rs.getInt(6));
 				dto.setBucketImagePath(rs.getString(7));
+				dto.setBucketLiketYN(rs.getString(8));
 				bucketResult.add(dto);
 			}
 		} catch (SQLException e) {

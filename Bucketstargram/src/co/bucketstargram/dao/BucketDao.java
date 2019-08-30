@@ -281,7 +281,6 @@ public class BucketDao {
 
 			while(rs.next()) {
 				bucket = new HashMap<String, String>();
-				
 				bucket.put("bucketId",rs.getString("BUCKET_ID"));
 				bucket.put("bucketMemberId",rs.getString("BUCKET_MEMBER_ID"));
 				bucket.put("bucket_title",rs.getString("BUCKET_TITLE"));

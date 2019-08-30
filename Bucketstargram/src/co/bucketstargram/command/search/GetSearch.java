@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.HttpRes;
@@ -23,15 +24,19 @@ public class GetSearch implements Command {
 		SearchDao dao = new SearchDao();
 		ArrayList<BucketDto> bucketResult = new ArrayList<BucketDto>();
 		ArrayList<LibraryDto> libResult = new ArrayList<LibraryDto>();
+		HttpSession session = request.getSession(true);
 		String word = request.getParameter("word");
+		String userid = (String) session.getAttribute("userid");
 		int libCount = 0;
 		int bucketCount = 0;
 		boolean exist = true;
-		System.out.println(word+"(을)를 검색합니다.");
-		libResult = dao.librarySearch(word);
-		bucketResult = dao.bucketSearch(word);
+		System.out.println("user : "+userid);
+		System.out.println("search : "+word+"(을)를 검색합니다.");
+		
+		libResult = dao.librarySearch(userid, word);
+		bucketResult = dao.bucketSearch(userid, word);
 		libCount = dao.libCount(word);
-		bucketCount = dao.bucketCount(word);	
+		bucketCount = dao.bucketCount(word);
 		// 슬라이더 공백이미지 처리
 		if(libCount%5!=0) { 
 			int remainder = 5-libCount%5;

@@ -8,6 +8,7 @@ public class LibraryDto {
 	private String libContents = null;
 	private String libType = null;
 	private String libImagePath = null;
+	private String libLikeYN = null;
 	private int libLike = 0;
 	private int libRowCnt = 0;
 	private ArrayList<String> libLikeMembList = null;
@@ -46,6 +47,15 @@ public class LibraryDto {
 	}
 	public void setLibImagePath(String libImagePath) {
 		this.libImagePath = libImagePath;
+	}
+	public String getLibLikeYN() {
+		return libLikeYN;
+	}
+	public void setLibLikeYN(String libLikeYN) {
+		this.libLikeYN = libLikeYN;
+	}
+	public void setLibLikeMembList(ArrayList<String> libLikeMembList) {
+		this.libLikeMembList = libLikeMembList;
 	}
 	public int getLibLike() {
 		return libLike;

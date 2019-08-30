@@ -8,6 +8,7 @@ $(document).ready(function() {
 			$(this).find(title).css("text-decoration","none");
 		}
 	});
+	$('.icons').hide();
 });
 /* on-type
 $('.gallery').on('mouseover',function() {
