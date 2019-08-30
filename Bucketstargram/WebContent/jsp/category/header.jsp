@@ -23,6 +23,30 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<style>
+	.icons .fa{
+	width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: #00b8ff9c;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    line-height: 50px;
+	}
+	
+	.icons .fa:hover {
+	background-color: #10b2cc;
+	}
+	
+	.icons .active {
+	background-color: #10b2cc;
+	}
+	
+	.category{
+		display: grid;
+	}
+</style>
 </head>
 <body>
 <!-- Wrapper -->
@@ -46,26 +70,63 @@
 			</ul>
 			<hr>
 			<ul class="icons">
-				<li><a href="LibraryForm.do" class="icon style2 fa-twitter"><span
+				<li><a href="LibraryForm.do" class="category"><i class="fa fa-slack" aria-hidden="true"></i><span
 						class="label">전체</span></a></li>
 				<li><a href="LibraryForm.do?type=여행"
-					class="icon style2 fa-facebook"><span class="label">여행</span></a></li>
+					class="category"><i class="fa fa-plane" aria-hidden="true"></i><span class="label">여행</span></a></li>
 				<li><a href="LibraryForm.do?type=운동"
-					class="icon style2 fa-instagram"><span class="label">운동</span></a></li>
+					class="category"><i class="fa fa-child" aria-hidden="true"></i><span class="label">운동</span></a></li>
 				<li><a href="LibraryForm.do?type=음식"
-					class="icon style2 fa-500px"><span class="label">음식</span></a></li>
+					class="category"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="label">음식</span></a></li>
 				<li><a href="LibraryForm.do?type=배움"
-					class="icon style2 fa-envelope-o"><span class="label">배움</span></a></li>
+					class="category"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span class="label">배움</span></a></li>
 				<li><a href="LibraryForm.do?type=문화"
-					class="icon style2 fa-envelope-o"><span class="label">문화</span></a></li>
+					class="category"><i class="fa fa-paint-brush" aria-hidden="true"></i><span class="label">문화</span></a></li>
 				<li><a href="LibraryForm.do?type=야외"
-					class="icon style2 fa-envelope-o"><span class="label">야외</span></a></li>
+					class="category"><i class="fa fa-envira" aria-hidden="true"></i><span class="label">야외</span></a></li>
 				<li><a href="LibraryForm.do?type=쇼핑"
-					class="icon style2 fa-envelope-o"><span class="label">쇼핑</span></a></li>
+					class="category"><i class="fa fa-shopping-bag" aria-hidden="true"></i><span class="label">쇼핑</span></a></li>
 				<li><a href="LibraryForm.do?type=생활"
-					class="icon style2 fa-envelope-o"><span class="label">생활</span></a></li>
+					class="category"><i class="fa fa-home" aria-hidden="true"></i><span class="label">생활</span></a></li>
 			</ul>
 		</header>
 	</div>
+	
+	<script>
+		var type =  "${param.type}";
+		var classname = "";
+		
+		switch(type){
+		case "":
+			classname = "fa-slack";
+			break;
+		case "여행":
+			classname = "fa-plane";
+			break;
+		case "운동":
+			classname = "fa-child"
+			break;
+		case "음식":
+			classname = "fa-cutlery"; 
+			break;
+		case "배움":
+			classname = "fa-graduation-cap";
+			break;
+		case "문화":
+			classname = "fa-paint-brush";
+			break;
+		case "야외":
+			classname = "fa-envira";
+			break;
+		case "쇼핑":
+			classname = "fa-shopping-bag";
+			break;
+		case "생활":
+			classname = "fa-home";
+			break;
+		}
+		
+		$("."+classname).addClass("active");
+	</script>
 </body>
 </html>

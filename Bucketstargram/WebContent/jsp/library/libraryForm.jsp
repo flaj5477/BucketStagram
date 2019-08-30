@@ -85,7 +85,6 @@ div.libList{
 	}
 	</script>
 	
-	
 	<!-- 라이브러리리스트 사진 출력하는 부분 -->
 		<div class="libList">
 			<c:forEach items="${libraryList}" var="library">
