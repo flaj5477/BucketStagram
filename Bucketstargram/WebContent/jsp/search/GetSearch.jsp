@@ -64,7 +64,6 @@
 									</span>
 									<span class="title">${dto.libTitle}</span>
 								</a>
-								<a>
 									<c:if test="${dto.libLikeYN == 'Y'}">
 										<span class="contents">
 											<i class='fa fa-heart' style='color:red' aria-hidden='true'></i>
@@ -75,7 +74,6 @@
 											<i class="fa fa-heart-o" style='color:black'></i>
 										</span>
 									</c:if>
-								</a>
 							</c:if>
 							<c:if test="${dto.libId == null}">
 								<div>
@@ -129,7 +127,7 @@
 										<span class="title">${dto.bucketTitle}</span>
 									</a>
 									<br>
-									<a>
+									<c:if test="${dto.bucketMemberId != userid}">
 										<c:if test="${dto.bucketLiketYN == 'Y'}">
 											<span class="contents">
 												<i class='fa fa-heart' style='color:red' aria-hidden='true'></i>
@@ -140,7 +138,7 @@
 												<i class="fa fa-heart-o" style='color:black'></i>
 											</span>
 										</c:if>
-									</a>
+									</c:if>
 								</c:if>
 								<c:if test="${dto.bucketId == null}">
 									<div>
