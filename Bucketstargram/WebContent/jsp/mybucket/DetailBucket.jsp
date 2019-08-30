@@ -35,6 +35,8 @@ let bucketTitle = "${bucket.bucketTitle}";
 let bucketContent = "${bucket.bucketContents}"; 
 //버킷 소요주 아이디 저장 변수
 let bucketMemberId = "${bucket.bucketMemberId}";
+//
+let bucketType = "${bucket.bucketType}";
 //stirng으로 넘어온 데이터를 json객체로 파싱 후 저장할 변수
 var bucketJson;
 //파라미터 변수
@@ -62,6 +64,7 @@ $( document ).ready(function(){
 	//동일할 경우 수정, 삭제, 도전중 유무 클릭 가능
 	console.log("bucketMemberId = " + bucketMemberId)
 	console.log("userId = " + "<%= userId%>");
+	console.log("bucketType = " + bucketType);
 	if(bucketMemberId == '<%= userId%>'){
 		console.log("사용자가 등록한 버킷입니다.")	
 		$("#like").css("display", "none");
@@ -208,6 +211,7 @@ function appendProcess() {
 		console.log("DB작업 성공(T)실패(F) => " + insertSuccess);
 		console.log("reUserImageId = " + reUserImageId);
 		
+		//어차피 내가 올린 댓글이니까 내 아이디에는 Mybucket화면으로 가게 링크 걸어주면 됨
 		if(insertSuccess == "true"){	
 			 tag = '<div>' +
 						'<div class="repl">' +
@@ -274,7 +278,7 @@ function completionProcess() {
 	}
 }
 
-function addAction(){
+function updateAction(whatAction){
 	if(userId == null){
 		if(confirm("로그인이 필요합니다. 로그인  하시겠습니까?")){
 			document.location.href = "LoginForm.do";
@@ -283,21 +287,34 @@ function addAction(){
 			return false;
 		}
 	}else{
-		if(confirm("버킷리스트에 추가하시겠습니까?")){
-			//parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
-			//버킷 추가시 iframe창 크기 감소 - 부모 태그로 접근해서 줄임
-			$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
-			document.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
-	
-			return true;
-		} else {
-			return false;
+		if(whatAction == 'update'){
+			if(confirm("버킷리스트를 수정하시겠습니까?")){
+				//parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+				//버킷 추가시 iframe창 크기 감소 - 부모 태그로 접근해서 줄임
+				$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
+				document.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + 
+						"&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + 
+						"&bucketMemberId="+bucketMemberId + "&whatAction=" + whatAction +"&bucketType=" + bucketType;
+		
+				return true;
+			} else {
+				return false;
+			}
+		}else{
+			if(confirm("버킷리스트에 추가하시겠습니까?")){
+				//parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+				//버킷 추가시 iframe창 크기 감소 - 부모 태그로 접근해서 줄임
+				$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
+				document.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + 
+						"&bucketTitle=" + bucketTitle + "&bucketContent=" +  
+						bucketContent + "&bucketMemberId="+bucketMemberId  + "&whatAction=" + whatAction +"&bucketType=" + bucketType;
+		
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
-}
-
-function updateAction(){
-	
 }
 
 function login(){
@@ -411,10 +428,10 @@ function test(){
 				<div class="photo__actions" style="border-top: 1px solid #e6e6e6; padding: 13px 0px; margin: 0px;">
 					<div>
 						<span id="like" onclick="likeAction()" style="cursor:pointer;"><i class="fa fa-heart-o fa-lg" ></i></span> 
-						<span id="add"  onclick="addAction();" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
+						<span id="add"  onclick="updateAction('add');" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
 						<span id="completion" onclick="completeAction();" style="cursor:pointer;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
 						<span id="delete" onclick="deleteAction();" style="cursor:pointer;"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-						<span id="update" onclick="updateAction();"style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+						<span id="update" onclick="updateAction('update');"style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
 						<span id="chat" onclick="$('#reply-textArea').focus();" style="cursor:pointer;font-size:30px;vertical-align: 15%"><i class="fa fa-comment-o fa-lg"></i></span>
 					</div>
 					<div style="font-family: 'Nanum Pen Script', cursive;font-size: 30px;">

@@ -23,17 +23,23 @@ public class BucketAddForm implements Command {
 		String bucketTitle = request.getParameter("bucketTitle");
 		String bucketContent = request.getParameter("bucketContent");
 		String bucketMemberId = request.getParameter("bucketMemberId");
+		String whatAction = request.getParameter("whatAction");
+		String bucketType = request.getParameter("bucketType");
 		
 		System.out.println("bucketId = " + bucketId);
 		System.out.println("bucketTitle = " + bucketTitle);
 		System.out.println("bucketContent = " + bucketContent);
 		System.out.println("bucketMemberId = " + bucketMemberId);
+		System.out.println("whatAction = " + whatAction);
+		System.out.println("bucketType = " + bucketType);
 		
 		String imagePath = bucket.getImagePathbucketId(bucketId);
 		request.setAttribute("imagePath", imagePath);
 		request.setAttribute("bucketTitle", bucketTitle);
 		request.setAttribute("bucketContent", bucketContent);
 		request.setAttribute("bucketMemberId", bucketMemberId);
+		request.setAttribute("whatAction", whatAction);
+		request.setAttribute("bucketType", "bucketType");
 		
 		String viewPage = "jsp/mybucket/BucketAddForm.jsp";
 		HttpRes.forward(request, response, viewPage);

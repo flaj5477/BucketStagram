@@ -17,10 +17,25 @@
 	String bucketTitle = (String)request.getAttribute("bucketTitle");
 	String bucketContent = (String)request.getAttribute("bucketContent");
 	String bucketMemberId = (String)request.getAttribute("bucketMemberId");
+	String whatAction = (String)request.getAttribute("whatAction");
+	String bucketType = (String)request.getAttribute("bucketType");
+	
 	System.out.println("이미지 경로: " + imagePath);
 	//자바스크립트가 백슬러시 하나 일경우 인식 못하고 깨지는 현상 때문에 치환함
 	String replaceImagePath = imagePath.replace("\\", "\\\\");
 %>
+<script type="text/javascript">
+$( document ).ready(function(){
+	console.log("bucketContent = " + $('#bucketContent').val());
+	console.log("bucketTitle = " + $('#bucketTitle').val());
+	console.log("bucketType = " + $('#bucketType').val());
+	$("select option[value='<%=bucketType%>']").attr("selected", true);
+	
+	if('<%=whatAction%>' == 'update'){
+		$('#image_owner_alarm').css("display", "none");
+	}
+});
+</script>
 </head>
 <body>
 <div style="margin: 50px 10px 15px 50px;">
@@ -86,6 +101,10 @@
 		</div>
 	</form>
 </div>
+
+	<!-- console.log("bucketContent = " + $('#bucketContent').val());
+	console.log("bucketTitle = " + $('#bucketTitle').val());
+	console.log("bucketType = " + $('#bucketType').val()); -->
 <script>
 	let oriImagePath = "<%=replaceImagePath%>";
 	function bucketAdd(){
@@ -96,19 +115,34 @@
 		let bucketType = $("#bucketType option:selected").val();
 		let frmActionValue;
 		
+		let formBucketTitle = $('#bucketTitle').val(); 
+		let formBucketContent =  $('#bucketContent').val();
+		
 		console.log("bucketTitle = " + bucketContent);
 		console.log("bucketContent = " + bucketContent);
 		console.log("thumImagePath = " + thumImagePath);
 		
 		if(oriImagePath != thumImagePath){
+			if(formBucketTitle == ""){
+				 $('#bucketTitle').val('<%=bucketTitle%>');
+			}
+			if(formBucketContent == ""){
+				$('#bucketContent').val('<%=bucketContent%>');
+			}
 			//form태그의 target을 parent로 함으로서 부모 페이지 reload안해도됨
 			frmActionValue = "BucketPostAction.do";
 			$("#buckt_add_form").attr("action", frmActionValue);
 		}else{
+			if(formBucketTitle == ""){
+				 $('#bucketTitle').val('<%=bucketTitle%>');
+			}
+			if(formBucketContent == ""){
+				$('#bucketContent').val('<%=bucketContent%>');
+			}
 			//이미지를 바꿨을 경우 멀티 리퀘스트폼이 아닌 서버에서 해당 이미지 경로의 이미지를 복사하여 나의 버킷에 추가 되도록 구현
 			frmActionValue = parent.location.href = "BucketAddAction.do?imagePath=" + 
-					encodeURIComponent(thumImagePath, true) + "&bucketTitle=" + bucketTitle + 
-					"&bucketContent=" + bucketContent + "&ownerId=" + "<%=bucketMemberId%>" +
+					encodeURIComponent(thumImagePath, true) + "&bucketTitle=" +  $('#bucketTitle').val() + 
+					"&bucketContent=" + $('#bucketContent').val() + "&ownerId=" + "<%=bucketMemberId%>" +
 					"&bucketType=" + bucketType;
 			$("#buckt_add_form").attr("action", frmActionValue);
 		}
