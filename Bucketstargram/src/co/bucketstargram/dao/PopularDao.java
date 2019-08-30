@@ -11,150 +11,165 @@ import java.util.HashMap;
 import co.bucketstargram.dto.BucketDto;
 
 public class PopularDao {
-	   Connection conn = null; // DB연결된 상태(세션)을 담은 객체
-	    PreparedStatement psmt = null;  // SQL 문을 나타내는 객체
-	    ResultSet rs = null;  // 쿼리문을 날린것에 대한 반환값을 담을 객체
-	    
-		public PopularDao() {
-			// TODO Auto-generated constructor stub
-			try {
-	            String user = "lee"; 
-	            String pw = "1234";
-	            String url = "jdbc:oracle:thin:@114.200.227.226:1521:xe";
-	         
-	            
-	            
-	            Class.forName("oracle.jdbc.driver.OracleDriver");        
-	            conn = DriverManager.getConnection(url, user, pw);
-	            
-	        } catch (ClassNotFoundException cnfe) {
-	            System.out.println("DB 드라이버 로딩 실패 :"+cnfe.toString());
-	        } catch (SQLException sqle) {
-	            System.out.println("DB 접속실패 : "+sqle.toString());
-	        } catch (Exception e) {
-	            System.out.println("Unkonwn error");
-	            e.printStackTrace();
-	        }
-		}
-		
-		private void close() {
-			// TODO Auto-generated method stub
-			try {
-				if(rs != null) rs.close();
-				if(psmt != null) psmt.close();
-				if(conn != null) conn.close();
-			} catch (SQLException e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
+	Connection conn = null; // DB연결된 상태(세션)을 담은 객체
+	PreparedStatement psmt = null; // SQL 문을 나타내는 객체
+	ResultSet rs = null; // 쿼리문을 날린것에 대한 반환값을 담을 객체
 
+	public PopularDao() {
+		// TODO Auto-generated constructor stub
+		try {
+			String user = "lee";
+			String pw = "1234";
+			String url = "jdbc:oracle:thin:@114.200.227.226:1521:xe";
 
-		public ArrayList<BucketDto> select() {
-			// TODO Auto-generated method stub
-			ArrayList<BucketDto> bucketList = null;
-			BucketDto bucket = null;
-			String sql = "SELECT * FROM bucket_info_tb order by bucket_like desc";
-			
-			try {
-				bucketList = new ArrayList<BucketDto>();
-				psmt = conn.prepareStatement(sql);
-				//psmt.setString(1, userid);
-				rs = psmt.executeQuery();
-				while(rs.next()) {
-					bucket = new BucketDto();
-					bucket.setBucketId(rs.getString("BUCKET_ID"));
-					bucket.setBucketMemberId(rs.getString("BUCKET_MEMBER_ID"));
-					bucket.setBucketTitle(rs.getString("BUCKET_TITLE"));
-					bucket.setBucketContents(rs.getString("BUCKET_CONTENTS"));
-					bucket.setBucketType(rs.getString("BUCKET_TYPE"));
-					bucket.setBucketLike(rs.getInt("BUCKET_LIKE"));
-					bucket.setBucketImagePath(rs.getString("BUCKET_IMAGE_PATH"));
-					bucket.setBucketTag(rs.getString("BUCKET_TAG"));
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, user, pw);
+
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("DB 드라이버 로딩 실패 :" + cnfe.toString());
+		} catch (SQLException sqle) {
+			System.out.println("DB 접속실패 : " + sqle.toString());
+		} catch (Exception e) {
+			System.out.println("Unkonwn error");
+			e.printStackTrace();
+		}
+	}
+
+	private void close() {
+		// TODO Auto-generated method stub
+		try {
+			if (rs != null)
+				rs.close();
+			if (psmt != null)
+				psmt.close();
+			if (conn != null)
+				conn.close();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<BucketDto> select() {
+		// TODO Auto-generated method stub
+		ArrayList<BucketDto> bucketList = null;
+		BucketDto bucket = null;
+		String sql = "SELECT * FROM bucket_info_tb order by bucket_like desc";
+
+		try {
+			bucketList = new ArrayList<BucketDto>();
+			psmt = conn.prepareStatement(sql);
+			// psmt.setString(1, userid);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				bucket = new BucketDto();
+				bucket.setBucketId(rs.getString("BUCKET_ID"));
+				bucket.setBucketMemberId(rs.getString("BUCKET_MEMBER_ID"));
+				bucket.setBucketTitle(rs.getString("BUCKET_TITLE"));
+				bucket.setBucketContents(rs.getString("BUCKET_CONTENTS"));
+				bucket.setBucketType(rs.getString("BUCKET_TYPE"));
+				bucket.setBucketLike(rs.getInt("BUCKET_LIKE"));
+				bucket.setBucketImagePath(rs.getString("BUCKET_IMAGE_PATH"));
+				bucket.setBucketTag(rs.getString("BUCKET_TAG"));
 //					bucket.setBucketWriteDate(rs.getString("BUCKET_WRITE_DATE"));
-					
-					bucketList.add(bucket);
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close();
-			}
-			
-			return bucketList;
-		}
-		
-		
-		public ArrayList<BucketDto> getPopList(String popType, int page) {
-			// TODO Auto-generated method stub
-			System.out.println("타입: " + popType + " 페이지: " + page);
-			
-			
-			ArrayList<BucketDto> bucketList = null;
-			BucketDto bucket = null;
-			String where ="";
-			
-			//가져올 게시글 번호
-			int begin = (page-1) * 20 + 1;
-			int end = page * 20;
-			
-			if(popType!=null && popType!="") {
 
-				where = "where bucket_type= ?";
+				bucketList.add(bucket);
 			}
-			
-			
-			//20부터 30까지 출력
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return bucketList;
+	}
+
+	public ArrayList<BucketDto> getPopList(String popType, int page) {
+		// TODO Auto-generated method stub
+		System.out.println("타입: " + popType + " 페이지: " + page);
+
+		ArrayList<BucketDto> bucketList = null;
+		BucketDto bucket = null;
+		String where = "";
+
+		// 가져올 게시글 번호
+		int begin = (page - 1) * 20 + 1;
+		int end = page * 20;
+
+		if (popType != null && popType != "") {
+
+			where = "where bucket_type= ?";
+		}
+
+		// 20부터 30까지 출력
+
 		
-		  String sql = "SELECT X.rn, X.*\r\n" + "FROM\r\n" +
-		  "  (SELECT rownum as rn, B.* \r\n" + "  FROM \r\n" +
-		  "    (select bucket_id, bucket_image_path, bucket_type, bucket_member_id, bucket_title, bucket_like from bucket_info_tb "
-		  + where + " order by bucket_like desc) B\r\n" +
-		  "  WHERE rownum <=?) X\r\n" + "WHERE X.rn >=?";
+		/*
+		 * String sql = "SELECT X.rn, X.*\r\n" + "FROM\r\n" +
+		 * "  (SELECT rownum as rn, B.* \r\n" + "  FROM \r\n" +
+		 * "    (select bucket_id, bucket_image_path, bucket_type, bucket_member_id, bucket_title, bucket_like from bucket_info_tb "
+		 * + where + " order by bucket_like desc) B\r\n" + "  WHERE rownum <=?) X\r\n" +
+		 * "WHERE X.rn >=?";
+		 */
 		 
-			
-		//	String sql =  "select X.rn, X.* FROM(select rownum as rn, B.* FROM (select bucket_id, bucket_image_path, bucket_type, bucket_member_id, bucket_title, bucket_like from bucket_info_tb" + where +  "order by bucket_like desc) B  WHERE rownum <=?) X WHERE X.rn >=?";
-			 
-			
-			try {
-				bucketList = new ArrayList<BucketDto>();
-				psmt = conn.prepareStatement(sql);
-				if(popType!=null && popType!="") {	//타입이 있을때
-					psmt.setString(1, popType);
-					psmt.setInt(2, end);
-					psmt.setInt(3, begin);
-				}
-				else {	//타입이 없을때 
-					psmt.setInt(1, end);
-					psmt.setInt(2, begin);
-				}
-				rs = psmt.executeQuery();
-				while(rs.next()) {
-					bucket = new BucketDto();
-					bucket.setBucketId(rs.getString("BUCKET_ID"));
-					bucket.setBucketMemberId(rs.getString("BUCKET_MEMBER_ID"));
-					bucket.setBucketTitle(rs.getString("BUCKET_TITLE"));
+		
+		
+		
+		  String sql = "select X.rn, X.* FROM(select rownum as rn, B.* " +
+		  "FROM (select * from " + "(select * from (select * from bucket_info_tb "+where+") " +
+		  "left outer join(select mwl_bucket_id, count(*) likeCnt from member_wish_list_Tb GROUP BY mwl_bucket_id) "
+		  + " on bucket_id = mwl_bucket_id) B order by likeCnt desc nulls last ) B " +
+		  "WHERE rownum <=?) X where X.rn >=?";
+		 
+		 
+		 
+
+		
+		
+		/*
+		 * String sql =
+		 * "select X.rn, X.* FROM(select rownum as rn, B.* FROM (select bucket_id, bucket_image_path, bucket_type, bucket_member_id, bucket_title, bucket_like from bucket_info_tb"
+		 * + where + "order by bucket_like desc) B  WHERE rownum <=?) X WHERE X.rn >=?";
+		 */
+		 
+
+		try {
+			bucketList = new ArrayList<BucketDto>();
+			psmt = conn.prepareStatement(sql);
+			if (popType != null && popType != "") { // 타입이 있을때
+				psmt.setString(1, popType);
+				psmt.setInt(2, end);
+				psmt.setInt(3, begin);
+			} else { // 타입이 없을때
+				psmt.setInt(1, end);
+				psmt.setInt(2, begin);
+			}
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				bucket = new BucketDto();
+				bucket.setBucketId(rs.getString("BUCKET_ID"));
+				bucket.setBucketMemberId(rs.getString("BUCKET_MEMBER_ID"));
+				bucket.setBucketTitle(rs.getString("BUCKET_TITLE"));
 //					bucket.setBucketContents(rs.getString("BUCKET_CONTENTS"));
-					bucket.setBucketType(rs.getString("BUCKET_TYPE"));
-					bucket.setBucketLike(rs.getInt("BUCKET_LIKE"));
-					bucket.setBucketImagePath(rs.getString("BUCKET_IMAGE_PATH"));
+				bucket.setBucketType(rs.getString("BUCKET_TYPE"));
+				bucket.setBucketImagePath(rs.getString("BUCKET_IMAGE_PATH"));
 //					bucket.setBucketTag(rs.getString("BUCKET_TAG"));
 //					bucket.setBucketWriteDate(rs.getString("BUCKET_WRITE_DATE"));
-					
-					bucketList.add(bucket);
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close();
+				bucket.setBucketLike(rs.getInt("likeCnt"));
+
+				bucketList.add(bucket);
 			}
-			
-			return bucketList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
 		}
-		
-		
+
+		return bucketList;
+	}
+
 	/*
 	 * public ArrayList<BucketDto> select(String column) { // TODO Auto-generated
 	 * method stub ArrayList<BucketDto> bucketList = null; BucketDto bucket = null;
