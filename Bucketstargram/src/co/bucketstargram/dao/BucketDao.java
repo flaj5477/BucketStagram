@@ -365,8 +365,12 @@ public class BucketDao {
 	public BucketDto getBucketInfo(String userId, String bucketId) {
 		// TODO Auto-generated method stub
 		BucketDto bucket = new BucketDto();
-		
-		String likeYN = getLikeYN(bucketId, userId);
+		String likeYN=null;
+		if(userId == null) {
+			likeYN = "N";
+		}else {			
+			likeYN = getLikeYN(bucketId, userId);
+		}
 		int replyCnt = getReplyCnt(bucketId);
 		String sql = "SELECT * FROM (SELECT * FROM bucket_info_tb WHERE bucket_id = ?) " + 
 								    "LEFT OUTER JOIN " + 

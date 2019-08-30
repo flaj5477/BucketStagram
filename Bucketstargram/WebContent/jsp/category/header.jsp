@@ -5,6 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+<%
+	String userId = (String)session.getAttribute("userid");
+	//String ownerId = (String)session.getAttribute("ownerId");
+%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+	function login(){
+		if(confirm("로그인이 필요합니다. 로그인  하시겠습니까?")){
+			document.location.href = "LoginForm.do";
+			return true;
+		} else {
+			return false;
+		}
+	}
+</script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
@@ -23,7 +38,11 @@
 			<ul class="topMenu">
 				<li><a class="menuLink" href="LibraryForm.do">Library</a></li>
 				<li><a class="menuLink" href="PopMain.do">Popular</a></li>
-				<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
+				<%if(userId == null) {%>
+					<li><a class="menuLink" href="#" onclick="login();">MyBucket</a></li>
+				<%} else{%>
+					<li><a class="menuLink" href="MyBucket.do">MyBucket</a></li>
+				<%} %>
 			</ul>
 			<hr>
 			<ul class="icons">

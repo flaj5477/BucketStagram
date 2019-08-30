@@ -81,7 +81,7 @@ function getWishListProcess() {
 		
 		for (var key=0 ; key<wishBucketCtn ; key++){
 			tag += '<div class="gallery" align="center">' +
-			'<a href="DetailMyBucket.do?bucketId=' + wishBucketJson.bucket[key].bucketId +'" data-poptrox="iframe,1200x805">' +
+			'<a href="DetailMyBucket.do?bucketId=' + wishBucketJson.bucket[key].bucketId +'&bucketMemberId=' + wishBucketJson.bucket[key].bucketMemberId +'" data-poptrox="iframe,1200x805">' +
 			'<img src="' + wishBucketJson.bucket[key].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
 			'<div>' + wishBucketJson.bucket[key].bucket_title + '</div>' +
 			'<div class="'+ wishBucketJson.bucket[key].bucket_type +'">' + wishBucketJson.bucket[key].bucket_type + '</div>' +
@@ -123,7 +123,7 @@ function getBucketListProcess() {
 		for (i=0 ; i<bucketCtn ; i++){
 			//댓글 정보 태크 생성 작업 부분
 			tag += '<div class="gallery" align="center">' +
-			'<a href="DetailMyBucket.do?bucketId=' + bucketJson[i].bucketId +'" data-poptrox="iframe,1200x805">' +
+			'<a href="DetailMyBucket.do?bucketId=' + bucketJson[i].bucketId +'&bucketMemberId=' + wishBucketJson.bucket[key].bucketMemberId +'" data-poptrox="iframe,1200x805">' +
 			'<img src="' + bucketJson[i].bucketImagePath + '" style="width: 350px; height:328px;" />' +  '</a>' +
 			'<div>' + bucketJson[i].bucket_title + '</div>' +
 			'<div class="'+ bucketJson[i].bucket_type +'">' + bucketJson[i].bucket_type + '</div>' +

@@ -94,6 +94,7 @@ public class LoginDao {
             
             Class.forName("oracle.jdbc.driver.OracleDriver");        
             conn = DriverManager.getConnection(url, user, pw);
+            System.out.println("conn생성");
             
         } catch (ClassNotFoundException cnfe) {
             System.out.println("DB 드라이버 로딩 실패 :"+cnfe.toString());
@@ -192,18 +193,21 @@ public class LoginDao {
 	public String getUserImagePath(String userId) {
 		// TODO Auto-generated method stub
 		String userImagePath = null;
-		String sql = "SELECT member_image_path FROM member_info_tb WHERE member_id = ?";
+		String sql = "SELECT MEMBER_IMAGE_PATH FROM member_info_tb WHERE member_id = ?";
 		
+		System.out.println("===>  LoginDao.java | userId = " + userId);
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, userId);
 			rs = psmt.executeQuery();
-			
+			System.out.println("test1");
 			if(rs.next()) {
+				System.out.println("test2");
 				userImagePath = rs.getString("member_image_path");
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
+			System.out.println("test3");
 			e.printStackTrace();
 		}finally {
 			close();

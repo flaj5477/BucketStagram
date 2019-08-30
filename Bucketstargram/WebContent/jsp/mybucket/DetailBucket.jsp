@@ -10,6 +10,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/styles.css">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <%	
 	String userId = (String)session.getAttribute("userid");
 	String ownerId = (String)session.getAttribute("ownerId");
@@ -43,8 +44,12 @@ var result;
 //댓글 내용 html에 생성하기 위해 사용될 태크 저장 변수
 var tag;
 var request = new XMLHttpRequest();
-	
+
+window.addEventListener('focus', function() {
+}, false);
+
 $( document ).ready(function(){
+	//$(top.document).find(".poptrox-popup").css({"width":"1200px", "height":"800px"});
 	if(likeYN == "Y"){
 		tag = "<i class='fa fa-heart' style='color:red;' aria-hidden='true'></i>";
 		document.getElementById("like").innerHTML = tag; 
@@ -60,15 +65,31 @@ $( document ).ready(function(){
 	if(bucketMemberId == '<%= userId%>'){
 		console.log("사용자가 등록한 버킷입니다.")	
 		$("#like").css("display", "none");
+		$("#add").css("display", "none");
 		$("#completion").css("display", "inline-block");
 		$("#update").css("display", "inline-block");
 		$("#delete").css("display", "inline-block");
 	}else{
 		console.log("사용자가 등록한 버킷이 아닙니다.")
-		$("#like").css("display", "inline-block");
-		$("#completion").css("display", "none");
-		$("#update").css("display", "none");
-		$("#delete").css("display", "none");
+		//비로그인 사용자 때문에
+		if(userId == "null"){
+			console.log("비로그인 사용자 처리 시작.")
+			$("#like").css("display", "none");
+			$("#add").css("display", "none");
+			$("#completion").css("display", "none");
+			$("#update").css("display", "none");
+			$("#delete").css("display", "none");
+			$("#reply-textArea").attr("disabled",true);
+			$("#reply-textArea").attr("placeholder","----- Login Please -----");
+			$("#reply-textArea").css({"text-align": "center", "font-weight": "bolder"});
+			$("#reply-sub").html('<i class="fa fa-sign-in" aria-hidden="true" onclick = "login();"></i>');
+		}else{
+			$("#like").css("display", "inline-block");
+			$("#add").css("display", "inline-block");
+			$("#completion").css("display", "none");
+			$("#update").css("display", "none");
+			$("#delete").css("display", "none");			
+		}
 	}
 	
 	if(completionYN == "completion"){
@@ -82,7 +103,7 @@ $( document ).ready(function(){
 });	
 //댓글 달거나 게시글 눌렀을 때 최신 댓글이 보이도록 하는 함수
 function autoScrollDown(){
-	$("#chat_scrol_div").scrollTop($("#chat_scrol_div")[0].scrollHeight);				
+	$("#reply-scrol-div").scrollTop($("#reply-scrol-div")[0].scrollHeight);				
 }
 </script>
 <script>
@@ -239,24 +260,52 @@ function completionProcess() {
 }
 
 function addAction(){
-	if(confirm("버킷리스트에 추가하시겠습니까?")){
-		//parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
-		//버킷 추가시 iframe창 크기 감소 - 부모 태그로 접근해서 줄임
-		$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
-		document.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+	if(userId == null){
+		if(confirm("로그인이 필요합니다. 로그인  하시겠습니까?")){
+			document.location.href = "LoginForm.do";
+			return true;
+		} else {
+			return false;
+		}
+	}else{
+		if(confirm("버킷리스트에 추가하시겠습니까?")){
+			//parent.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+			//버킷 추가시 iframe창 크기 감소 - 부모 태그로 접근해서 줄임
+			$(top.document).find(".poptrox-popup").css({"width":"400px", "height":"400px"});
+			document.location.href = "BucketAddForm.do?bucketId=" + encodeURIComponent(bucketId, true) + "&bucketTitle=" + bucketTitle + "&bucketContent=" +  bucketContent + "&bucketMemberId="+bucketMemberId;
+	
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
 
+function updateAction(){
+	
+}
+
+function login(){
+	if(confirm("로그인이 필요합니다. 로그인  하시겠습니까?")){
+		$(top.document).find(".poptrox-popup").css({"width":"1200px", "height":"700px"});
+		document.location.href = "LoginForm.do?bucketId="+bucketId+"&ownerId="+bucketMemberId;
+		
 		return true;
 	} else {
 		return false;
 	}
 }
-
-
 </script>
 <style>
-div::-webkit-scrollbar { 
+::-webkit-scrollbar { 
     display: none !important;
 }
+.repl-content, .photo__user-info, .photo__author{
+	font-family: 'Nanum Pen Script', cursive;font-size: 30px;
+}
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: blue; text-decoration: underline;}
 </style>
 <!-- 
 <script>
@@ -268,27 +317,31 @@ function test(){
 <body>
 	<div class="photo" >
 		<div  style="display:inline-block;">
-			<img src="${bucket.bucketImagePath }" align="left" width="700" height="800">
+			<img src="${bucket.bucketImagePath }" align="left" width="750px" height="799px" >
 		</div>
-		<div id="chat_scrol_div" style="margin-left:10px;height:800px;width:450px;display:inline-block;font-size: 30px;">
-			<div class="photo__header" style="border-bottom: 1px solid #e6e6e6; margin-bottom: 10px;">
-				<img src="${userImagePath} " class="photo__avatar" style="width: 70px;">
-				<div class="photo__user-info">
-					<c:set var="userId" value="<%=userId %>" />
-					<c:choose>
-	 					<c:when test="${bucket.bucketMemberId eq userId}">
-							<a href="MyBucket.do"><span class="photo__location">${bucket.bucketMemberId}</span></a>
-						</c:when>
-						<c:otherwise>
-							<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${bucket.bucketMemberId}';">
-								${bucket.bucketMemberId}
-							</a>
-						</c:otherwise>
-					</c:choose>
-					<span class="photo__author" style="display:inline-block">${bucket.bucketContents}</span>
+		<div id="chat_scrol_div" style="margin-right: 10px;height:800px;width:400px;display:inline-block;font-size: 30px;float:right;">
+			<div class="#" style="border-bottom: 1px solid #e6e6e6;display: flex;">
+				<div style="display: inline-block; padding: 20px 0px;">
+					<div><img src="${userImagePath} " class="photo__avatar" style="width: 2em; height: 2em; border-radius: 100%;"></div>
+					<div class="photo__user-info">
+						<c:set var="userId" value="<%=userId %>" />
+						<c:choose>
+		 					<c:when test="${bucket.bucketMemberId eq userId}">
+								<a href="MyBucket.do"><span class="photo__location">${bucket.bucketMemberId}</span></a>
+							</c:when>
+							<c:otherwise>
+								<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${bucket.bucketMemberId}';">
+									${bucket.bucketMemberId}
+								</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
+				<span class="photo__author" style="max-height: 130px;overflow-y: scroll;margin-left:20px;align-self: center;display:inline-block;font-family: 'Nanum Pen Script', cursive;font-size: 30px;">
+					${bucket.bucketContents}
+				</span>
 			</div>
-			<div style="height:300px;min-height:450px;overflow-y: scroll;">
+			<div id="reply-scrol-div" style="height:300px;min-height:500px;overflow-y: scroll;">
 				<div id="bucket_repl" class="bucket_repl" >
 					<c:set var="userId" value="<%=userId %>" />
 					<c:forEach items="${replyList}" var="reply">
@@ -298,11 +351,20 @@ function test(){
 							<!-- style="border: 1px solid; padding-bottom: 8px; padding-left: 14px; padding-top: 5px; border-radius: 14px; height: 71px; margin-bottom: 5px;" -->
 								<div class="repl">
 									<div class="photo__header" style="margin-top: 10px; padding: 0px;">
-										<img src="images/profile/ironman.jpg" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">
-										<a href="#" onclick="parent.location='MyBucket.do'"><h3 class = "repl-id" style="font-size: 20px;display:inline-block">${reply.reMemberId }</h3></a>
-										<span class="repl-content" style="font-size: 20px;margin-left: 10px;margin-top: 10px;">${reply.reReplyContents }</span>
+										<c:choose>
+											<c:when test="${empty reply.reMemberImagePath }">
+												<img src="images/profile/temp.jpg" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">
+											</c:when>
+											<c:otherwise>
+												<img src="${reply.reMemberImagePath} " class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">											
+											</c:otherwise>
+										</c:choose>
+										<a href="#" onclick="parent.location='MyBucket.do'">
+											<h3 class = "repl-id" style="font-size: 20px;display:inline-block">${reply.reMemberId }</h3>
+										</a>
+										<span class="repl-content" style="margin-left: 10px;margin-top: 10px;">${reply.reReplyContents }</span>
 									</div>
-									<span style="font-size: medium; margin-left: 60px;">${reply.reWriteDate }</span>
+									<span style="font-size: medium; margin-left: 60px;    display: flow-root;">${reply.reWriteDate }</span>
 								</div>
 								</div>							
 							</c:when>
@@ -310,12 +372,19 @@ function test(){
 							<div>
 								<div class="repl">
 									<div class="photo__header" style="margin-top: 10px; padding: 0px;" >
-										<img src="images/profile/ironman.jpg" class="photo__avatar" style="width: 2em; height: 2em;;margin-top: 15px;">
+										<c:choose>
+											<c:when test="${empty reply.reMemberImagePath }">
+												<img src="images/profile/temp.jpg" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">
+											</c:when>
+											<c:otherwise>
+												<img src="${reply.reMemberImagePath} " class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">											
+											</c:otherwise>
+										</c:choose>
 										<a href="#" onclick="parent.location='OtherBucket.do?ownerId=${reply.reMemberId}';">
-										<h3 class = "repl-id" style="font-size: 20px;display:inline-block;">${reply.reMemberId }</h3></a>
-										<span class="repl-content" style="font-size: 20px;margin-left: 10px;margin-top: 10px;">${reply.reReplyContents }</span>
+										<h3 class = "repl-id" style="font-size: 20px; display:inline-block;">${reply.reMemberId }</h3></a>
+										<span class="repl-content" style="margin-left: 10px;margin-top: 10px;">${reply.reReplyContents }</span>
 									</div>
-									<span style="font-size: medium; margin-left: 60px;">${reply.reWriteDate }</span>
+									<span style="font-size: medium; margin-left: 60px;     display: flow-root;">${reply.reWriteDate }</span>
 								</div>
 							</div>	
 							</c:otherwise>
@@ -325,24 +394,26 @@ function test(){
 			</div>
 			<div>
 				<div class="photo__actions" style="border-top: 1px solid #e6e6e6; padding: 13px 0px; margin: 0px;">
-					<span id="like" onclick="likeAction()" style="cursor:pointer;"><i class="fa fa-heart-o fa-lg" ></i></span> 
-					<span id="add"  onclick="addAction();" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
-					<span id="completion" onclick="completeAction();" style="cursor:pointer;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
-					<span id="delete" onclick="deleteAction();" style="cursor:pointer;"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-					<span id="update" style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-					<span id="chat" onclick="$('#reply-textArea').focus();" style="cursor:pointer;"><i class="fa fa-comment-o fa-lg"></i></span>
-					<br>
-					<span id="total-like-view">좋아요 ${bucket.bucketLike}개</span>
-					<br> 
-					<span id="total-reply-view">댓글 ${bucket.bucketReplyCnt }개</span>
-					<br>
-					<span id="bucket-wDate">${bucket.bucketWriteDate } 작성...</span>
+					<div>
+						<span id="like" onclick="likeAction()" style="cursor:pointer;"><i class="fa fa-heart-o fa-lg" ></i></span> 
+						<span id="add"  onclick="addAction();" style="cursor:pointer;" ><i class="fa fa-plus" aria-hidden="true"></i></span>
+						<span id="completion" onclick="completeAction();" style="cursor:pointer;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+						<span id="delete" onclick="deleteAction();" style="cursor:pointer;"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+						<span id="update" onclick="updateAction();"style="cursor:pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+						<span id="chat" onclick="$('#reply-textArea').focus();" style="cursor:pointer;font-size:30px;vertical-align: 15%"><i class="fa fa-comment-o fa-lg"></i></span>
+					</div>
+					<div style="font-family: 'Nanum Pen Script', cursive;font-size: 30px;">
+						<span id="total-like-view" style="color: red;">좋아요</span><span style="font-weight: bold; font-size: larger;"> ${bucket.bucketLike}</span><span>개</span>
+						<span id="total-reply-view" style="color: green;">댓글</span><span style="font-weight: bold; font-size: larger;"> ${bucket.bucketReplyCnt }</span><span>개</span>
+						<br>
+						<span id="bucket-wDate">${bucket.bucketWriteDate } 버킷리스트 시작...</span>
+					</div>
 				</div>
 			</div>
 			<div>
-				<div class="photo__add-comment-container" style = "margin-top:35px;">
-					<textarea id="reply-textArea" name="comment" placeholder="Add a comment..."></textarea>
-					<i class="fa fa-ellipsis-h"></i>
+				<div class="photo__add-comment-container" style = "margin:0px; padding:0px">
+					<textarea id="reply-textArea" name="comment" placeholder="Add a comment..." rosw="2" style="height: 25px; margin-top: 13px; font-size: 18px;"></textarea>
+					<span id="reply-sub"><i class="fa fa-ellipsis-h"></i></span>
 				</div>
 			</div>
 	</div>
