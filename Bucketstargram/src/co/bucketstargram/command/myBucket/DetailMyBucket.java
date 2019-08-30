@@ -26,6 +26,7 @@ public class DetailMyBucket implements Command {
 		String userId = (String) session.getAttribute("userid");
 		String bucketId = request.getParameter("bucketId");
 		String bucketMemberId = request.getParameter("bucketMemberId");
+		
 		System.out.println("usersId = " + userId);
 		System.out.println("bucketId = " + bucketId);
 		System.out.println("bucketMemberId = " + bucketMemberId);
@@ -38,7 +39,7 @@ public class DetailMyBucket implements Command {
 		ArrayList<ReplyDto> replyList = replyDao.getReplyInfo(bucketId);
 		String userImagePath = loginDao.getUserImagePath(bucketMemberId);
 		//ArrayList reUserImagePath = loginDao.getReUserImagePath()
-		System.out.println("DetailMyBucket.java | bucket.getBucketImagePath() = " + bucket.getBucketImagePath());
+		System.out.println("userImagePath = " + userImagePath);
 		
 		session.setAttribute("ownerId", userId);
 		request.setAttribute("bucket", bucket);

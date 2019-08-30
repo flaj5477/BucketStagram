@@ -15,8 +15,10 @@
 	String bucketTitle = (String)request.getAttribute("bucketTitle");
 	String bucketContent = (String)request.getAttribute("bucketContent");
 	String bucketMemberId = (String)request.getAttribute("bucketMemberId");
+	String bucketType = (String)request.getAttribute("bucketType");
 	
 	System.out.println(imagePath);
+	System.out.println(bucketContent);
 	
 	//자바스크립트가 백슬러시 하나 일경우 인식 못하고 깨지는 현상 때문에 치환함
 	String replaceImagePath = imagePath.replace("\\", "\\\\");
@@ -42,13 +44,14 @@
 	<br>
 	버킷	제목: <input type="text" id="bucketTitle" name="bucketTitle" value="<%=bucketTitle %>">
 	<br>
+	
 	<c:choose>
 		<c:when test="${bucketContent eq null}">
-		버킷 내용: <textarea rows="5" cols="30" id="bucketContent" name="bucketContent" value=""></textarea>
+		버킷 내용: <textarea rows="5" cols="30" id="bucketContent" name="bucketContent" placeholder=""></textarea>
 			<br>	
 		</c:when>
 		<c:otherwise>
-		버킷	내용: <textarea rows="5" cols="30" id="bucketContent" name="bucketContent" value="<%=bucketContent %>"></textarea>
+		버킷	내용: <textarea rows="5" cols="30" id="bucketContent" name="bucketContent" placeholder="<%=bucketContent %>"></textarea>
 			<br>			
 		</c:otherwise>	
 	</c:choose>
@@ -95,6 +98,13 @@
 			$("#buckt_add_form").attr("action", frmActionValue);
 		}
 	};
+	
+	//input 태그 초기화
+	$(document).ready(function() {
+			$("#bucketTitle").val("${bucketTitle}");
+			$("#bucketContent").val("${bucketContent}");
+			$("#bucketType").val("${bucketType}").prop("selected", true);
+	});
 </script>
 <script type="text/javascript">
 	var file = document.querySelector('#getfile');

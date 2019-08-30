@@ -25,6 +25,8 @@
                         <input type="text" id = "formID" name="formID" placeholder="Username" required />
                         <input type="password" id = "formPW" name="formPW" placeholder="Password" required />
                         <input type="submit" value="Log in" />
+                        <input type="hidden" name="bucketId" value="${bucketId}" />
+                        <input type="hidden" name="ownerId" value="${ownerId} " />
                     </form>
                     <span class="login__divider">or</span>
                     <a href="#" class="login__link">

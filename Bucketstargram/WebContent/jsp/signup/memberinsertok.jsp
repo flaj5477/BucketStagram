@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <title>Insert title here</title>
 </head>
 <body>
@@ -27,8 +29,20 @@
 			</span>			
 	</div>  
 	<div style ="margin-top:25px;"> 
-	 <p><small>감사합니다.</small></p>
-	 <p><small>로그인 페이지로 이동합니다.</small>
+<div class="alert alert-info" role="alert">
+  <h4 class="alert-heading">환영합니다!</h4>
+  <p>버킷스타그램에 가입해주셔서 감사합니다.</p>
+  <hr>
+  <p class="mb-0"> 로그인 페이지로 이동합니다.</p>
+   <div class="spinner-grow text-success" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-danger" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-warning" role="status">
+  <span class="sr-only">Loading...</span>
+</div></div>
 	</div>
 			<meta http-equiv='refresh' content='2;url=LoginForm.do'>
 			</c:if></h3><p></div>

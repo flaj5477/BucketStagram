@@ -6,19 +6,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>버킷스타그램 좋아요 순위</title>
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="assets/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 
 
-.gallery{
+/* .gallery{
  	display : inline;
  	float : left;
  	width:450px;
  	height:450px;
-} 
+}  */
 
 
 form[name="frm_Search"] {
@@ -35,26 +37,134 @@ input[name="wordSearch"] {
 div.asd{
 	display: flow-root;
 }
+ 
+ body {
+  padding: 20px;
+  font-family: sans-serif;
+ 
+  /* background: #f2f2f2; */
+}
+img {
+  width: 100%; /* need to overwrite inline dimensions */
+  height: auto;
+}
+h2 {
+  margin-bottom: .5em;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1em;
+}
+
+ 
+ /* hover styles */
+.location-listing {
+  position: relative;
+}
+
+.location-image {
+  line-height: 0;
+  overflow: hidden;
+}
+
+.location-image img {
+  filter: blur(0px);
+  transition: filter 0.3s ease-in;
+  transform: scale(1.1);
+}
+
+.location-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity .5s;
+  background: rgba(90,0,10,0.4);
+  color: white;
+   
+  /* position the text in t’ middle*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.location-listing:hover .location-title {
+  opacity: 1;
+}
+
+.location-listing:hover .location-image img {
+  filter: blur(2px);
+}
+ 
+
+/* for touch screen devices */
+@media (hover: none) { 
+  .location-title {
+    opacity: 1;	
+  }
+  .location-image img {
+    filter: blur(2px);
+  }
+}
+ 
+form[name="frm_Search"] {
+	text-align: center;
+	margin: 0 auto;
+
+}
+
+input[name="wordSearch"] {
+	height: 2em;
+	text-align: left;
+
+}
+div.child-page-listing{
+	display: flow-root;
+}
+
 
 </style>
 
 
+
+
 </head>
-<body>
+<body>	
 <jsp:include page = "../category/nav.jsp"/>
 <jsp:include page = "../category/popheader.jsp"/>
 			
 	 
 
 				
- 	<div class="asd" >
-		<c:forEach items="${list}" var="dto">
-			 <div class="gallery" align="center">
-				<a target="_blank" href="DetailMyBucket.do?bucketId=${dto.bucketId}"
-						   data-poptrox="iframe,1200x800">
-					<img id="${dto.bucketId}" src="${dto.bucketImagePath}"
+ 	<div class="child-page-listing" >
+
+			 <div class="grid-container">
+			 
+			 <c:forEach items="${list}" var="dto" varStatus="status">
+			  <div class="gallery" align="center" >
+			 	<article id="${dto.bucketId}" class="location-listing">
+			 		 <span class="title" style="font-size:45px; color:skyblue	">${status.count}위</span>
+				<a href="DetailMyBucket.do?bucketId=${dto.bucketId}"
+						   data-poptrox="iframe,1200x800" class="location-title" style="color:white">
+						   
+						  <br><br><br><br>${dto.bucketTitle}<br><br>
+						   ${dto.bucketMemberId}<br><br><br><Br>
+						   좋아요  ${dto.bucketLike}개<br><br><br><br>
+						  </a>
+						   <div class="location-image">		
+					<img width="400" height="169" id="${dto.bucketId}"
+					 src="${dto.bucketImagePath}"
 					 style="width: 350px; height:328px;" />  
-					<span class="type">
+					 </div>
+					 
+					<span class="type" style="text-align:center; font-size:25px">
 							<c:if test="${dto.bucketType == '여행'}">
 								<p style="color:#00C5BC">TRAVEL</p>
 							</c:if>
@@ -80,12 +190,11 @@ div.asd{
 								<p style="color:#87ADF8">LIFESTYLE</p>
 							</c:if>
 						</span>	
-						<span class="title">${dto.bucketTitle}</span>
-						</a>
-						<div class="contents">${dto.bucketLike}</div>
-				
+						</article>
+						</div>
+				</c:forEach>
 			</div>
-		 </c:forEach>
+		 
 	</div>  
  
 	 

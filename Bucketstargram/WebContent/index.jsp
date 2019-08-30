@@ -15,29 +15,10 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/all.js"></script>
 </head>
+<script>
+	document.location.href = "LibraryForm.do";
+</script>
 <body>
-	<jsp:include page="jsp/category/nav.jsp"/>
-	<jsp:include page="jsp/category/header.jsp"/>
-		<!-- Main -->
-		<div>
-			<!-- Thumbnails -->
-			<div class="thumbnails">
-				<div>
-					하이
-				</div>
-				<div>
-					
-				</div>
-				<div>
-					
-				</div>
-				<div>
-					
-				</div>
-				<div>
-					
-				</div>
-			</div>
-		</div>
+	
 </body>
 </html>

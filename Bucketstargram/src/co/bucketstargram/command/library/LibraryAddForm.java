@@ -19,15 +19,17 @@ public class LibraryAddForm implements Command{
 		
 		//String bucketId = request.getParameter("bucketId");
 		String imagePath = request.getParameter("imagePath");
-		String bucketTitle = request.getParameter("bucketTitle");
-		String bucketContent = request.getParameter("bucketContent");
-		String bucketMemberId = request.getParameter("bucketMemberId");
+		String bucketTitle = request.getParameter("Title");
+		String bucketContent = request.getParameter("Title");
+		String bucketMemberId = request.getParameter("MemberId");
+		String bucketType = request.getParameter("Type");
 		
 		//System.out.println("bucket아이디 = " + bucketId);
 		System.out.println("bucket이미지 경로 = " + imagePath);
 		System.out.println("bucket제목 = " + bucketTitle);
 		System.out.println("bucket내용 = " + bucketContent);
 		System.out.println("bucket작성자(로그인한 사람)아이디 = " + bucketMemberId);
+		System.out.println("bucket타입 = " + bucketType);
 		
 		//String imagePath1 = bucket.getImagePathbucketId(bucketId);
 		
@@ -35,6 +37,7 @@ public class LibraryAddForm implements Command{
 		request.setAttribute("bucketTitle", bucketTitle);
 		request.setAttribute("bucketContent", bucketContent);
 		request.setAttribute("bucketMemberId", bucketMemberId);
+		request.setAttribute("bucketType", bucketType);
 		
 		String viewPage = "jsp/library/libraryAddForm.jsp";
 		HttpRes.forward(request, response, viewPage);

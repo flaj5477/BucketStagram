@@ -148,6 +148,7 @@ public class BucketDao {
 				bucket.put("bucketImagePath",rs.getString("BUCKET_IMAGE_PATH"));
 				bucket.put("bucketTag",rs.getString("BUCKET_TAG"));
 				bucket.put("bucketWriteDate",rs.getString("BUCKET_WRITE_DATE"));
+				//내 버킷에는 좋아요 못누르니까 그냥 초기값을 N으로 설정함
 				bucket.put("likeYN", "N");
 				
 				bucketInfoList.add(bucket);
@@ -364,8 +365,12 @@ public class BucketDao {
 	public BucketDto getBucketInfo(String userId, String bucketId) {
 		// TODO Auto-generated method stub
 		BucketDto bucket = new BucketDto();
-		
-		String likeYN = getLikeYN(bucketId, userId);
+		String likeYN=null;
+		if(userId == null) {
+			likeYN = "N";
+		}else {			
+			likeYN = getLikeYN(bucketId, userId);
+		}
 		int replyCnt = getReplyCnt(bucketId);
 		String sql = "SELECT * FROM (SELECT * FROM bucket_info_tb WHERE bucket_id = ?) " + 
 								    "LEFT OUTER JOIN " + 

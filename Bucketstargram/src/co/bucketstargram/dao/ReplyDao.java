@@ -85,6 +85,7 @@ public class ReplyDao {
 
 	public boolean insert(String replyId, String bucketId, String memberId, String replyCotents) {
 		// TODO Auto-generated method stub
+		System.out.println("===> ReplyDao.java");
 		boolean insertSuccess = false;
 		String sql = "insert into bucket_reply_tb(RE_REPLY_ID, RE_BUCKET_ID, RE_MEMBER_ID, RE_REPLY_CONTENTS) values(?, ?, ?, ?)";
 		try {
@@ -148,7 +149,7 @@ public class ReplyDao {
 		// TODO Auto-generated method stubString sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
 		ArrayList<ReplyDto> replyInfoList = new ArrayList<ReplyDto>();
 		ReplyDto reply = null;
-		String sql = "SELECT * FROM bucket_reply_tb br WHERE re_bucket_id = ?"; 
+		String sql = "SELECT * FROM bucket_reply_tb br,(SELECT member_id, member_image_path FROM member_info_tb) WHERE re_member_id=member_id AND re_bucket_id =?"; 
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -163,6 +164,7 @@ public class ReplyDao {
 				reply.setReMemberId(rs.getString("re_member_id"));
 				reply.setReReplyContents(rs.getString("re_reply_contents"));
 				reply.setReWriteDate(rs.getString("re_write_date"));
+				reply.setReMemberImagePath(rs.getString("member_image_path"));
 				
 				replyInfoList.add(reply);
 			
@@ -174,7 +176,7 @@ public class ReplyDao {
 			close();
 		}
 		
-		System.out.println("ReplyDao.java | replyInfoList.size() = " + replyInfoList.size());
+		System.out.println("===> ReplyDao.java | replyInfoList.size() = " + replyInfoList.size());
 		return replyInfoList;
 	}
 }
