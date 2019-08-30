@@ -40,7 +40,7 @@ public class AppendReplyAction implements Command {
 		System.out.println("userImagePath = " + userImagePath);
 		if(insertSuccess) {
 			System.out.println("String.valueOf(insertSuccess) = " + String.valueOf(insertSuccess));
-			response.getWriter().write(String.valueOf(insertSuccess));
+			response.getWriter().write(String.valueOf(insertSuccess+"/"));
 			response.getWriter().write(userImagePath);
 		}
 	}
