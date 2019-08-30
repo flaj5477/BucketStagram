@@ -17,6 +17,9 @@ import co.bucketstargram.command.library.DetailLibFrm;
 import co.bucketstargram.command.library.LibInsert;
 import co.bucketstargram.command.library.LibInsertForm;
 import co.bucketstargram.command.library.LibraryForm;
+import co.bucketstargram.command.library.LibraryUpdate;
+import co.bucketstargram.command.library.LibraryUpdateForm;
+import co.bucketstargram.command.library.libraryRemove;
 import co.bucketstargram.command.member.IdCheck;
 import co.bucketstargram.command.member.LogOut;
 import co.bucketstargram.command.member.LoginForm;
@@ -36,15 +39,7 @@ import co.bucketstargram.command.myBucket.WishListAction;
 import co.bucketstargram.command.myBucket.LikeAction;
 import co.bucketstargram.command.myBucket.MyBucket;
 import co.bucketstargram.command.myBucket.OtherBucket;
-import co.bucketstargram.command.popular.Culture;
-import co.bucketstargram.command.popular.Food;
-import co.bucketstargram.command.popular.LifeStyle;
-import co.bucketstargram.command.popular.NewSkill;
-import co.bucketstargram.command.popular.Outdoor;
 import co.bucketstargram.command.popular.PopMain;
-import co.bucketstargram.command.popular.Shopping;
-import co.bucketstargram.command.popular.Sport;
-import co.bucketstargram.command.popular.Travel;
 import co.bucketstargram.command.search.GetSearch;
 import co.bucketstargram.common.Command;
 import co.bucketstargram.common.Trace;
@@ -92,6 +87,9 @@ public class Controller extends HttpServlet {
         map.put("/LibraryAddForm.do", new LibraryAddForm());
         map.put("/LibInsertForm.do", new LibInsertForm()); //라이브러리 입력 폼 요청
         map.put("/LibInsert.do", new LibInsert()); //라이브러리 입력(dao)
+        map.put("/libraryRemove.do", new libraryRemove()); //라이브러리 삭제(dao)
+        map.put("/LibraryUpdateForm.do", new LibraryUpdateForm()); //라이브러리 수정 폼 요청 
+        map.put("/libraryUpdate.do", new LibraryUpdate()); //라이브러리 수정(dao)
 
         //동규
         map.put("/GetSearch.do", new GetSearch());
@@ -99,14 +97,7 @@ public class Controller extends HttpServlet {
 
         //지민
         map.put("/PopMain.do", new PopMain());
-        map.put("/Travel.do", new Travel());
-        map.put("/Sport.do", new Sport());
-        map.put("/Food.do", new Food());
-        map.put("/NewSkill.do", new NewSkill());
-        map.put("/Culture.do", new Culture());
-        map.put("/Outdoor.do", new Outdoor());
-        map.put("/Shopping.do", new Shopping());
-        map.put("/LifeStyle.do", new LifeStyle());
+       
      }
 
      protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

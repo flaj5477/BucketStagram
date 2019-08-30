@@ -21,19 +21,34 @@
 	//자바스크립트가 백슬러시 하나 일경우 인식 못하고 깨지는 현상 때문에 치환함
 	String replaceImagePath = imagePath.replace("\\", "\\\\");
 %>
+<style>
+	body{
+	width: 350px;
+    height: 350px;
+    padding: 25px 25px 0 25px;
+    text-align: center;
+    font-size: larger;
+	}
+	input{
+		font-size: large;
+	}
+	select{
+		font-size: 20px;
+	}
+</style>
 </head>
 <body>
-<form action="" id="buckt_add_form" method="post" enctype="multipart/form-data" onsubmit="bucketAdd();">
+<form action="" id="buckt_add_form" target="_parent" method="post" enctype="multipart/form-data" onsubmit="bucketAdd();">
 	<br>
 	버킷	제목: <input type="text" id="bucketTitle" name="bucketTitle" value="<%=bucketTitle %>">
 	<br>
 	<c:choose>
 		<c:when test="${bucketContent eq null}">
-		버킷 내용: <input type="text" id="bucketContent" name="bucketContent" value="">
+		버킷 내용: <textarea rows="5" cols="30" id="bucketContent" name="bucketContent" value=""></textarea>
 			<br>	
 		</c:when>
 		<c:otherwise>
-		버킷	내용: <input type="text" id="bucketContent" name="bucketContent" value="<%=bucketContent %>">
+		버킷	내용: <textarea rows="5" cols="30" id="bucketContent" name="bucketContent" value="<%=bucketContent %>"></textarea>
 			<br>			
 		</c:otherwise>	
 	</c:choose>
@@ -46,7 +61,7 @@
 					<option value ="쇼핑">쇼핑</option>
 					<option value ="생활">생활</option>
 			 	</select>
-	버킷 사진: <input type="file" id="getfile" accept="image/*">
+	<input type="file" id="getfile" accept="image/*">
 	<br>
 	<input type="submit" value="전송">
 	<h4 id="image_owner_alarm"  style="color:red;"><%=bucketMemberId %>님 사진을 그대로 사용중입니다.</h4>
@@ -69,7 +84,7 @@
 		console.log("thumImagePath = " + thumImagePath);
 		
 		if(oriImagePath != thumImagePath){
-			frmActionValue = "BucketPostAction.do";
+			frmActionValue = "BucketPostAction.do";	//form의 타겟이 부모에서 실행!
 			$("#buckt_add_form").attr("action", frmActionValue);
 		}else{
 			//이미지를 바꿨을 경우 멀티 리퀘스트폼이 아닌 서버에서 해당 이미지 경로의 이미지를 복사하여 나의 버킷에 추가 되도록 구현

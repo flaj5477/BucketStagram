@@ -55,9 +55,24 @@ div.gallery:hover {
 	border: 1px solid #777;
 }
 
-div.gallery img {
+div.gallery img.exist {
 	width: 100%;
 	height: 60%;
+}
+
+div.gallery img.none {
+	margin: 80px 0;
+	width: 80%;
+	height: 80%;
+}
+
+span.none-text {
+	display: block;
+	font-size: 1.5em;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #87ADF8;
+    margin: 20px 0;
 }
 
 span.type p {

@@ -27,7 +27,6 @@ public class DetailLibFrm implements Command {
 		
 		request.setAttribute("library", library);
 		
-		
 		String viewPage = "jsp/library/detail_libraryForm.jsp";
 		HttpRes.forward(request, response, viewPage);
 		
