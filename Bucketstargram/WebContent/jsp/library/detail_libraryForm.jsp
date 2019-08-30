@@ -40,8 +40,18 @@ div.photo {			/* 화면전체 */
 
 header.photo__header {	/* 라이브러리 아이디, 타이틀 출력 부분 */
 	height: 50px;
-	width: 600px;
-	display: inline-flex;
+    width: 580px;
+    display: inline-flex;
+    padding: 10px;
+    border-bottom: solid 1px gray;
+}
+
+.library_id{
+
+}
+
+.title{
+	font-size: 28px;
 }
 
 div.photo__info {		/*헤더를 제외한 나머지 공간*/
@@ -51,26 +61,28 @@ div.photo__info {		/*헤더를 제외한 나머지 공간*/
 }
 
 div.lib_content {		/*라이브러리 내용 출력 공간*/
-	font-size: 30px;
-	width: 600px;
-	height: 500px;
-	overflow: auto;
+	font-size: 20px;
+    width: 580px;
+    height: 430px;
+    overflow: auto;
+    padding: 10px;
+    line-height: 200%;
 }
 
 div.photo__likes {		/*좋아요 갯수 표시 부분*/
 	width: 600px;
 	height: 20px;
 	padding-left: 15px;
-	padding-top: 5px;
-    padding-bottom: 3px;
+	padding-top: 7px;
+    padding-bottom: 5px;
     font-size: 20px;
 }
 
 div.photo__actions {	/*좋아요, add, 삭제 버튼 공간*/
-	width: 600px;
-	height: 30px;
-	font-size: 30px;
-	padding: 5px;
+	width: 580px;
+    height: 30px;
+    font-size: 30px;
+    padding: 10px;
 }
 
 div.libLikeMembs {		/*좋아요 한 사람들 리스트*/
@@ -78,6 +90,7 @@ div.libLikeMembs {		/*좋아요 한 사람들 리스트*/
 	height: 170px;
 	overflow: auto;
 	padding: 5px;
+	line-height: 200%;
 }
 
 a {						
@@ -86,8 +99,12 @@ a {
 	color: rgba(0, 106, 213);
 }
 p{
-	margin: 3px 0 3px 10px;
+	margin: 0 0 0 10px;
 	font-size: 18px;
+}
+
+i.fa-heart-o{
+	    color: #ff0039b5;    /* 좋아요 색깔 */
 }
 
 </style>
@@ -97,11 +114,11 @@ p{
 	<div class="photo">
 		<img src="${library.libImagePath }" align="left" width="600" height="800">
 		<header class="photo__header">
-			<img src="images/avatar.jpg" class="photo__avatar">
+			<!-- <img src="images/avatar.jpg" class="photo__avatar"> -->
 			<div class="photo__user-info">
-				<span class="photo__author">라이브러리 아이디: ${library.libId}</span> <br>
+				<span class="library_id">#${library.libId}</span> <br>
 				<span
-					class="photo__location">${library.libTitle}</span>
+					class="title">${library.libTitle}</span>
 			</div>
 		</header>
 		<div class="photo__info">
@@ -130,12 +147,16 @@ p{
 				</span>
 			</div>
 
-			<form name="addFrm">
+			<form name="frm">
 				<input type="hidden" name="imagePath"
-					value="${library.libImagePath }"> <input type="hidden"
-					name="bucketTitle" value="${library.libTitle }"> <input
-					type="hidden" name="bucketContent" value="${library.libContents }">
-				<input type="hidden" name="bucketMemberId" value="<%=userId%>">
+					value="${library.libImagePath }"> 
+				<input type="hidden"
+					name="Title" value="${library.libTitle }"> 
+				<input
+					type="hidden" name="Content" value="${library.libContents }">
+				<input type="hidden" name="MemberId" value="<%=userId%>">
+				<input type="hidden" name="Type" value="${library.libType }">
+				<input type="hidden" name="Id" value="${library.libId }">
 			</form>
 
 
@@ -149,7 +170,7 @@ p{
 	</div>
 
 	<script>
-		var form = document.addFrm;
+		var form = document.frm;
 		function addBucket() {
 			//document.addFrm.submit();
 			if(confirm("버킷리스트에 추가하시겠습니까?")){
@@ -171,7 +192,7 @@ p{
 			
 		};
 		
-		function updateLibrary() {
+		function updateLibrary() {	//라이브러리 수정!!!
 			if (confirm("라이브러리를 수정하겠습니까?")) {
 
 				$(top.document).find(".poptrox-popup").css({

@@ -204,10 +204,21 @@ public class LibraryDao {
 	public boolean update(LibraryDto library) {
 		boolean success = false;
 		String sql = "update LIBRARY_INFO_TB \r\n" + 
-				"set(lib_title,lib_contents,lib_type,lib_image_path) = (select '테스트','테스트','여행',' 몰라' from dual) where LIBRARY_INFO_TB.LIB_ID = '20190830021321226'";
+				"set(lib_title,lib_contents,lib_type,lib_image_path) = (select ?,?,?,? from dual) where LIBRARY_INFO_TB.LIB_ID = ?";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, library.getLibTitle());
+			psmt.setString(2, library.getLibContents());
+			psmt.setString(3, library.getLibType());
+			psmt.setString(4, library.getLibImagePath());
+			psmt.setString(5, library.getLibId());
+			
+			int result = psmt.executeUpdate();
+			
+			if(result > 0) {
+				System.out.println("DB수정 성공!");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
