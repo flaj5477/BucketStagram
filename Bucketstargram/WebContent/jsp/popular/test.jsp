@@ -46,8 +46,8 @@ input[name="wordSearch"] {
  	<div class="asd" >
 		<c:forEach items="${list}" var="dto">
 			 <div class="gallery" align="center">
-				<a target="_blank" href="DetailMyBucket.do?bucketId=${dto.bucketId}"
-						   data-poptrox="iframe,1200x800">
+				<a target="_blank" href="DetailMyBucket.do?bucketId=${dto.bucketId}&bucketMemberId=${dto.bucketMemberId}"
+						   data-poptrox="iframe,1200x803">
 					<img id="${dto.bucketId}" src="${dto.bucketImagePath}"
 					 style="width: 350px; height:328px;" />  
 					<span class="type">

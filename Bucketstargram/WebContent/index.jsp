@@ -23,7 +23,7 @@
 			<!-- Thumbnails -->
 			<div class="thumbnails">
 				<div>
-					하이
+				
 				</div>
 				<div>
 					

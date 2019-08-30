@@ -6,9 +6,20 @@ public class ReplyDto {
 	private String reBucketId;
 	private String reReplyContents;
 	private String reWriteDate;
+	private String reMemberImagePath;
+	
 	public ReplyDto() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String getReMemberImagePath() {
+		return reMemberImagePath;
+	}
+
+	public void setReMemberImagePath(String reMemberImagePath) {
+		this.reMemberImagePath = reMemberImagePath;
+	}
+
 	public String getReReplyId() {
 		return reReplyId;
 	}
