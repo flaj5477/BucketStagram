@@ -201,11 +201,26 @@ function appendProcess() {
 	
 	if (request.readyState == 4 && request.status == 200) {
 		tag = "";
-		var insertSuccess = request.responseText;
+		var reResult = request.responseText;
+		resultArray = reResult.split("/");
+		var insertSuccess = resultArray[0];
+		var reUserImageId = resultArray[1];
 		console.log("DB작업 성공(T)실패(F) => " + insertSuccess);
+		console.log("reUserImageId = " + reUserImageId);
 		
-		if(insertSuccess == "true"){
-			tag += '<div class="repl"><a href="OtherBucket.do?ownerId='+'<%=userId%>'+'"><h3 class = "repl-id"  style="display:inline-block">' + '<%=userId%>'  + '</h3></a><span class = "repl-content">' + $('#reply-textArea').val() + '</span>' + '<div class = "repl-wDate">' + getTimeStamp() + '</div></div>';
+		if(insertSuccess == "true"){	
+			 tag = '<div>' +
+						'<div class="repl">' +
+							'<div class="photo__header" style="margin-top: 10px; padding: 0px;">' +		
+								'<img src="' + reUserImageId  + '" class="photo__avatar" style="width: 2em; height: 2em;margin-top: 15px;">' +			
+									'<a href="#" onclick="parent.location=MyBucket.do">' +
+										'<h3 class="repl-id" style="font-size: 20px;display:inline-block">' + '<%=userId%>' + '</h3>' +
+									'</a>' +
+								'<span class="repl-content" style="margin-left: 10px;margin-top: 10px;">' + $('#reply-textArea').val() + '</span>' +
+							'</div>' +
+							'<span style="font-size: medium; margin-left: 60px;    display: flow-root;">' + getTimeStamp() + '</span>' +
+						'</div>' +
+					'</div>';
 			// replyCnt : 댓글 입력시 총 댓글 갯수 증가 시키기 위해 존재
 			replyCnt = replyCnt+1;
 			document.getElementById("total-reply-view").innerHTML = "댓글 " + replyCnt + "개";
