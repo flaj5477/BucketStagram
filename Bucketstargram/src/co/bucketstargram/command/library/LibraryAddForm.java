@@ -20,7 +20,7 @@ public class LibraryAddForm implements Command{
 		//String bucketId = request.getParameter("bucketId");
 		String imagePath = request.getParameter("imagePath");
 		String bucketTitle = request.getParameter("Title");
-		String bucketContent = request.getParameter("Title");
+		String bucketContent = request.getParameter("Content");
 		String bucketMemberId = request.getParameter("MemberId");
 		String bucketType = request.getParameter("Type");
 		
